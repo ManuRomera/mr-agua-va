@@ -1,0 +1,623 @@
+/** Generado por scripts/contenido.py desde la aventura: no editar a mano. */
+export default {
+ "promesa": "durante un solo día de verano, cuatro alumnos de un dojo ruinoso de Nerima, malditos por unas sales de baño de Jusenkyo, se mojan con agua fría y se vuelven animales, se secan con agua caliente y vuelven a ser personas, mientras corren por todo el barrio para reunir tres tablillas de madera antes de la medianoche y salvar su gimnasio del Capitán Hidetoshi.",
+ "pjs": [
+  {
+   "clave": "kenji",
+   "nombre": "Kenji",
+   "apodo": "Plancha de Hierro",
+   "estilo": "Discípulo del Kempo de la Tintorería y Doblado en Seco",
+   "lema": "¡Ni una arruga en mi kimono, ni una mancha en mi honor!",
+   "marcial": "Combate cuerpo a cuerpo usando prendas de ropa, lazos con sábanas, planchas calientes, saltar entre tendederos y resistir golpes manteniendo la pose marcial.",
+   "maldicion": "Fuente del Avestruz Ahogado",
+   "animal": "Avestruz",
+   "descripcion_animal": "Se convierte en un avestruz de metro ochenta con gafas redondas.",
+   "bestia": "Correr a 80 km/h cargando aliados, dar coces que derriban puertas y picotear objetos a distancia.",
+   "defecto": "Cuando se asusta o pasa vergüenza en forma de avestruz, mete inmediatamente la cabeza en el primer cubo, maceta o buzón que encuentre.",
+   "secreto": "Rompió la legendaria Plancha de Vapor del Fundador anoche intentando hacerse un sándwich mixto y la pegó con chicle antes de la inspección.",
+   "confesion": "«La rompí yo, intentando hacerme un sándwich; la pegué con chicle.»",
+   "vinculo": "Mako le debe un favor por una mancha de salsa; Daiki le ha prometido planchar sus pergaminos.",
+   "presentacion": "Alguien te señala una arruga en el kimono. ¿Cómo reaccionas?",
+   "reto": "Una inspección de higiene viene al dojo y pide ver «la Plancha de Vapor del Fundador» o un montón de ropa recién lavada se pone a bailar.",
+   "color": "#2b5fa8"
+  },
+  {
+   "clave": "mako",
+   "nombre": "Mako",
+   "apodo": "Cucharón Relámpago",
+   "estilo": "Heredera del Arte Marcial del Banquete y el Wok Rodante",
+   "lema": "¡Si puedes esquivar aceite hirviendo, puedes esquivar un puñetazo!",
+   "marcial": "Pelear con utensilios de cocina gigantes, lanzar proyectiles con precisión milimétrica, olfato infalible y sobornar con comida recién hecha.",
+   "maldicion": "Fuente de la Nutria Marina Ahogada",
+   "animal": "Nutria marina",
+   "descripcion_animal": "Se convierte en una nutria rechoncha con pañuelo de chef.",
+   "bestia": "Deslizarse como un torpedo sobre suelos mojados, colarse por tuberías y hacer malabares en equilibrio con cualquier objeto en el hocico.",
+   "defecto": "Las señoras mayores y los niños del barrio la confunden con una mascota adorable e intentan secuestrarla para ponerle lacitos rosas.",
+   "secreto": "Fue ella quien compró el sobre de «Sales de Baño de Jusenkyo» en el mercadillo y maldijo por error a todo el grupo.",
+   "confesion": "«El frasco lo compré yo, en el mercadillo, porque estaba de oferta.»",
+   "vinculo": "Kenji le ha planchado el delantal; Yumi le entrega los pedidos y se queda las propinas.",
+   "presentacion": "Un vecino te pide una ración «para llevar» en medio de una pelea. ¿Qué le sirves?",
+   "reto": "Un cliente exige reclamar «las sales con las que te bañaste» o un jurado de pastelería juzga un plato que nadie ha cocinado.",
+   "color": "#e0572a"
+  },
+  {
+   "clave": "daiki",
+   "nombre": "Daiki",
+   "apodo": "Pincel Cortante",
+   "estilo": "Guardián del Dojo de Caligrafía de Combate y Protocolo Extremo",
+   "lema": "¡Un trazo mal dado deshonra a tres generaciones!",
+   "marcial": "Combate con pinceles gigantes de bambú, pantallas de tinta cegadora, lectura de pergaminos antiguos y etiqueta marcial.",
+   "maldicion": "Fuente de la Cabra Montesa Ahogada",
+   "animal": "Cabra montesa",
+   "descripcion_animal": "Se transforma en un cabrito blanco con perilla y mirada intensa.",
+   "bestia": "Escalar paredes verticales de 90 grados, mantenerse en equilibrio sobre marcos de puertas y embestir con los cuernos.",
+   "defecto": "En forma de cabra siente un impulso biológico irresistible de masticar y tragarse cualquier mapa, contrato o papel importante que tenga a mano.",
+   "secreto": "Es miope perdido pero se niega a llevar gafas por orgullo; firmó la apuesta del gimnasio creyendo que era el albarán del lechero.",
+   "confesion": "«Veo fatal y firmé sin leer; creí que era el albarán del lechero.»",
+   "vinculo": "Kenji plancha sus pergaminos; Yumi le debe una caligrafía en un cartel de reparto.",
+   "presentacion": "Alguien te enseña un papel importante. ¿Dónde pones los ojos?",
+   "reto": "Un notario llega con un contrato que Daiki firmó sin leer o un rival le reta a un duelo de caligrafía a ciegas.",
+   "color": "#2e7d4f"
+  },
+  {
+   "clave": "yumi",
+   "nombre": "Yumi",
+   "apodo": "Rueda de Fuego",
+   "estilo": "Especialista del Estilo de Mensajería Acrobática sobre Patines",
+   "lema": "¡Entrega en menos de treinta minutos o te pateo el tejado!",
+   "marcial": "Acrobacias imposibles sobre patines, combate en equilibrio sobre cables telefónicos, atajos por callejones y persecuciones.",
+   "maldicion": "Fuente del Mono de Nieve Ahogado",
+   "animal": "Macaco japonés",
+   "descripcion_animal": "Se transforma en un macaco japonés con chaleco de repartidora.",
+   "bestia": "Cuatro extremidades prensiles (pies como manos), saltar de rama en rama sin tocar el suelo y robar objetos al vuelo.",
+   "defecto": "Si ve una bañera caliente, una fuente termal o una olla humeante mientras es un mono, intenta meterse dentro con expresión de éxtasis.",
+   "secreto": "Perdió la Tablilla nº 1 esta mañana por intentar hacer un caballito delante de un chico guapo, y metió una tetera vieja en la caja lacada para disimular.",
+   "confesion": "«La tablilla se me cayó haciendo un caballito; la caja solo tiene una tetera.»",
+   "vinculo": "Mako le da pedidos que ella reparte; Daiki le escribe sus carteles de oferta.",
+   "presentacion": "Un cliente impaciente te pide la entrega ya. ¿Qué excusa pones?",
+   "reto": "Un cliente reclama un paquete que no ha entregado o alguien la reconoce de una foto con el «caballito».",
+   "color": "#e1a21a"
+  }
+ ],
+ "retos": [
+  {
+   "id": "R01",
+   "titulo": "¡EL REPARTO EQUIVOCADO DEL TÍO DEL RAMEN!",
+   "quien": "Yumi",
+   "grupo": "personal",
+   "cuando": "mañana",
+   "escena": "09-canal",
+   "tablilla": 1,
+   "situacion": "El tío del ramen empuja por el borde del canal un carro con una caja lacada entre los cuencos: dentro está la Tablilla nº 1. La caja del dojo solo guardaba una tetera.",
+   "urgencia": "El carro cruza el puente en dos minutos; después, la tablilla acaba en la cocina de un restaurante al otro lado.",
+   "opciones": "correr a pie o patinar, subirse al carro, pedir un cuenco «por favor» y cambiar la caja, inventar un pedido urgente.",
+   "giro": "Un chorro del canal moja al que se acerque: el primero en llegar queda Mojado y el reparto se vuelve de ida y vuelta.",
+   "secuela": "El tío del ramen les guarda un cuenco de caldo caliente para después (Hervir gratis una vez)."
+  },
+  {
+   "id": "R02",
+   "titulo": "¡DUELO EN LA PISTA DE HIELO DEL SUPERMERCADO!",
+   "quien": "público",
+   "grupo": "publico",
+   "cuando": "mañana-tarde",
+   "escena": "08-supermercado",
+   "tablilla": 2,
+   "pelea": "mariko",
+   "situacion": "Mariko, campeona de la sección de congelados, patina entre las neveras con la Tablilla nº 2 clavada en una merluza congelada.",
+   "urgencia": "Si pierden, Mariko la guarda en el congelador del fondo hasta mañana.",
+   "opciones": "¡PELEA! contra Mariko, un cambio de carro, sobornarla con helado de judía roja o dejarla sin su merluza.",
+   "giro": "El suelo helado hace de Entorno: quien patina bien gana +1d6; quien resbala hacia la nevera queda Mojado de escarcha.",
+   "secuela": "Mariko pasa a ser rival amistosa: aparece en un reto posterior para ayudar o fastidiar."
+  },
+  {
+   "id": "R03",
+   "titulo": "¡LA CEREMONIA DEL TÉ CON TRAMPA!",
+   "quien": "Daiki",
+   "grupo": "personal",
+   "cuando": "tarde",
+   "escena": "10-jardin-te",
+   "tablilla": 3,
+   "situacion": "La Maestra Matsu entrega la Tablilla nº 3 a quien sirva el té con la elegancia que exige el ritual. Hay dos teteras: una hirviendo y otra helada. Los matones del Cisne han cambiado las etiquetas.",
+   "urgencia": "Un solo fallo y la tablilla pasa al discípulo del Cisne que espera su turno junto al estanque de carpas.",
+   "opciones": "adivinar la temperatura por el vapor, intercambiar tazas, usar un Cartel para pedir tiempo, sobornar a las carpas.",
+   "giro": "Té hirviendo: Hervir gratis para un Mojado. Té helado: ¡CHAPUZÓN! sobre quien lo derrame. Los dos, sobre el estanque, valen un duelo de pinceles.",
+   "secuela": "La Maestra Matsu regala un abanico que sirve de +1d6 de Entorno una vez."
+  },
+  {
+   "id": "R04",
+   "titulo": "¡PERSECUCIÓN EN BICICLETAS!",
+   "quien": "Yumi",
+   "grupo": "personal",
+   "cuando": "mañana",
+   "escena": "06-calle-nerima",
+   "situacion": "Tres matones del Cisne, en monopatín y con globos de agua, atraviesan la calle detrás de los personajes. Una bicicleta de reparto está apoyada en una farola.",
+   "urgencia": "Si alguien queda atrás, se queda con todo el cargamento de globos encima.",
+   "opciones": "saltar entre bicis aparcadas, deslizarse por un toldo, empujar un carro, poner un cartel de «cuidado» en mitad de la calle.",
+   "giro": "Un hidrante abierto por un vecino convierte la calle en un tobogán: todos van de lado; los Mojados ganan +1d6 por huir.",
+   "secuela": "Los matones del Cisne pierden un monopatín: los volveréis a ver, más despacio."
+  },
+  {
+   "id": "R05",
+   "titulo": "¡TOLDOS CAÍDOS!",
+   "quien": "Kenji",
+   "grupo": "personal",
+   "cuando": "mañana-tarde",
+   "escena": "07-mercadillo",
+   "situacion": "El peso del agua de cien cubos derrumba el toldo del mercadillo. Debajo hay puestos, abuelas y una cuba de caldo que se calienta sola.",
+   "urgencia": "El toldo se rasga: todo se empapa en tres, dos, uno…",
+   "opciones": "doblar el toldo como una sábana, colgar a los vecinos de tendederos, sostener las varillas con una pose marcial, usar el caldo para Hervir.",
+   "giro": "La tela, al plegarse, hace de ola: todos los de debajo se mojan. Kenji, en pose, se queda seco… y le salpican.",
+   "secuela": "El mercadillo regala un lote de ropa seca (un personaje cambia de ropa sin perder el hilo)."
+  },
+  {
+   "id": "R06",
+   "titulo": "¡GUERRA EN LA LAVANDERÍA AUTOMÁTICA!",
+   "quien": "Kenji / Mako",
+   "grupo": "personal",
+   "cuando": "tarde",
+   "escena": "11-lavanderia",
+   "situacion": "Una máquina enloquecida escupe espuma por toda la lavandería y los matones del Cisne esconden cubos de hielo dentro de las lavadoras.",
+   "urgencia": "La espuma sube y ya llega a las rodillas; el dueño amenaza con cerrar el local para siempre.",
+   "opciones": "subirse a una secadora para Hervir, apagar el centrifugado con un Cartel («¡PARA YA!»), ¡PELEA! con la Pandilla entre las lavadoras.",
+   "giro": "La secadora es una fuente de calor gigante: cualquier Mojado que se meta, vuelve a ser humano… con la ropa encogida.",
+   "secuela": "Un cartel de «Se agradece» del dueño: gratis la ropa seca durante la tarde."
+  },
+  {
+   "id": "R07",
+   "titulo": "¡MANGUERAS DESBOCADAS!",
+   "quien": "público",
+   "grupo": "publico",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "Una docena de mangueras, abiertas a todo gas por el Desbarajuste, se sacuden como serpientes y persiguen a todo el que huela a agua.",
+   "urgencia": "Alguien debe cerrar el grifo general antes de que el barrio entero se convierta en un lago.",
+   "opciones": "atar las mangueras con una sábana, seguirlas hasta la boca de riego, saltar sobre ellas, convencerlas de otro rumbo.",
+   "giro": "Cada manguera que pasa moja a alguien distinto: tirad d6 para saber quién (1-2 el que tire, 3-4 el vecino, 5-6 el más cercano).",
+   "secuela": "Las mangueras reaparecen más tarde, atadas a una señal, como obstáculo cómico."
+  },
+  {
+   "id": "R08",
+   "titulo": "¡EL BANQUETE RELÁMPAGO!",
+   "quien": "Mako",
+   "grupo": "personal",
+   "cuando": "mañana-tarde",
+   "escena": "07-mercadillo",
+   "situacion": "Un concurso de comer fideos en el mercadillo: premio, un cuenco de caldo hirviendo infinito. El único rival de Mako es un discípulo del Cisne con un cubo escondido.",
+   "urgencia": "El reloj del concurso cuenta atrás y las raciones llegan sin parar.",
+   "opciones": "comer a la velocidad de la nutria, repartir raciones a los vecinos, olfatear el cubo de trampa, trampear con un Cartel.",
+   "giro": "El caldo hirviendo es una fuente de calor infinita (Hervir gratis); el cubo del Cisne mojará a quien beba demasiado deprisa.",
+   "secuela": "El ganador consigue un termo lleno: +1 carga de Termo."
+  },
+  {
+   "id": "R09",
+   "titulo": "¡LA FIRMA MISTERIOSA!",
+   "quien": "Daiki",
+   "grupo": "personal",
+   "cuando": "tarde",
+   "escena": "04-dojo-exterior",
+   "situacion": "Un notario con aspecto de pajarito llega al dojo con la apuesta del gimnasio firmada por Daiki: si el Cisne reúne las tablillas, el edificio se demuele sin más trámite.",
+   "urgencia": "El notario lee la cláusula en voz alta, deprisa, y pide el visto bueno antes de que anochezca.",
+   "opciones": "leerla de cerca (Daiki no ve nada), encontrar el error de forma, impugnarla con un Cartel, distraer al notario con un chorro.",
+   "giro": "En forma de cabra, Daiki intenta comerse el contrato: ¿lo hace? Si sí, se gana tiempo… pero se pierde la prueba para el Final B.",
+   "secuela": "Si se halla la cláusula defectuosa: vía para el Final B (trampa administrativa)."
+  },
+  {
+   "id": "R10",
+   "titulo": "¡ZOO AMBULANTE!",
+   "quien": "público",
+   "grupo": "publico",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "Una patrulla de «control de animales» del barrio persigue a los personajes en forma Mojada, convencida de que se han escapado del zoo del parque.",
+   "urgencia": "Si los atrapan, acaban en la perrera municipal hasta que alguien pague la fianza.",
+   "opciones": "huir, hacerse pasar por mascotas, secarse con un Termo delante de testigos, negociar con Carteles.",
+   "giro": "Un chorro de manguera bien dirigido moja a la patrulla… y los convierte en espectadores felices de un número de circo.",
+   "secuela": "La patrulla se aficiona a los personajes: los defenderá en el Acto III (o los perseguirá con cariño)."
+  },
+  {
+   "id": "R11",
+   "titulo": "¡SE CORTA EL AGUA CALIENTE DE TODO EL BARRIO!",
+   "quien": "público",
+   "grupo": "publico",
+   "cuando": "tarde",
+   "escena": "07-mercadillo",
+   "situacion": "Por culpa de las mangueras, la presión de la caldera del barrio cae y todos los grifos escupen agua helada.",
+   "urgencia": "Cada vez que alguien necesite Hervir, el Termo es lo único que queda.",
+   "opciones": "buscar fuentes de calor (ramen, baños, secadoras), repartir las cargas, usar un Cartel para pedir ayuda, hacer una fogata.",
+   "giro": "Los vecinos empiezan a ofrecer fuentes de calor… a cambio de un favor ridículo cada vez.",
+   "secuela": "El Termo pierde una carga; la Casa de Baños queda como único lugar caliente de Nerima."
+  },
+  {
+   "id": "R12",
+   "titulo": "¡LAS FOTOS DE LA VERGÜENZA!",
+   "quien": "social",
+   "grupo": "social",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "Un chaval con una cámara desechable ha fotografiado a los personajes transformándose y quiere vender la exclusiva al periódico del barrio.",
+   "urgencia": "La edición sale al caer la noche y el titular ya está escrito: «LOS MONSTRUOS DE NERIMA».",
+   "opciones": "comprar su silencio, intercambiar fotos, secuestrar el carrete, ofrecerle una entrevista exclusiva.",
+   "giro": "Una foto buena sale de un Mojado: gana una fama inesperada que ayudará en R17.",
+   "secuela": "El chaval retira la exclusiva si hay una entrevista sincera; ganas contacto con la prensa del barrio."
+  },
+  {
+   "id": "R13",
+   "titulo": "¡HIDRANTE EXPLOSIVO EN LA AVENIDA!",
+   "quien": "gran escala",
+   "grupo": "grande",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "Un hidrante revienta en mitad de la avenida y lanza un chorro de diez metros que baña farolas, toldos y transeúntes.",
+   "urgencia": "La avenida queda cortada, y el chorro empuja a los vecinos hacia el canal.",
+   "opciones": "cerrar la llave, tapar el chorro con un colchón, desviarlo hacia una zona vacía, subirse al chorro.",
+   "giro": "El chorro es un tobogán de agua helada gratuito: todo aquel que lo cruce queda Mojado, pero llega al otro lado en un segundo.",
+   "secuela": "El Desbarajuste sube 1 si no se resuelve; la avenida queda abierta como atajo si se resuelve."
+  },
+  {
+   "id": "R14",
+   "titulo": "¡EL DESFILE DE CARROZAS ACUÁTICAS!",
+   "quien": "gran escala",
+   "grupo": "grande",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "El desfile anual del Uchimizu pasa por la avenida con carrozas llenas de agua, abanicos y cañones de confeti húmedo.",
+   "urgencia": "El jefe del desfile quiere que los personajes participen: o se meten en una carroza, o la carroza se les mete a ellos.",
+   "opciones": "disfrazarse, colarse entre carrozas, usar el desfile para cruzar la ciudad, robar una carroza.",
+   "giro": "Una carroza con forma de ballena dispara un chorro enorme: ¡CHAPUZÓN! general… y la multitud aplaude.",
+   "secuela": "La multitud corea el nombre de los personajes; en el Acto III, los vecinos los esperan en la puerta."
+  },
+  {
+   "id": "R15",
+   "titulo": "¡EL CANAL SE DESBORDA!",
+   "quien": "gran escala",
+   "grupo": "grande",
+   "cuando": "tarde",
+   "escena": "09-canal",
+   "situacion": "Con tanto cubo vacío, el canal ha subido medio metro. Los puentes ya son islas, y los carros de reparto, barcos.",
+   "urgencia": "Una fila de abuelas atrapadas en un puente, esperando a que alguien las cruce.",
+   "opciones": "construir un puente con tatamis, cruzar a lomos de un Mojado, rescatar a las abuelas una a una, usar un Cartel para dirigir el tráfico.",
+   "giro": "El que cruce el agua queda Mojado hasta que la corriente se lo permita; la fuerza del agua cuenta como Entorno +1d6.",
+   "secuela": "Las abuelas, agradecidas, regalan sopa caliente: +1 Termo."
+  },
+  {
+   "id": "R16",
+   "titulo": "¡CIEN CUBOS A LA VEZ!",
+   "quien": "gran escala",
+   "grupo": "grande",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "El *Uchimizu* alcanza su clímax: a las cuatro en punto, todo el barrio lanza el cubo a la vez. Los personajes están en el centro de la plaza.",
+   "urgencia": "Si nadie hace nada, todos se mojan a la vez; si alguien lo evita, todos se enteran.",
+   "opciones": "saltar sobre un toldo, esquivar uno a uno, usar un paraguas de papel, huir por tuberías (si hay una nutria cerca).",
+   "giro": "Los dados que repitan valor (dobles) provocan un cubo extra: ¡todos los vecinos aplauden!",
+   "secuela": "El Desbarajuste baja 1 si se sale bien librado: el barrio ya ha gastado sus cubos."
+  },
+  {
+   "id": "R17",
+   "titulo": "¡TODO EL BARRIO QUIERE UNA FOTO CON EL AVESTRUZ!",
+   "quien": "social",
+   "grupo": "social",
+   "cuando": "tarde",
+   "escena": "06-calle-nerima",
+   "situacion": "Los vecinos han convertido a un personaje Mojado en celebridad: piden fotos, firmas, autógrafos y que haga el «avestruz» (o la «nutria», o la «cabra», o el «mono»).",
+   "urgencia": "Una cola de admiradores bloquea el camino de los personajes hacia la Casa de Baños.",
+   "opciones": "ofrecer un espectáculo, negociar el paso con Carteles, utilizar la fama como Entorno, esconderse.",
+   "giro": "Un fan intenta secar al famoso con un secador: si Hervir se hace delante de todos, el público grita.",
+   "secuela": "La fama sirve de +1d6 en el siguiente reto social o de persuasión."
+  },
+  {
+   "id": "R18",
+   "titulo": "¡CHAPARRÓN DE VERANO!",
+   "quien": "comodín de urgencia",
+   "grupo": "comodin",
+   "cuando": "cualquier acto",
+   "escena": "06-calle-nerima",
+   "situacion": "Un chaparrón repentino empapa a todos los de la calle, de golpe, sin aviso, con trueno incluido.",
+   "urgencia": "Es el comodín para cuando la mesa se atasca o necesita un chiste gordo.",
+   "opciones": "refugiarse bajo un cartel, bailar bajo la lluvia, mirar el cielo, sacar el Termo.",
+   "giro": "Todos los personajes en forma Seca pasan a Mojado… y los Mojados pasan a decir «¡qué bien!» con un Cartel.",
+   "secuela": "El Desbarajuste baja 1 (la lluvia ha hecho el trabajo de los vecinos)."
+  }
+ ],
+ "cortinillas": [
+  {
+   "id": "amanecer",
+   "titulo": "¡Buenos días, Nerima!",
+   "minuto": 0,
+   "escena": "00-amanecer",
+   "guia": "guia-manana",
+   "lineas": [
+    "Las tejas aún están frías. En una calle estrecha de Nerima, alguien ha dejado una fila de cubos junto a una puerta de bambú.",
+    "El Guía de Jusenkyo levanta el termo hacia la cámara: «¡Buenos días, queridos espectadores! Hoy es el Día del Gran Remojo de Verano. Les recuerdo que el agua fría es amiga… hasta que deja de serlo.»",
+    "Dentro del dojo, el montón de ropa de cuatro personas se agita bajo una manta. Una pluma sale por debajo."
+   ]
+  },
+  {
+   "id": "mediodia",
+   "titulo": "¡A comer!",
+   "minuto": 45,
+   "escena": "01-mediodia",
+   "guia": "guia-mediodia",
+   "lineas": [
+    "El sol cae a plomo sobre el asfalto. En un portal sombreado, el Guía de Jusenkyo sorbe fideos de un cuenco enorme.",
+    "«Hacemos una pausa, estimado público. Mientras tanto, les recuerdo lo que ha pasado esta mañana: tablillas, cubos, avestruces… y una tetera que no debería estar en esa caja.»",
+    "Cuatro gotas de sudor. Una mosca. Un cubo que cae a lo lejos. «Sigan comiendo, que la tarde viene movida.»"
+   ]
+  },
+  {
+   "id": "noche",
+   "titulo": "¡Buenas noches, Nerima!",
+   "minuto": 85,
+   "escena": "02-noche",
+   "guia": "guia-noche",
+   "lineas": [
+    "Los farolillos rojos se encienden de uno en uno a lo largo de la calle, como si el barrio entero hubiera decidido prender su propio cielo.",
+    "El Guía de Jusenkyo alza una linterna de papel: «Esta noche el vapor sube, queridos amigos. Cuando oigan el gong de la caldera, ya saben que algo se está cociendo.»",
+    "Al fondo, una chimenea enorme respira nubes blancas sobre una Casa de Baños."
+   ]
+  },
+  {
+   "id": "nuevo",
+   "titulo": "¡Nuevo amanecer!",
+   "minuto": 112,
+   "escena": "03-nuevo-amanecer",
+   "guia": "guia-amanecer",
+   "lineas": [
+    "La luz del sol vuelve a las tejas mojadas. Hay cubos tirados, una manguera enrollada en una farola y un arco iris pequeño en el chorro del último grifo.",
+    "El Guía de Jusenkyo, con ojeras de cuatro días, saluda con una mano: «Y así termina la jornada. Recuerden: el agua caliente es amiga… hasta que se acaba.»",
+    "Algo cae desde un tejado: un cubo. «¡Oiga!»"
+   ]
+  }
+ ],
+ "reloj": [
+  {
+   "minutos": "00–05",
+   "titulo": "AMANECER EN NERIMA: presentación por el Guía de Jusenkyo",
+   "texto": "Cortinilla de amanecer con el termo y el aviso de que «el agua fría es amiga»."
+  },
+  {
+   "minutos": "05–15",
+   "titulo": "MONTAJE MATINAL",
+   "texto": "Deseos, presentación de los PJ y primera bomba de agua del Cisne Hidráulico."
+  },
+  {
+   "minutos": "15–45",
+   "titulo": "ACTO I · MAÑANA MOVIDA",
+   "texto": "Dos o tres retos por las calles, primer contacto con las Tablillas, Carteles de Madera."
+  },
+  {
+   "minutos": "45–48",
+   "titulo": "CORTINILLA DE MEDIODÍA",
+   "texto": "Pausa con el Guía de Jusenkyo comiendo fideos."
+  },
+  {
+   "minutos": "48–85",
+   "titulo": "ACTO II · TARDE DE MANGUERAS Y CALORES",
+   "texto": "Retos flotantes cruzados, aumento del Desbarajuste y pistas sobre la Casa de Baños."
+  },
+  {
+   "minutos": "85–88",
+   "titulo": "CORTINILLA DE NOCHE",
+   "texto": "Se encienden los farolillos rojos del barrio."
+  },
+  {
+   "minutos": "88–112",
+   "titulo": "ACTO III · EL CLÍMAX EN LA CASA DE BAÑOS",
+   "texto": "Infiltración, vapor, tuberías cruzadas, ¡PELEA! y el juicio de las maldiciones."
+  },
+  {
+   "minutos": "112–120",
+   "titulo": "NUEVO AMANECER Y CRÉDITOS",
+   "texto": "Epílogos individuales y último gag acuático de cierre."
+  }
+ ],
+ "rivales": [
+  {
+   "clave": "pandilla",
+   "nombre": "La Pandilla del Cisne",
+   "papel": "Matones del Dojo del Cisne Hidráulico",
+   "dignidad": 6,
+   "barras": 1,
+   "rondas": 1,
+   "tipo": "rival",
+   "descripcion": "Tres discípulos en monopatín con globos de agua y cubos de hielo. Se mueven en grupo y comparten un solo marcador. Los envía Hidetoshi a empapar a quien pueda.",
+   "tecnica": "¡Tormenta de Globos!",
+   "secreto": "Les da pánico su capitán: «¡Vuestro capitán no sabe nadar!»",
+   "frase": "¡Por el Cisne Hidráulico!"
+  },
+  {
+   "clave": "mariko",
+   "nombre": "Mariko",
+   "papel": "Reina de la sección de congelados",
+   "dignidad": 6,
+   "barras": 1,
+   "rondas": 1,
+   "tipo": "rival",
+   "descripcion": "Campeona de patinaje entre neveras. Lleva la Tablilla nº 2 clavada en una merluza congelada. Tiene +1d6 en el supermercado.",
+   "tecnica": "¡Torpedo de Merluza Congelada!",
+   "secreto": "Se rinde ante un helado de judía roja.",
+   "frase": "¡Aquí mando yo, entre la mantequilla y el pescado!"
+  },
+  {
+   "clave": "hidetoshi",
+   "nombre": "Capitán Hidetoshi",
+   "papel": "Capitán del Dojo del Cisne Hidráulico",
+   "dignidad": 8,
+   "barras": 2,
+   "rondas": 2,
+   "tipo": "jefe",
+   "descripcion": "Alto, pomposo y vanidoso, con la sonrisa más blanca de Nerima. Lleva un cañón de agua a presión (+1d6) y sueña con una piscina olímpica donde ahora hay un gimnasio. En la segunda barra pierde el cañón y empieza con Furia 2.",
+   "tecnica": "¡Torrente Olímpico!",
+   "secreto": "No sabe nadar: lleva manguitos hinchables bajo la chaqueta.",
+   "frase": "¡Un estilo libre digno de mi apellido!"
+  }
+ ],
+ "finales": [
+  {
+   "id": "A",
+   "nombre": "Victoria limpia",
+   "texto": "Aceptan sus errores y sus maldiciones, derrotan al Cisne Hidráulico por cooperación y descubren que el Barril Imperial contenía fideos gigantes."
+  },
+  {
+   "id": "B",
+   "nombre": "Victoria técnica",
+   "texto": "Aseguran las tablillas mediante trampas administrativas, conservando el dojo pero ganando la fama de ser un zoológico ambulante."
+  },
+  {
+   "id": "C",
+   "nombre": "Se les va de las manos",
+   "texto": "La caldera explota y manda todo el edificio volando hacia el estanque del instituto vecino."
+  },
+  {
+   "id": "D",
+   "nombre": "Conservar la maldición",
+   "texto": "Algunos personajes deciden que prefieren seguir siendo animales porque Nerima es más divertida así."
+  }
+ ],
+ "cameos": [
+  {
+   "clave": "parejas",
+   "nombre": "La pareja del canal",
+   "paso1": "Una chica de coleta trenzada y una de pelo corto discuten a gritos en un puente, a pocos metros.",
+   "paso2": "Ella da un empujón y los dos acaban en el canal: el chorro salpica a quien esté cerca.",
+   "paso3": "Salen a la orilla discutiendo; nadie les pregunta qué pasó."
+  },
+  {
+   "clave": "viajero",
+   "nombre": "El viajero despistado",
+   "paso1": "Un chico con una mochila enorme estudia un mapa… al revés, delante de una farola.",
+   "paso2": "Un chorro de manguera lo moja y un cerdito negro se escurre del abrigo hacia los personajes.",
+   "paso3": "El chico recoge al cerdito y se va por donde ha venido, convencido de que va bien."
+  },
+  {
+   "clave": "panda",
+   "nombre": "El oso de la bañera",
+   "paso1": "Un oso panda gigante lee el periódico en un banco, con una taza de té y un cartel que no se puede leer.",
+   "paso2": "Alguien le tira un cubo de agua: gruñe, enseña un cartel («¡PERDÓN!») y se levanta.",
+   "paso3": "Se va con el periódico en la cabeza, sin mirar atrás."
+  },
+  {
+   "clave": "poeta",
+   "nombre": "El poeta del bokken",
+   "paso1": "Un chico con hakama y espada de madera recita versos a una farola.",
+   "paso2": "Se vuelve hacia los personajes, les reta a un duelo de poesía y se cae en un cubo.",
+   "paso3": "Se aleja saludando a un banco del parque como si fuera su rival."
+  },
+  {
+   "clave": "repartidora",
+   "nombre": "La repartidora de ramen",
+   "paso1": "Una chica de pelo violeta pasa en bicicleta con una torre de cuencos humeantes.",
+   "paso2": "Pega un frenazo frente a los personajes, los salpica de caldo caliente (Hervir gratis a un Mojado) y se disculpa a medias.",
+   "paso3": "Se pierde entre las calles: «¡Pedido urgente!»"
+  }
+ ],
+ "vias": [
+  {
+   "titulo": "Planos del sento",
+   "quien": "Daiki o Yumi",
+   "texto": "Revisan las conducciones del barrio y descubren que la caldera principal tiene una válvula auxiliar secreta."
+  },
+  {
+   "titulo": "Vigilancia",
+   "quien": "cualquiera",
+   "texto": "Observan a los discípulos de Hidetoshi entrenando con cubos de agua helada en el callejón trasero. Oyen: «¡Que nadie le quite los manguitos al capitán!»"
+  },
+  {
+   "titulo": "Chismorreo",
+   "quien": "Mako o Kenji",
+   "texto": "La señora Sawa cuenta que el Maestro Yuzuki dejó la llave maestra dentro del casillero de la Casa de Baños y que tomará allí su último baño a las diez."
+  }
+ ],
+ "desbarajuste": [
+  "Calma chicha: solo cubos de vecinos con buena intención.",
+  "Los vecinos calientan motores: mangueras en mano.",
+  "Tiempo de remojo: cada reto trae su chorro; un éxito aparatoso salpica.",
+  "Se desbloquean los retos de gran escala (R13–R16) y el barrio se queda sin agua caliente.",
+  "Las mangueras se escapan solas: con un fiasco también hay ¡CHAPUZÓN!.",
+  "Nerima entera está empapada: gastar una carga de Termo cuesta una complicación.",
+  "¡Inundación! Si de noche no se calma, amenaza el Final C."
+ ],
+ "vapor": [
+  "Aire tibio: Carteles de 4 palabras.",
+  "Aire tibio: Carteles de 4 palabras.",
+  "Niebla: Carteles de 3 palabras; las distancias engañan.",
+  "Niebla: Carteles de 3 palabras; las distancias engañan.",
+  "Calor espeso: Carteles de 2 palabras; tuberías cruzadas.",
+  "Calor espeso: Carteles de 2 palabras; tuberías cruzadas.",
+  "¡La caldera explota! Carteles de 1 palabra. Final C."
+ ],
+ "capitulos": [
+  {
+   "n": 1,
+   "titulo": "La premisa: un dojo, un frasco y un día de mucha agua",
+   "corto": "Premisa",
+   "html": "<h2>Lo que ocurrió esta semana (solo dirección)</h2>\n<p>El ruinoso <strong>Gimnasio Multiusos «El Bambú Torcido»</strong>, en el barrio de Nerima, está a punto de cerrar. Los cuatro personajes jugadores son alumnos y vecinos de este dojo de segunda fila que apenas sobrevive entre una tintorería, una casa de comidas y una tienda de patines.</p>\n<p>Durante la limpieza general de la semana pasada abrieron un viejo frasco de <strong>«Sales de Baño Minerales Chinas»</strong>, comprado por error en un mercadillo. Las sales eran barro deshidratado de las <strong>pozas malditas de Jusenkyo</strong>. Desde entonces, cada vez que alguno se moja con <strong>agua fría</strong> se transforma, de forma humillante, en un animal; y recupera su forma humana solo al entrar en contacto con <strong>agua caliente</strong>.</p>\n<p>Para colmo, hoy es el <strong>Día del Gran Remojo de Verano (<em>Uchimizu</em>)</strong>: todo Nerima sale a la calle con mangueras, cubos y bolsas de hielo para refrescar el asfalto, es decir, para empapar a cualquiera que pase. Y el anciano y cegato <strong>Maestro Yuzuki</strong>, propietario del terreno, ha anunciado que hoy se jubila. Entregará la <strong>Escritura del Gimnasio</strong> —y el legendario <strong>Barril Imperial de Agua Termal de Jusenkyo</strong>, que según el rumor cura las maldiciones— a quien reúna, antes de la medianoche, las <strong>Tres Tablillas de Madera del Barrio</strong> en una carrera marcial libre.</p>\n<p>Su archirrival, el pedante <strong>Capitán Hidetoshi</strong>, del <strong>Dojo del Cisne Hidráulico</strong>, está decidido a ganar las tablillas para demoler el gimnasio y construir una piscina climatizada olímpica.</p>\n<h2>Lo que saben los jugadores al abrir la partida</h2>\n<ul>\n<li>Se llaman como su ficha y conocen su propia maldición, su lema y su Talento Marcial. <strong>Nadie sabe todavía lo de los demás secretos</strong>: cada ficha tiene un secreto vergonzoso que solo ve su jugador y la dirección.</li>\n<li>Saben que hoy hay <em>Uchimizu</em>, que el Maestro Yuzuki se jubila y que habla de «tres tablillas». No saben dónde están.</li>\n<li>Saben que el Capitán Hidetoshi quiere el terreno y que sus discípulos llevan semanas entrenando con cubos de agua helada.</li>\n</ul>\n<h2>Lo que no saben (todavía)</h2>\n<ul>\n<li><strong>El Barril Imperial no cura nada.</strong> Contiene fideos gigantes. El Maestro lo olvidó hace veinte años; él mismo lo cree sagrado. (Final A.)</li>\n<li><strong>La caldera de «El Vapor Feliz» tiene una válvula auxiliar secreta</strong> y el Maestro dejó la llave maestra dentro de un casillero de la casa de baños.</li>\n<li><strong>Hidetoshi no sabe nadar.</strong> Lleva manguitos hinchables bajo la chaqueta.</li>\n<li><strong>La Tablilla nº 1 ya se perdió</strong>, y Yumi lo sabe. Ha metido una tetera vieja en la caja lacada para disimular.</li>\n</ul>\n<h2>El tono</h2>\n<p>Es una <strong>comedia de enredos acuáticos</strong> en la que la vergüenza y las transformaciones son el motor de la risa. Piensa en un dibujo animado de sobremesa de 1990: física elástica, gotas de sudor del tamaño de un puño, golpes que mandan a alguien volando hasta convertirse en una estrellita, y nadie, jamás, sale herido de verdad.</p>\n<blockquote>\n<p><strong>Regla de oro del humor.</strong> Prioriza siempre el ridículo y la física elástica antes que el daño numérico o realista. Se empapa, se chamusca, se despeina, se vuela por los aires; no se hiere.</p>\n</blockquote>\n<p>La partida es una <strong>partida <em>one-shot</em> para 2 a 4 participantes y dirección</strong>, de <strong>120 minutos</strong>, para mesa adulta o juvenil. Incluye humor de bofetada y situaciones vergonzosas: si alguien se incomoda, pulsad <strong>Pausa</strong> (hay herramientas de seguridad en la barra de Foundry) y cambiad de gag sin dar explicaciones.</p>\n<h2>Cómo se organiza el libro</h2>\n<p>El manual sigue un día entero de Nerima, minuto a minuto. Los capítulos 2 a 4 contienen las reglas; el 5, las cuatro fichas; del 6 al 11 la aventura (acto por acto, con un banco de retos flotantes); y el 12, una chuleta de una página para tener delante mientras se dirige. En Foundry todo lo anterior vive en el <strong>Panel de dirección</strong>.</p>"
+  },
+  {
+   "n": 2,
+   "titulo": "Las reglas de Jusenkyo: ¡PAM! 2.0",
+   "corto": "Reglas",
+   "html": "<h2>Cuándo tirar los dados</h2>\n<p>Tira <strong>únicamente</strong> cuando haya una incertidumbre dramática o cómica interesante. <strong>No se tira</strong> para saludar a un vecino, caminar por la calle, coger un objeto caído o decir un chiste. La incertidumbre aparece al esquivar un chorro de agua fría, disputar una tablilla, realizar una acrobacia imposible, negociar con rivales o trastear con una caldera.</p>\n<h2>La reserva de dados</h2>\n<ul>\n<li><strong>Por defecto:</strong> tira <code>2d6</code>.</li>\n<li><strong>Talento:</strong> si tu <strong>Talento Marcial</strong> (en forma Seca) o tu <strong>Talento de Bestia</strong> (en forma Mojada) ayuda activamente, añade <code>+1d6</code>.</li>\n<li><strong>Ayuda complicada:</strong> si otro personaje colabora de forma arriesgada y expone su propio pellejo (o su identidad), añade <code>+1d6</code> por cada uno.</li>\n<li><strong>Límite:</strong> máximo <code>4d6</code>. <strong>Suma únicamente los dos valores más altos</strong> y descarta el resto.</li>\n</ul>\n<h2>Tabla de resultados</h2>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Suma de los dos mejores</th>\n<th style=\"text-align: left;\">Resultado</th>\n<th style=\"text-align: left;\">Instrucción para la dirección</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>2 – 5</strong></td>\n<td style=\"text-align: left;\"><strong>Fiasco útil</strong></td>\n<td style=\"text-align: left;\">La acción falla estrepitosamente o se desvía. Ofrece de inmediato otra posibilidad cómica y un lío visible. Nunca un callejón sin salida.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>6 – 8</strong></td>\n<td style=\"text-align: left;\"><strong>Éxito aparatoso</strong></td>\n<td style=\"text-align: left;\">El objetivo se logra, pero con un coste cómico, una consecuencia secundaria… o un <strong>¡CHAPUZÓN!</strong> accidental con agua fría.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>9 – 11</strong></td>\n<td style=\"text-align: left;\"><strong>Éxito brillante</strong></td>\n<td style=\"text-align: left;\">Lo logras sin precio relevante; añade una descripción marcial memorable y exagerada, al estilo del anime de los 80.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>12</strong></td>\n<td style=\"text-align: left;\"><strong>Éxito descomunal</strong></td>\n<td style=\"text-align: left;\">Además de lograrlo con soberbia, el jugador elige un beneficio extraordinario, vistoso y temporal en el escenario.</td>\n</tr>\n</tbody>\n</table>\n<h3>La regla del Caos de Nerima (dobles)</h3>\n<p>Si en una tirada de éxito (6 o más) <strong>los dos dados que cuentan muestran el mismo número</strong>, se desata un <strong>gag ambiental secundario</strong>: un vecino asoma con una manguera, un transeúnte resbala, un bulto inesperado sale disparado. Lo decide la dirección y no resta nada al éxito.</p>\n<h2>Los dos marcadores del día</h2>\n<ul>\n<li><strong>Desbarajuste Acuático (0–6):</strong> cuánto se ha desmadrado el <em>Uchimizu</em>. Sube con cada desastre realmente nuevo (un fiasco gordo, una manguera que se escapa) y baja un punto si se dedica una escena a recoger y calmar. Sus efectos están en la tabla del capítulo 12.</li>\n<li><strong>Vapor Nocturno (0–6):</strong> solo se usa en el Acto III, en la casa de baños. Es el aliento caliente de la caldera: cuanto más sube, menos caben las palabras en los Carteles de Madera (capítulo 3) y más cerca está el Final C.</li>\n</ul>\n<p>Un tercer recurso, el <strong>Termo Portátil</strong> (3 cargas), sirve para volver a ser humano sin buscar una tetera. Lo explica el capítulo siguiente.</p>\n<h2>Seguridad en la mesa</h2>\n<p>Esta es una partida de humillaciones cómicas. Antes de empezar, pregunta si hay algún gag que prefiráis evitar (por ejemplo, desnudeces, burlas por el aspecto físico o humillación insistente) y usad las <strong>líneas, velos y Pausa</strong> de la barra de seguridad. Los secretos de las fichas son ficción del personaje: nadie tiene que confesar nada real.</p>"
+  },
+  {
+   "n": 3,
+   "titulo": "Doble forma: Seco y Mojado",
+   "corto": "Doble forma",
+   "html": "<p>La maldición de Jusenkyo no es un simple castigo de estadísticas: cambia por completo <strong>las herramientas y los problemas</strong> del personaje.</p>\n<h2>1. Estado SECO (forma humana)</h2>\n<ul>\n<li><strong>Ventajas:</strong> puedes hablar con normalidad, usar herramientas, armas y objetos cotidianos, negociar con los vecinos de Nerima y aplicar tu <strong>Talento Marcial</strong>.</li>\n<li><strong>Riesgos:</strong> eres blanco directo de los desafíos formales del Dojo del Cisne Hidráulico, las deudas de honor y las vergüenzas públicas con tu nombre real.</li>\n</ul>\n<h2>2. Estado MOJADO (forma maldita de Jusenkyo)</h2>\n<ul>\n<li><strong>Activación:</strong> ocurre al recibir un chorro de agua fría: como consecuencia de un <code>6-8</code>, de un <code>2-5</code>, de unos dobles con agua presente, de un golpe de ¡PELEA! o <strong>voluntariamente</strong> si el personaje se tira a un estanque. En Foundry, el botón <strong>¡CHAPUZÓN!</strong> de la ficha lo hace y cambia el retrato y la figura.</li>\n<li><strong>Ventajas:</strong></li>\n<li>Tu Talento de Bestia sustituye a tu Talento Marcial: da <code>+1d6</code> cuando ayuda.</li>\n<li>Obtienes además <code>+1d6</code> automático al <strong>huir, esquivar o colarte por un espacio diminuto</strong>.</li>\n<li>Nadie te reconoce como la persona que buscan.</li>\n<li><strong>Regla de los Carteles (restricción de mesa):</strong> mientras estés en forma maldita, <strong>el jugador NO puede hablar con frases normales</strong>. Solo puede gruñir, bufar o emitir ruidos de animal y comunicarse levantando <strong>Carteles de Madera de, como máximo, cuatro palabras</strong>, que escribe a pincel en el aire: <em>«[Cartel]: ¡Tira del cable, idiota!»</em>. En Foundry, el botón <strong>Cartel</strong> de la ficha pone el rótulo en el chat. El <strong>Vapor</strong> de la noche se come las palabras (de cuatro a una).</li>\n<li><strong>Defecto cómico:</strong> cada forma maldita trae una compulsión (ficha del capítulo 5). Cuando la dirección la activa, el jugador debe obedecerla o aceptar un fiasco.</li>\n</ul>\n<h2>3. La Regla del Hervidor (agua caliente)</h2>\n<p>Volver a la forma humana exige <strong>gastar una acción de escena</strong> interactuando con una <strong>fuente de calor</strong>: el caldo de un puesto de ramen, una tetera hirviendo, la caldera de un baño o una carga del <strong>Termo Portátil</strong> del grupo.</p>\n<ul>\n<li><strong>Termo Portátil:</strong> el grupo empieza con <strong>3 cargas</strong>. Cada carga devuelve a un personaje a su forma humana. Se rellena en cualquier fuente de calor grande (ramen, caldera) y un <strong>¡PERFECTO!</strong> en una ¡PELEA! regala una carga.</li>\n<li><strong>Chapuzón ajeno:</strong> un personaje puede empapar a otro <strong>sin tirada</strong> si ese otro está distraído, pero será <strong>Ayuda complicada</strong> si quiere hacerlo en plena acción.</li>\n<li><strong>Nadie queda fuera de escena.</strong> Un personaje Mojado nunca está «fuera de juego»: cambia sus herramientas, no su peso en la mesa. Si el cartel se queda corto, la dirección interpreta lo que quiere decir el animal.</li>\n</ul>\n<h2>Resumen rápido</h2>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\"></th>\n<th style=\"text-align: left;\">SECO</th>\n<th style=\"text-align: left;\">MOJADO</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\">Habla</td>\n<td style=\"text-align: left;\">Con normalidad</td>\n<td style=\"text-align: left;\">Solo ruidos y Carteles (4 palabras)</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Talento</td>\n<td style=\"text-align: left;\">Marcial <code>+1d6</code></td>\n<td style=\"text-align: left;\">Bestia <code>+1d6</code> y <code>+1d6</code> al huir, esquivar o colarse</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Identidad</td>\n<td style=\"text-align: left;\">Te reconocen</td>\n<td style=\"text-align: left;\">Nadie te reconoce</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Para cambiar</td>\n<td style=\"text-align: left;\">Agua fría (¡CHAPUZÓN!)</td>\n<td style=\"text-align: left;\">Agua caliente (Termo, ramen, tetera, caldera)</td>\n</tr>\n</tbody>\n</table>"
+  },
+  {
+   "n": 4,
+   "titulo": "¡PELEA! Combate de barrio",
+   "corto": "¡PELEA!",
+   "html": "<p>Las peleas de Nerima no se resuelven con un «ataco / daño / vuelves a tirar» y ya. Se parecen más a una <strong>máquina recreativa de lucha de 1992</strong>: dos nombres arriba, dos barras de vida, un cronómetro, un grito de «¡RONDA 1!» y un cartel de <strong>¡K.O.!</strong> cuando alguien sale volando. Esta es la regla para esas escenas. Se puede usar en cualquier duelo, desde una pandilla de matones hasta el Capitán Hidetoshi, y funciona igual con <strong>1 contra 1</strong> o por <strong>equipos</strong> (<em>tag</em>, de 2 a 4 luchadores).</p>\n<blockquote>\n<p><strong>Cuándo usarla.</strong> Cuando un combate importe de verdad o sea demasiado bueno para despacharlo con una tirada. Para una refriega normal basta con ¡PAM!; para un <strong>Duelo de barrio</strong> se saca la máquina. En Foundry hay un botón de <strong>¡Pelea!</strong> en el Panel de dirección que monta los marcadores arriba del tablero.</p>\n</blockquote>\n<h2>Lo esencial en seis líneas</h2>\n<ol>\n<li>Cada luchador tiene una barra de <strong>Dignidad</strong> (el orgullo, no la salud).</li>\n<li>En cada <strong>Cruce</strong> los dos bandos eligen <strong>a la vez y en secreto</strong> una postura: <strong>Golpe</strong>, <strong>Presa</strong> o <strong>Parada</strong>.</li>\n<li><strong>Golpe gana a Presa, Presa gana a Parada, Parada gana a Golpe.</strong> Quien gana el triángulo es el <strong>Dominante</strong> y tira ¡PAM!</li>\n<li>El resultado dice cuánta Dignidad pierde el otro. Cada golpe llena la barra de <strong>Furia</strong>; con tres puntos se puede lanzar una <strong>Técnica Secreta</strong> a gritos.</li>\n<li>Quien llega a cero Dignidad hace <strong>¡K.O.!</strong> y sale volando. Se juega a una ronda (gente menor) o a <strong>mejor de tres</strong> (jefes).</li>\n<li>Si en el Cruce sale agua fría, hay <strong>¡CHAPUZÓN!</strong>; si se vence sin recibir ni un golpe, hay <strong>¡PERFECTO!</strong>.</li>\n</ol>\n<h2>La barra de Dignidad</h2>\n<p>La Dignidad es <strong>orgullo, no carne</strong>. Quien la pierde no queda herido: queda empapado, despeinado, chamuscado, con la ropa a jirones o con la reputación por los suelos.</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Luchador</th>\n<th style=\"text-align: left;\">Dignidad</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\">Personaje jugador</td>\n<td style=\"text-align: left;\"><strong>8</strong></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Pandilla de matones (hasta 3 en un solo marcador)</td>\n<td style=\"text-align: left;\">6</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Rival de calle</td>\n<td style=\"text-align: left;\">6</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\">Jefe</td>\n<td style=\"text-align: left;\">8 por barra; <strong>2 barras</strong> (16)</td>\n</tr>\n</tbody>\n</table>\n<p>Una barra se divide en <strong>tres colores</strong>: verde (más de la mitad), amarilla (la mitad o menos) y <strong>roja</strong> (un cuarto o menos). <strong>Al entrar en rojo ganas 1 de Furia gratis</strong>: el orgullo herido saca fuerzas.</p>\n<h2>El Cruce (un intercambio de golpes)</h2>\n<p>Cada ronda dura <strong>6 Cruces</strong> como máximo (el cronómetro de la máquina). En cada Cruce:</p>\n<p><strong>1. Elegid postura, en secreto y a la vez.</strong> En Foundry, con tres botones de colores; en mesa, con la mano (un puño = Golpe, dos dedos = Presa, la palma abierta = Parada) revelada a la de «¡ya!».</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Postura</th>\n<th style=\"text-align: left;\">Qué es</th>\n<th style=\"text-align: left;\">Gana a</th>\n<th style=\"text-align: left;\">Pierde contra</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>GOLPE</strong></td>\n<td style=\"text-align: left;\">Puñetazo, patada, cucharonazo, planchazo: cualquier ataque</td>\n<td style=\"text-align: left;\">Presa</td>\n<td style=\"text-align: left;\">Parada</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>PRESA</strong></td>\n<td style=\"text-align: left;\">Agarrar, lanzar, empapar, arrastrar</td>\n<td style=\"text-align: left;\">Parada</td>\n<td style=\"text-align: left;\">Golpe</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>PARADA</strong></td>\n<td style=\"text-align: left;\">Bloquear, esquivar, huir, tapar con un cartel</td>\n<td style=\"text-align: left;\">Golpe</td>\n<td style=\"text-align: left;\">Presa</td>\n</tr>\n</tbody>\n</table>\n<p><strong>2. Revelad.</strong> Quien gane el triángulo es el <strong>Dominante</strong>. Si coinciden (<strong>Choque</strong>), los dos tiran y pega quien saque más.</p>\n<p><strong>3. El Dominante tira ¡PAM!</strong> <code>2d6</code>, con <code>+1d6</code> si su <strong>talento</strong> de la forma actual (Marcial o Bestia) encaja con lo que cuenta, <code>+1d6</code> por <strong>Entorno</strong> (usar algo de la escena: un cubo, una manguera, un rollo de papel de baño…) y <code>+1d6</code> por cada <strong>Asistencia</strong> (ver <em>Equipos</em>). Máximo <code>4d6</code>; cuentan los dos mejores.</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Resultado</th>\n<th style=\"text-align: left;\">Dignidad que pierde el rival</th>\n<th style=\"text-align: left;\">Extra</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>Fiasco útil</strong> (2–5)</td>\n<td style=\"text-align: left;\"><strong>1</strong></td>\n<td style=\"text-align: left;\">El golpe roza y el Dominante se tropieza: narra el gag.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Éxito aparatoso</strong> (6–8)</td>\n<td style=\"text-align: left;\"><strong>2</strong></td>\n<td style=\"text-align: left;\"><strong>¡CHAPUZÓN!</strong> para quien decida la dirección (el golpe salpica).</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Éxito brillante</strong> (9–11)</td>\n<td style=\"text-align: left;\"><strong>3</strong></td>\n<td style=\"text-align: left;\">Se narra un golpe memorable.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>Éxito descomunal</strong> (12)</td>\n<td style=\"text-align: left;\"><strong>4</strong></td>\n<td style=\"text-align: left;\">Llena de golpe la barra de Furia.</td>\n</tr>\n</tbody>\n</table>\n<p><strong>Choque.</strong> Los dos tiran; pega el de suma más alta con el daño de su resultado <strong>menos 1</strong> (mínimo 1). Si empatan: <strong>¡doble impacto cómico!</strong> y los dos pierden 1.</p>\n<p><strong>4. Narrad.</strong> Una frase por Cruce basta, y quien golpea <strong>pone nombre al golpe</strong> («¡Plancha Vertical!»). El nombre es lo que hace reír; el número solo lo apunta.</p>\n<h2>Furia y Técnica Secreta</h2>\n<ul>\n<li><strong>Furia</strong> (0 a 3). El Dominante que acierta gana <strong>+1</strong>; quien recibe el golpe gana <strong>+1</strong> también (rabia). Entrar en rojo da otro +1. Un descomunal la llena.</li>\n<li><strong>Técnica Secreta</strong> (cuesta los <strong>3 puntos</strong>). En lugar de elegir postura, el jugador <strong>grita el nombre de una técnica inventada</strong>, vinculada a su oficio («¡Kempo de la Plancha Voladora!», «¡Tsunami del Wok Hirviente!»). Es <strong>Dominante automático</strong> (rompe cualquier Parada), tira con <code>+1d6</code> y <strong>hace +1 de daño</strong> (mínimo 2). Si el rival también lanza una Técnica, hay Choque. El nombre se muestra en grande en pantalla: <strong>es obligatorio decirlo en voz alta</strong>.</li>\n</ul>\n<h2>Provocación (una por ronda y luchador)</h2>\n<p>Antes de elegir postura, un luchador puede <strong>provocar</strong>: suelta una pulla sobre el <strong>defecto cómico o el secreto</strong> del rival, a la cara y en voz alta. Si hace gracia a la mesa (lo decide la dirección, que siempre acierta), el rival <strong>pierde los papeles: este Cruce no puede elegir Parada</strong>. Es el arma de los listos: con quien no puede parar, un Golpe nunca pierde.</p>\n<h2>Chapuzón y agua caliente en plena pelea</h2>\n<ul>\n<li><strong>¡CHAPUZÓN!</strong> (un éxito aparatoso, un fiasco con agua o una manguera que se desvía): el luchador pasa a forma <strong>Mojada</strong>. Su barra y su Dignidad <strong>no cambian</strong>; cambian su retrato, su talento (ahora el de Bestia) y su voz: en plena pelea <strong>solo puede gruñir y levantar Carteles</strong>, y los Carteles valen como <strong>Provocación gratis</strong>.</li>\n<li><strong>Hervir</strong> (volver a la forma humana): ocupa el Cruce entero. El luchador no elige postura: cuenta como <strong>Parada</strong> y gasta una carga del Termo (o una fuente de calor de la escena).</li>\n</ul>\n<h2>Equipos (tag): asistir y relevar</h2>\n<p>Un bando puede tener de 1 a 4 luchadores. <strong>Solo uno está activo</strong>; los demás esperan en el banquillo.</p>\n<ul>\n<li><strong>Asistencia.</strong> Un compañero del banquillo puede ayudar al activo con <code>+1d6</code> (como la ayuda complicada de ¡PAM!). El precio: si el bando <strong>pierde el Cruce o saca un fiasco</strong>, cada ayudante pierde <strong>1 de Dignidad</strong>.</li>\n<li><strong>Relevo.</strong> Al final de un Cruce, un compañero puede <strong>relevar</strong> al activo (una vez por Cruce, no dos seguidas). El que entra gana <code>+1d6</code> en su primer Cruce («¡entrada espectacular!»).</li>\n<li><strong>Descanso.</strong> Quien está en el banquillo <strong>recupera 1 de Dignidad por Cruce</strong> (nunca por encima de su barra).</li>\n<li>Si el activo cae, <strong>entra el siguiente</strong>. La ronda se pierde cuando <strong>todos</strong> los luchadores del bando están a cero.</li>\n</ul>\n<h2>K.O., Perfecto y Tiempo</h2>\n<ul>\n<li><strong>¡K.O.!</strong> Gana la ronda quien deja a cero a todo un bando. <strong>Quien cae decide cómo sale volando</strong> (a una estrellita, a una piscina, a lo alto de un poste) y quien gana pone su <strong>pose de victoria</strong>.</li>\n<li><strong>¡PERFECTO!</strong> Si el ganador no ha perdido ni 1 de Dignidad en la ronda, el grupo gana <strong>una carga de Termo</strong>.</li>\n<li><strong>¡TIEMPO!</strong> Si se agotan los 6 Cruces, gana quien conserve <strong>más porcentaje</strong> de Dignidad. Si empatan, <strong>doble K.O. cómico</strong> y se repite la ronda.</li>\n<li><strong>Rondas.</strong> Gente menor, <strong>una ronda</strong>. Jefes, <strong>mejor de tres</strong> (gana quien gane dos rondas). Entre rondas se restablece la Dignidad; <strong>la Furia se conserva</strong>.</li>\n</ul>\n<h2>Contendientes de Nerima</h2>\n<p><strong>La Pandilla del Cisne</strong> (3 matones en un solo marcador). Dignidad 6, una ronda. Cubos de hielo y globos de agua. <em>Se les puede provocar con su director: «¡Vuestro capitán no sabe nadar!»</em> No eligen Parada si les gritan «¡cobardes!».\n<strong>Mariko, reina de los congelados.</strong> Dignidad 6, una ronda. Se desliza por el suelo helado: <strong>gana +1d6 si el escenario es el supermercado</strong>. Defecto: no resiste un helado de judía roja (sobornable). Técnica: <em>¡Torpedo de Merluza Congelada!</em>\n<strong>Capitán Hidetoshi, Dojo del Cisne Hidráulico.</strong> Dignidad 8 × 2 barras, mejor de tres. Tira con <code>+1d6</code> si lleva puesto el cañón de agua. <strong>Técnica Secreta:</strong> <em>«¡Torrente Olímpico!»</em>. En la segunda barra pierde el cañón y <em>sube</em> a Furia 2 («¡Ahora vais a ver mi verdadero estilo libre!»). <strong>Secreto:</strong> no sabe nadar; si lo empapan sin manguitos, queda <strong>Mojado</strong>… como pato de goma, y pierde el cañón. Provocarlo con eso <strong>no puede fallar</strong>.</p>\n<h2>Hoja de una página</h2>\n<blockquote>\n<p><strong>Antes de empezar:</strong> elegid contendientes, rondas (1 o 3) y cronómetro (6 Cruces).\n<strong>En cada Cruce:</strong> 1) ¿Provoca alguien? 2) Elegid postura a la vez. 3) Revelad: Golpe &gt; Presa &gt; Parada &gt; Golpe. 4) El Dominante tira ¡PAM! (+Entorno, +Asistencias, +Talento). 5) Daño 1 / 2 + ¡CHAPUZÓN! / 3 / 4. 6) Furia +1 a los dos. 7) Narrad.\n<strong>Con 3 de Furia:</strong> Técnica Secreta (nombre a gritos, +1 de daño, rompe Parada).\n<strong>Fin de ronda:</strong> K.O. a cero, ¡TIEMPO! tras 6 Cruces. ¡PERFECTO! = +1 Termo.</p>\n</blockquote>\n<h2>Cómo se ve en Foundry</h2>\n<p>Arriba de la pantalla aparecen <strong>dos nombres, sus retratos, sus barras de vida, la Furia, el cronómetro y los marcadores de ronda</strong>, con cartel de <strong>«¡RONDA 1! ¡PELEA!»</strong> al empezar y <strong>«¡K.O.!»</strong> al terminar. Abajo, cada jugador ve su <strong>mando</strong>: tres botones de colores (Golpe, Presa, Parada), la casilla de Entorno, Provocar y, con Furia máxima, la Técnica Secreta. La dirección resuelve el Cruce con un botón y la tarjeta del chat cuenta lo que ha pasado. Todo cabe en un momento de mesa: <strong>un Duelo de barrio dura de 5 a 10 minutos</strong>.</p>"
+  },
+  {
+   "n": 5,
+   "titulo": "Cuatro humanos, cuatro maldiciones",
+   "corto": "Personajes",
+   "html": "<p>Cada jugador lleva a <strong>un humano y su maldición</strong>: un nombre, un lema que presume en público, un <strong>Talento Marcial</strong> (forma Seca), una <strong>fuente maldita</strong> que lo convierte en animal, un <strong>Talento de Bestia</strong> (forma Mojada), un <strong>defecto cómico</strong> y un <strong>secreto vergonzoso</strong> que solo conoce su jugador y la dirección. Las páginas siguientes traen las cuatro fichas completas; en Foundry cada una tiene retrato y figura en las dos formas.</p>\n<p><strong>Para repartirlos:</strong> que cada jugador elija por la imagen y el lema. Con dos jugadores, que cada uno lleve <strong>dos personajes</strong> (uno activo y otro de relevo para la ¡PELEA!, aunque jugando a ambos con cariño). Con tres, el cuarto lo lleva la dirección como secundario o queda de «alumno invitado».</p>\n<h2>Cómo se usan las fichas</h2>\n<ul>\n<li><strong>El lema</strong> se dice en voz alta la primera vez que el personaje entra en una escena importante.</li>\n<li><strong>El Talento Marcial</strong> es una <em>profesión normal convertida en arte milenario</em>: planchar, cocinar, caligrafiar o repartir. Basta con que encaje en lo que se hace para añadir <code>+1d6</code>.</li>\n<li><strong>El Talento de Bestia</strong> funciona igual en forma Mojada y se suma a la bonificación de huir, esquivar o colarse.</li>\n<li><strong>El defecto cómico</strong> de la forma animal lo activa la dirección <strong>una vez por escena</strong> como máximo. Si el jugador lo obedece con ganas, recibe un <code>+1d6</code> para su siguiente tirada; si se resiste, acepta un fiasco.</li>\n<li><strong>El secreto vergonzoso</strong> (en la sección «Solo para ti» de la ficha de Foundry) <strong>se confiesa solo si el jugador quiere</strong>: no hay castigo por callarlo. Pero el Final A lo premia.</li>\n</ul>\n<h2>Crea tu propio maldito (opcional)</h2>\n<p>Para una segunda partida o un grupo mayor, un personaje nuevo se hace en cinco pasos:</p>\n<ol>\n<li><strong>Oficio normal</strong> que será el arte milenario (cartero, peluquero, taxista, estudiante de recuperación…).</li>\n<li><strong>Nombre, apodo y lema</strong> en forma de «¡Ni una…, ni una…!».</li>\n<li><strong>Fuente maldita:</strong> «Fuente de la/el ___ Ahogado/a». Elige un animal con rasgos que choquen con el oficio.</li>\n<li><strong>Talento de Bestia:</strong> tres verbos físicos del animal.</li>\n<li><strong>Defecto cómico y secreto vergonzoso:</strong> el primero visible, el segundo escondido.</li>\n</ol>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">d6</th>\n<th style=\"text-align: left;\">Fuente maldita (ejemplos)</th>\n<th style=\"text-align: left;\">Defecto cómico</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">1</td>\n<td style=\"text-align: left;\">Pingüino Emperador Ahogado</td>\n<td style=\"text-align: left;\">Se desliza sobre cualquier superficie y no puede frenar</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2</td>\n<td style=\"text-align: left;\">Gallina de Corral Ahogada</td>\n<td style=\"text-align: left;\">Pone un huevo cuando se asusta (y quiere esconderlo)</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">3</td>\n<td style=\"text-align: left;\">Rana Toro Ahogada</td>\n<td style=\"text-align: left;\">Se le sale la lengua ante cualquier mosca</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4</td>\n<td style=\"text-align: left;\">Gato Ahogado</td>\n<td style=\"text-align: left;\">No puede ignorar un cordel, una luz o una caja</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">5</td>\n<td style=\"text-align: left;\">Cocodrilo Enano Ahogado</td>\n<td style=\"text-align: left;\">Los vecinos lo toman por un bolso</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">6</td>\n<td style=\"text-align: left;\">Pulpo Ahogado</td>\n<td style=\"text-align: left;\">Se pega a las paredes, siempre en el peor momento</td>\n</tr>\n</tbody>\n</table>"
+  },
+  {
+   "n": 6,
+   "titulo": "Un día entero en 120 minutos",
+   "corto": "Reloj",
+   "html": "<p>La partida cabe en <strong>120 minutos de mesa</strong>, que son <strong>un día entero de Nerima</strong>, de un amanecer al siguiente. Cada tramo tiene su cortinilla, su función y su duración. En Foundry, el <strong>Panel de dirección</strong> lleva un reloj real con aviso de cortinilla y la <strong>cartela</strong> flotante (hora del día, Desbarajuste y, de noche, Vapor).</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Minuto</th>\n<th style=\"text-align: left;\">Momento</th>\n<th style=\"text-align: left;\">Qué ocurre</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>00 – 05</strong></td>\n<td style=\"text-align: left;\"><strong>Amanecer en Nerima</strong></td>\n<td style=\"text-align: left;\">Presentación televisiva por el <em>Guía de Jusenkyo</em>.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>05 – 15</strong></td>\n<td style=\"text-align: left;\"><strong>Montaje matinal</strong></td>\n<td style=\"text-align: left;\">Deseos, presentación de los personajes en el «Bambú Torcido» y primer ataque con agua fría del Cisne Hidráulico.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>15 – 45</strong></td>\n<td style=\"text-align: left;\"><strong>Acto I · Mañana movida</strong></td>\n<td style=\"text-align: left;\">Dos o tres retos por las calles, primer contacto con las Tablillas y uso de los Carteles de Madera.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>45 – 48</strong></td>\n<td style=\"text-align: left;\"><strong>Cortinilla de mediodía</strong></td>\n<td style=\"text-align: left;\">Pausa con el Guía de Jusenkyo comiendo fideos.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>48 – 85</strong></td>\n<td style=\"text-align: left;\"><strong>Acto II · Tarde de mangueras y calores</strong></td>\n<td style=\"text-align: left;\">Retos cruzados, aumento del Desbarajuste y pistas sobre la Casa de Baños.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>85 – 88</strong></td>\n<td style=\"text-align: left;\"><strong>Cortinilla de noche</strong></td>\n<td style=\"text-align: left;\">Se encienden los farolillos rojos del barrio.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>88 – 112</strong></td>\n<td style=\"text-align: left;\"><strong>Acto III · El clímax en la Casa de Baños</strong></td>\n<td style=\"text-align: left;\">Infiltración, vapor, tuberías cruzadas, ¡PELEA! y el juicio de las maldiciones.</td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>112 – 120</strong></td>\n<td style=\"text-align: left;\"><strong>Nuevo amanecer y créditos</strong></td>\n<td style=\"text-align: left;\">Epílogos individuales y último gag acuático de cierre.</td>\n</tr>\n</tbody>\n</table>\n<h2>Las cortinillas son sagradas</h2>\n<p>Cada cortinilla dura <strong>tres minutos</strong> y se lee en voz alta o se deja que la lea el Guía en el chat de Foundry. No son pausas de relleno: <strong>marcan el ritmo</strong>, dan tiempo para respirar y para subir o bajar un marcador. Si vais tarde, recortad retos, <strong>nunca cortinillas</strong>. Si vais pronto, añadid un reto de la reserva o un cameo.</p>\n<h2>Montaje matinal en diez minutos</h2>\n<ol>\n<li><strong>El Guía abre el programa.</strong> Lee la cortinilla de amanecer (cinco minutos de reloj).</li>\n<li><strong>Cada jugador se presenta</strong> con su nombre, su lema y su <strong>deseo de hoy</strong>, en una frase.</li>\n<li><strong>El pedido del Maestro Yuzuki</strong> (la dirección): lee la oferta de las Tres Tablillas, la medianoche y el Barril Imperial.</li>\n<li><strong>Primer ataque.</strong> Una bomba de agua lanzada desde un monopatín por los matones del Cisne moja a los personajes y revela sus primeras formas malditas. <strong>Es la primera vez que aparece un Cartel de Madera</strong>: explicadlo en el momento.</li>\n<li><strong>Lanzad el reloj.</strong> Se acabó la presentación. A las calles.</li>\n</ol>\n<h2>Si se tuerce el ritmo</h2>\n<ul>\n<li><strong>Tema espeso:</strong> pulsad ¡PELEA!; una pelea de cinco minutos reajusta la energía.</li>\n<li><strong>Un jugador calla:</strong> dale un Cartel; callarse con carteles de cuatro palabras convierte a cualquiera en protagonista.</li>\n<li><strong>Todo el mundo empapado:</strong> busca una fuente de calor gigante y dale a la escena un respiro con una Cortinilla anticipada.</li>\n</ul>"
+  },
+  {
+   "n": 7,
+   "titulo": "Acto I · Amanecer y desastres en Nerima",
+   "corto": "Acto I",
+   "html": "<h2>Narración de apertura</h2>\n<p><em>El sol brilla sobre los tejados inclinados de Nerima. En las aceras, los vecinos ya han sacado los cubos para cumplir con el </em><em>Uchimizu</em><em>: regar la calle para espantar el polvo, el calor y, de paso, a cualquiera que pase por allí. En el dojo «El Bambú Torcido», los personajes se despiertan sintiendo que sus ropas no encajan del todo bien… o que tienen plumas, pezuñas y colas.</em></p>\n<p><strong>La convergencia.</strong> Un estruendo sacude la puerta corrediza. Una <strong>bomba de agua improvisada</strong>, lanzada desde un monopatín por los matones del Cisne Hidráulico, moja a los personajes y revela sus primeras formas malditas. Es la primera vez que alguien tiene que usar un Cartel de Madera. Después, el <strong>Maestro Yuzuki</strong> asoma por la puerta rota, guiado por el sonido del agua, y repite su oferta: <em>tres tablillas antes de la medianoche, y la Escritura y el Barril serán de quien las junte</em>.</p>\n<h2>Las Tres Tablillas de Madera del Barrio</h2>\n<p>Cada una está escondida en un reto fijo de la mañana. No son objetos de misión: son <strong>la excusa para que el barrio entero salga al paso</strong>.</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Tablilla</th>\n<th style=\"text-align: left;\">Madera</th>\n<th style=\"text-align: left;\">Dónde está esta mañana</th>\n<th style=\"text-align: left;\">Reto</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\"><strong>nº 1</strong></td>\n<td style=\"text-align: left;\">Bambú</td>\n<td style=\"text-align: left;\"><strong>Perdida.</strong> Yumi la dejó caer al hacer un caballito y acabó en un carro de reparto que cruza el canal. En la caja lacada del dojo solo queda una <strong>tetera vieja</strong>.</td>\n<td style=\"text-align: left;\"><strong>R01</strong></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>nº 2</strong></td>\n<td style=\"text-align: left;\">Cerezo</td>\n<td style=\"text-align: left;\">La guarda <strong>Mariko</strong>, reina de los congelados, como trofeo en el supermercado.</td>\n<td style=\"text-align: left;\"><strong>R02</strong></td>\n</tr>\n<tr>\n<td style=\"text-align: left;\"><strong>nº 3</strong></td>\n<td style=\"text-align: left;\">Sándalo</td>\n<td style=\"text-align: left;\">Es el premio de una ceremonia del té en el jardín de la Maestra Matsu.</td>\n<td style=\"text-align: left;\"><strong>R03</strong></td>\n</tr>\n</tbody>\n</table>\n<p><strong>Si los personajes fallan o rehúyen un reto</strong>, los matones del Cisne se hacen con la tablilla correspondiente. No es una derrota: Hidetoshi la llevará a la Casa de Baños, y habrá <strong>duelo por la Escritura</strong> en el Acto III.</p>\n<h2>Cómo conducir la mañana (15 – 45 min)</h2>\n<p>Se hacen <strong>dos o tres retos</strong> de los que ofrecen las calles, a elección de los jugadores. El orden es libre, y las retiradas siempre dejan una salida cómica. Entre reto y reto, sigue el patrón:</p>\n<ol>\n<li><strong>Una frase de calle.</strong> Un vecino, un rótulo o un chorro de agua que da pie al siguiente reto.</li>\n<li><strong>Una tirada de ¡PAM!</strong> como mínimo por reto.</li>\n<li><strong>Una consecuencia visible</strong>: alguien se moja, una cosa se rompe, un vecino se queja.</li>\n<li><strong>El marcador sube</strong> solo si hay un desastre realmente nuevo.</li>\n</ol>\n<h3>La tetera en la caja lacada</h3>\n<p>La primera vez que alguien abra la caja lacada de la Tablilla nº 1 (el reto R01 lo provoca, pero puede ocurrir antes), aparecerá una tetera con asa de dragón. Yumi tiene un secreto que acaba de ser descubierto. <strong>No se la humilla</strong>: la pregunta es <em>«¿cómo lo explicas?»</em>. Si lo confiesa, la mesa se ríe <strong>con</strong> ella y gana un <code>+1d6</code> para el siguiente reto; si lo niega, la dirección se lo devuelve cuando más duela en un buen momento.</p>\n<h2>Primer contacto con los Carteles de Madera</h2>\n<p>Todos los jugadores Mojados deben usar Carteles de madera, de máximo cuatro palabras. Si alguien lo olvida y suelta una frase larga, la dirección dice «¡CARTEL!» y se la corta en seco. Es una convención de mesa <strong>que se agradece</strong>: acelera la escena y la hace más divertida.</p>\n<h2>La amenaza del Cisne Hidráulico</h2>\n<p>Los matones del Cisne (la <strong>Pandilla</strong>) aparecen en cualquier momento de la mañana, en monopatín, con globos de agua y cubos de hielo. <strong>No son un reto aparte: son un recurso de dirección</strong> para devolver energía a una escena que se atasca. Cada vez que aparecen, <strong>un personaje queda Mojado</strong> (a la dirección le toca elegir) y se oye la risa de Hidetoshi desde algún tejado.</p>\n<p>Cuando haya aire, un <strong>¡PELEA!</strong> a una ronda contra la Pandilla enseña la regla del capítulo 4.</p>\n<h2>Qué esperar de la cortinilla de mediodía</h2>\n<p>A los 45 minutos suena la <strong>cortinilla de mediodía</strong>: el Guía de Jusenkyo come fideos en pantalla y repasa lo ocurrido. Aprovechad para <strong>contar las tablillas</strong> y revisar el marcador de Desbarajuste.</p>"
+  },
+  {
+   "n": 8,
+   "titulo": "Acto II · La tarde de los cien cubos",
+   "corto": "Acto II",
+   "html": "<h2>Presión creciente</h2>\n<p>Conforme avanza la tarde, el calor hace que todo el vecindario intensifique el uso de mangueras y bocas de riego. El <strong>Desbarajuste Acuático</strong> sube: cada reto resuelto con un gran desastre, y cada fiasco, pueden empujarlo un punto. Con <strong>3</strong> se desbloquean los <strong>retos de gran escala</strong> (R13–R16); con <strong>4</strong>, las mangueras se escapan solas.</p>\n<p>En este acto todo se cruza: retos de la reserva que se cuelan en medio de otros, vecinos que piden cuentas por los destrozos de la mañana, y la sensación de que Nerima entera os persigue con una manguera.</p>\n<h2>Las tres vías de información (nunca bloqueadas por tirada)</h2>\n<p>Para llegar al clímax los personajes necesitan <strong>enterarse de lo de la Casa de Baños</strong>. Hay tres caminos, y la dirección no esconde ninguno detrás de una tirada: se ofrecen cuando haya aire.</p>\n<ol>\n<li><strong>Planos del sento.</strong> <em>Daiki o Yumi</em> revisan las conducciones del barrio (un mapa, una caseta, una tubería) y descubren que <strong>la caldera principal tiene una válvula auxiliar secreta</strong>.</li>\n<li><strong>Vigilancia.</strong> Observan a los discípulos de Hidetoshi <strong>entrenando con cubos de agua helada</strong> en el callejón trasero de la Casa de Baños. Oyen: <em>«¡Que nadie le quite los manguitos al capitán!»</em>.</li>\n<li><strong>Chismorreo.</strong> <strong>La señora Sawa</strong>, de la tienda de comestibles, les cuenta que el Maestro Yuzuki dejó <strong>la llave maestra dentro del casillero</strong> de la Casa de Baños, y que esta noche, a las diez, tomará allí su último baño de jubilado.</li>\n</ol>\n<p>Con <strong>dos de las tres</strong> pistas ya se puede ir a la Casa de Baños. Cada una que falte se compensa con un problema extra en el Acto III (ver capítulo 11).</p>\n<h2>Secretos en el aire</h2>\n<p>El Acto II es el lugar para que salgan <strong>los secretos vergonzosos</strong> de las fichas. Cada uno tiene un momento natural:</p>\n<ul>\n<li><strong>Kenji.</strong> Un pariente del fundador del dojo aparece y pide ver la <em>Plancha de Vapor del Fundador</em>, que anoche se rompió y Kenji pegó con chicle.</li>\n<li><strong>Mako.</strong> Alguien identifica el sobre de las Sales de Jusenkyo y pregunta quién lo compró en el mercadillo.</li>\n<li><strong>Daiki.</strong> Un notario con aspecto de pajarito llega al dojo con la <strong>apuesta del gimnasio</strong>, que Daiki firmó creyendo que era el albarán del lechero. (Reto R09.)</li>\n<li><strong>Yumi.</strong> Si no salió antes, la tetera sale ahora.</li>\n</ul>\n<p>No fuerces ninguna confesión. Ofrece la escena y deja que el jugador la tome. <strong>Quien confiesa gana un <code>+1d6</code></strong>; quien oculta, lo oculta, pero la partida seguirá y el Juicio de las Maldiciones se lo recordará.</p>\n<h2>Agua caliente escasa</h2>\n<p>A partir del Desbarajuste 3, el barrio se queda sin agua caliente (R11). El <strong>Termo Portátil</strong> se vuelve un tesoro. Cuando alguien necesite hervir y no haya Termo ni ramen, ofrece una fuente de calor con un precio cómico (una tetera de la tendera que hay que ganarse, una lavandería a vapor, un cazo de caldo de un puesto cerrado…).</p>\n<h2>Encadenar retos</h2>\n<p>Un buen Acto II tiene <strong>tres o cuatro retos</strong> y deja <strong>una secuela</strong> de cada uno. Las secuelas son pequeñas: un vecino que ahora os saluda, un cubo roto, una moto de reparto que ya sabe vuestro nombre. Se usan como gags de fondo en el Acto III y en los epílogos.</p>\n<h2>Cortinilla de noche</h2>\n<p>A los <strong>85 minutos</strong>, el Guía enciende un farolillo rojo y despide a la tarde. El Vapor Nocturno empieza en <strong>1</strong>. Los personajes tienen 25 minutos para entrar en la Casa de Baños, hacerse con las llaves y enfrentarse al Cisne.</p>"
+  },
+  {
+   "n": 9,
+   "titulo": "Banco de retos flotantes",
+   "corto": "Retos",
+   "html": "<p>Los <strong>retos flotantes</strong> son escenas autónomas que la dirección saca de la reserva cuando hace falta energía, sin orden fijo. <strong>Elige de seis a ocho en total</strong> para toda la partida: un par por la mañana, tres o cuatro por la tarde y alguno de reserva.</p>\n<p>Cada reto sigue la misma receta de cinco pasos: <strong>1. la situación</strong> (una imagen cómica y concreta), <strong>2. la urgencia</strong> (qué se pierde si nadie hace nada), <strong>3. las opciones</strong> (sugerencias, nunca puertas únicas), <strong>4. el giro de agua</strong> (el ¡CHAPUZÓN! o el agua caliente que lo complica) y <strong>5. la secuela</strong> (qué queda en el barrio).</p>\n<p>Los tres primeros son <strong>retos con tablilla</strong>; los <strong>personales</strong> (Kenji, Mako, Daiki, Yumi) están hechos para tocar el defecto o el secreto de cada ficha; los <strong>de gran escala</strong> (R13–R16) se desbloquean con <strong>Desbarajuste 3 o más</strong>; el <strong>social</strong> (R17) es un respiro entre peleas; y el <strong>comodín</strong> (R18) se saca cuando la mesa se atasca.</p>\n<p>Los retos marcados con ¡PELEA! traen su contendiente listo para el marcador de Foundry. En un reto sin pelea, resuélvelo con ¡PAM! como siempre.</p>\n<h2>Selección rápida recomendada</h2>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: left;\">Con tiempo justo (6 retos)</th>\n<th style=\"text-align: left;\">Con más ganas (8 retos)</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: left;\">Mañana: <strong>R01</strong>, <strong>R02</strong>, <strong>R04</strong>. Tarde: <strong>R03</strong>, <strong>R09</strong>, <strong>R13</strong>.</td>\n<td style=\"text-align: left;\">Añade <strong>R05</strong> por la mañana y <strong>R11</strong> por la tarde. Si hay un hueco, <strong>R18</strong>.</td>\n</tr>\n</tbody>\n</table>\n<h2>Ritmo ideal</h2>\n<p>Un reto de mañana dura de <strong>5 a 8 minutos</strong>; uno de tarde, de <strong>7 a 10</strong>. Si uno se alarga, cortad con un «¡CHAPUZÓN!» y un cambio de escena: nunca dejéis a la mesa dos retos seguidos con el mismo tipo de problema.</p>"
+  },
+  {
+   "n": 10,
+   "titulo": "Nerima vive sin nosotros",
+   "corto": "Cameos",
+   "html": "<p>El reparto de siempre del barrio de Nerima <strong>aparece en segundo plano haciendo sus tonterías</strong>, y <strong>nunca resuelve la partida de los personajes</strong>. Funcionan como un decorado con vida: dan color, regalan un gag y se van. Piensa en ellos como los extras que cruzan la calle en una escena de dibujos animados.</p>\n<h2>Cameos en tres pasos</h2>\n<p>Cada cameo se juega con la misma regla de <strong>tres pasos</strong>, para que no acaparen la mesa:</p>\n<ol>\n<li><strong>Avistamiento.</strong> Se les ve de lejos, ocupados en lo suyo. Se describen con una frase. No se interactúa.</li>\n<li><strong>Roce.</strong> Su gag choca un instante con los personajes (un chorro, un empujón, una nota que cae). Un efecto menor y visible.</li>\n<li><strong>Despedida.</strong> Se van, con el problema sin resolver, y nadie, jamás, les pide ayuda.</li>\n</ol>\n<blockquote>\n<p><strong>Regla de cortesía.</strong> Ningún cameo aporta información, ayuda ni objetos a los personajes jugadores. Son <em>recuerdos</em> de otro programa, no recursos. Si la mesa se emociona, el cameo se interrumpe con un ¡CHAPUZÓN! y desaparece.</p>\n</blockquote>\n<h2>Cinco cameos para escoger</h2>\n<p>En Foundry, las fichas de cameo van en el diario; no tienen arte propio en el sistema, porque son gags de fondo y no personajes.</p>"
+  },
+  {
+   "n": 11,
+   "titulo": "Acto III · El clímax en la Casa de Baños",
+   "corto": "Acto III",
+   "html": "<h2>El escenario nocturno</h2>\n<p>La Casa de Baños <strong>«El Vapor Feliz»</strong> está envuelta en una densa capa de vapor blanco. Las piscinas de agua fría y caliente gorgotean en la oscuridad; sobre el tejado, una chimenea enorme respira como un dragón dormido. Hay tres zonas en juego:</p>\n<ol>\n<li><strong>El vestíbulo y los casilleros.</strong> Aquí está la llave maestra del Maestro.</li>\n<li><strong>La sala de calderas.</strong> Válvulas, manómetros y la válvula auxiliar secreta.</li>\n<li><strong>La sala de baños.</strong> Piscina caliente, piscina fría, el mural del monte Fuji, taburetes y cubos. Aquí espera el Capitán.</li>\n</ol>\n<h2>El Vapor Nocturno</h2>\n<p>El marcador de <strong>Vapor</strong> (0 a 6) empieza en <strong>1</strong> al caer la noche y sube en estos casos:</p>\n<ul>\n<li>Cada <strong>fiasco</strong> en la Casa de Baños: <strong>+1</strong>.</li>\n<li>Cada <strong>ronda de ¡PELEA!</strong> (las tuberías sufren): <strong>+1</strong>.</li>\n<li>Cada vía de información que no se descubrió en el Acto II: <strong>+1</strong> de salida.</li>\n<li>Cada vez que se gira una válvula con éxito aparatoso o fiasco: <strong>+1</strong> (efecto secundario).</li>\n</ul>\n<p>Baja <strong>1</strong> cada vez que alguien logra un <strong>éxito brillante o descomunal</strong> cerrando una válvula de seguridad. Efectos:</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">Vapor</th>\n<th style=\"text-align: left;\">Efecto</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">0 – 1</td>\n<td style=\"text-align: left;\">Aire tibio: los Carteles admiten <strong>4 palabras</strong>.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2 – 3</td>\n<td style=\"text-align: left;\">Niebla: los Carteles admiten <strong>3 palabras</strong>; las distancias engañan.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4 – 5</td>\n<td style=\"text-align: left;\">Calor espeso: <strong>2 palabras</strong>; las tuberías se cruzan (tabla siguiente).</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">6</td>\n<td style=\"text-align: left;\"><strong>1 palabra.</strong> ¡La caldera explota! Se activa el <strong>Final C</strong>.</td>\n</tr>\n</tbody>\n</table>\n<h2>Infiltración en cuatro pasos (88 – 98 min)</h2>\n<ol>\n<li><strong>La puerta trasera.</strong> Los vecinos han dejado una lavandería abierta; entrad por ahí o por el tejado. <em>(Una tirada, no más.)</em></li>\n<li><strong>Los casilleros.</strong> La llave maestra está en uno de ellos; <strong>no hay cerradura que forzar</strong>: lo difícil es que la tienen guardada con pegatinas de animales. <em>(Daiki, si es una cabra, podría comerse la pista.)</em></li>\n<li><strong>La sala de calderas.</strong> Ahí está la <strong>válvula auxiliar secreta</strong> que baja el Vapor y es la clave para ganar por «técnica». Cada intento abre una <strong>tubería cruzada</strong>.</li>\n<li><strong>La entrada a la sala de baños.</strong> Una cortina de <em>noren</em>; detrás, el Capitán.</li>\n</ol>\n<h3>Tuberías cruzadas (d6)</h3>\n<p>Cada vez que alguien manipula una válvula o una tubería, tira <code>d6</code>:</p>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">d6</th>\n<th style=\"text-align: left;\">Qué sale</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">1</td>\n<td style=\"text-align: left;\">Un chorro helado en la cara del que gire la rueda: <strong>¡CHAPUZÓN!</strong></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2</td>\n<td style=\"text-align: left;\">Una nube de vapor: <strong>+1 Vapor</strong>.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">3</td>\n<td style=\"text-align: left;\">Agua caliente por la regadera más cercana: <strong>cualquier Mojado se seca</strong> (Hervir gratis).</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4</td>\n<td style=\"text-align: left;\">Un gong metálico que se oye en todo el edificio: Hidetoshi sabe que estáis ahí.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">5</td>\n<td style=\"text-align: left;\">Una válvula se queda en la mano: <strong>Entorno</strong> <code>+1d6</code> para la siguiente tirada.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">6</td>\n<td style=\"text-align: left;\"><strong>Todo sale bien</strong>, por una vez. <strong>−1 Vapor.</strong></td>\n</tr>\n</tbody>\n</table>\n<h2>¡El enfrentamiento final! (98 – 108 min)</h2>\n<p>El <strong>Capitán Hidetoshi</strong> aguarda en el centro, sobre la tarima del mural, con su cañón de agua a presión y una toalla de seda en los hombros. A su lado, la <strong>Pandilla del Cisne</strong>. Las Tablillas que tengáis están sobre una mesa baja, con un <strong>mazo de ceremonia</strong> a la vista del Maestro Yuzuki, que acaba de entrar por la otra puerta, sin enterarse de nada.</p>\n<p><strong>La pelea se juega con ¡PELEA!</strong> (capítulo 4):</p>\n<ul>\n<li><strong>Primera parte (calentamiento):</strong> el equipo de los personajes contra la <strong>Pandilla</strong>, <strong>a una ronda</strong>. Es corta y sirve para aprender la regla si todavía no se ha usado.</li>\n<li><strong>Segunda parte:</strong> el equipo entero contra <strong>Hidetoshi</strong>, mejor de tres rondas.</li>\n<li><strong>El escenario es Entorno gratis:</strong> mientras se pelea en la piscina caliente nadie puede quedar Mojado; en la fría, quien entra queda Mojado al instante. Las válvulas, los taburetes y el mural valen como <code>+1d6</code>.</li>\n<li><strong>La piscina fría es una trampa para los dos lados</strong>: Hidetoshi no sabe nadar. Si los personajes lo descubren (pista de vigilancia) o lo provocan, <strong>un Golpe no puede fallar</strong>.</li>\n<li><strong>Los Carteles</strong> pueden gritar sus provocaciones: gratis para quien esté Mojado.</li>\n</ul>\n<blockquote>\n<p><strong>Si se pierde la pelea:</strong> Hidetoshi sube a la tarima para recoger las Tablillas con aire triunfal… y resbala con el jabón. La ronda siguiente es un <em>rematch</em> con la barra de Dignidad a mitad. Perder es parte del chiste, no el final.</p>\n</blockquote>\n<h2>El juicio de las maldiciones (108 – 112 min)</h2>\n<p>Cuando el humo se asienta, el <strong>Maestro Yuzuki</strong> (que siempre ha estado ahí, sin ver nada) golpea el suelo con su bastón y pide <strong>«el juicio»</strong>: para entregar el Barril Imperial necesita ver que los aspirantes <strong>aceptan lo que son</strong>. Cada personaje, por turnos, debe hacer una de estas tres cosas:</p>\n<ol>\n<li><strong>Mostrar su forma maldita</strong> delante de todos, sin esconderse.</li>\n<li><strong>Confesar su secreto vergonzoso</strong> (si quiere: nadie está obligado).</li>\n<li><strong>Usar su Cartel</strong> para decir una sola cosa verdadera sobre el grupo (cuatro palabras o las que permita el Vapor).</li>\n</ol>\n<p>Cuantas más cosas se cumplan, más limpio será el final.</p>\n<h2>Los cuatro finales posibles</h2>\n<p>La dirección elige el final según el estado de la mesa: <strong>Tablillas</strong>, <strong>Vapor</strong>, <strong>confesiones</strong> y <strong>resultado de la pelea</strong>.</p>\n<ul>\n<li><strong>Final A · Victoria limpia.</strong> Se gana la ¡PELEA!, con tres o más personajes aceptando su forma o confesando. Aceptan sus errores y sus maldiciones, derrotan al Cisne Hidráulico por cooperación y descubren que <strong>el Barril Imperial contenía fideos gigantes</strong>. El Maestro los reparte, y todos ríen mientras comen.</li>\n<li><strong>Final B · Victoria técnica.</strong> Aseguran las Tablillas <strong>mediante trampas administrativas</strong> (la nulidad de la apuesta de Daiki, la tetera de Yumi como prueba, la válvula auxiliar…), conservando el dojo pero ganando la fama de ser <strong>un zoológico ambulante</strong>.</li>\n<li><strong>Final C · Se les va de las manos.</strong> El Vapor llega a 6: <strong>la caldera explota</strong> y manda todo el edificio volando hacia el estanque del instituto vecino. Nadie sale herido; el Maestro, de hecho, está encantado.</li>\n<li><strong>Final D · Conservar la maldición.</strong> Uno o más personajes deciden que prefieren seguir siendo animales <strong>porque Nerima es más divertida así</strong>. Puede combinarse con A o B.</li>\n</ul>\n<h2>Nuevo amanecer y créditos (112 – 120 min)</h2>\n<p>Lee la <strong>cortinilla de nuevo amanecer</strong> y dedica los últimos minutos a <strong>epílogos individuales</strong>: cada jugador dice en una frase qué es de su personaje al día siguiente (en la forma que prefiera). Cierra con el <strong>último gag acuático</strong>: el Guía de Jusenkyo sale a despedirse… y alguien, desde un tejado, le tira un cubo de agua.</p>"
+  },
+  {
+   "n": 12,
+   "titulo": "Chuleta de dirección",
+   "corto": "Chuleta",
+   "html": "<h2>Una página para la mesa</h2>\n<p><strong>Promesa.</strong> Una comedia de enredos acuáticos donde la vergüenza y las transformaciones son el motor de la risa.</p>\n<p><strong>Ritmo.</strong> 12 min de presentación → retos de mañana → retos de tarde (con aumento de agua) → infiltración nocturna en el baño público → clímax con vapor.</p>\n<p><strong>Regla de oro del humor.</strong> Prioriza siempre el ridículo y la física elástica antes que el daño numérico o realista.</p>\n<h3>Reloj de mesa</h3>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">00–05</th>\n<th style=\"text-align: center;\">05–15</th>\n<th style=\"text-align: center;\">15–45</th>\n<th style=\"text-align: center;\"><strong>45</strong></th>\n<th style=\"text-align: center;\">48–85</th>\n<th style=\"text-align: center;\"><strong>85</strong></th>\n<th style=\"text-align: center;\">88–112</th>\n<th style=\"text-align: center;\"><strong>112</strong>–120</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">Amanecer</td>\n<td style=\"text-align: center;\">Montaje</td>\n<td style=\"text-align: center;\">Acto I</td>\n<td style=\"text-align: center;\"><strong>Cortinilla</strong></td>\n<td style=\"text-align: center;\">Acto II</td>\n<td style=\"text-align: center;\"><strong>Cortinilla</strong></td>\n<td style=\"text-align: center;\">Acto III</td>\n<td style=\"text-align: center;\"><strong>Cortinilla</strong> y créditos</td>\n</tr>\n</tbody>\n</table>\n<h3>¡PAM! 2.0 en una línea</h3>\n<p><code>2d6</code> + <code>1d6</code> talento (Marcial o Bestia) + <code>1d6</code> ayuda complicada · máx. <code>4d6</code> · suman los <strong>dos mejores</strong> · <strong>2–5</strong> fiasco útil · <strong>6–8</strong> aparatoso (¡CHAPUZÓN!) · <strong>9–11</strong> brillante · <strong>12</strong> descomunal · <strong>dobles de éxito</strong> = gag de Nerima.</p>\n<h3>Desbarajuste Acuático</h3>\n<table>\n<thead>\n<tr>\n<th style=\"text-align: center;\">Nivel</th>\n<th style=\"text-align: left;\">Efecto</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td style=\"text-align: center;\">0</td>\n<td style=\"text-align: left;\">Calma chicha: solo cubos de vecinos con buena intención.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">1</td>\n<td style=\"text-align: left;\">Los vecinos calientan motores: mangueras en mano.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">2</td>\n<td style=\"text-align: left;\">Tiempo de remojo: cada reto trae su chorro; un aparatoso salpica.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">3</td>\n<td style=\"text-align: left;\"><strong>Se desbloquean los retos de gran escala (R13–R16).</strong> El barrio se queda sin agua caliente.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">4</td>\n<td style=\"text-align: left;\">Las mangueras se escapan solas: con un fiasco también hay ¡CHAPUZÓN!.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">5</td>\n<td style=\"text-align: left;\">Nerima entera está empapada: gastar una carga de Termo cuesta una complicación.</td>\n</tr>\n<tr>\n<td style=\"text-align: center;\">6</td>\n<td style=\"text-align: left;\">¡Inundación! Si de noche no se calma, amenaza el <strong>Final C</strong>.</td>\n</tr>\n</tbody>\n</table>\n<p>Sube con un desastre realmente nuevo; baja 1 si se dedica una escena a recoger y calmar.</p>\n<h3>Vapor Nocturno (solo Acto III)</h3>\n<p>Empieza en 1. <strong>+1</strong> por fiasco, por ronda de pelea y por pista no descubierta. <strong>−1</strong> por cerrar una válvula con brillante. Carteles: <strong>4 · 3 · 2 · 1</strong> palabras según el nivel (0-1 · 2-3 · 4-5 · 6). A <strong>6</strong>, Final C.</p>\n<h3>¡PELEA! en una línea</h3>\n<p>Dignidad 8 (jefe 16). <strong>Golpe &gt; Presa &gt; Parada &gt; Golpe.</strong> Dominante tira ¡PAM! → daño <strong>1 · 2+¡CHAPUZÓN! · 3 · 4</strong>. Furia +1 a los dos; con 3, <strong>Técnica Secreta</strong> (+1 daño, a gritos). Provocación: sin Parada ese Cruce. ¡PERFECTO! = +1 Termo.</p>\n<h3>Retos con tablilla</h3>\n<p><strong>R01</strong> nº 1 (canal, Yumi) · <strong>R02</strong> nº 2 (supermercado, Mariko, ¡PELEA!) · <strong>R03</strong> nº 3 (jardín de té).</p>\n<h3>Los cuatro finales</h3>\n<p><strong>A</strong> Limpia (barril de fideos) · <strong>B</strong> Técnica (trampas administrativas) · <strong>C</strong> Se les va de las manos (caldera) · <strong>D</strong> Conservar la maldición.</p>\n<h2>Frases del Guía de Jusenkyo (para improvisar)</h2>\n<ul>\n<li>«¡Y aquí, amigos, se ve claramente la tragedia del barrio que acaba de mojarse!»</li>\n<li>«Recuerden: el agua fría es amiga hasta que deja de serlo.»</li>\n<li>«Esa nutria es profesional.»</li>\n<li>«Yo solo cuento la historia. El cubo no es cosa mía.»</li>\n</ul>"
+  }
+ ]
+};

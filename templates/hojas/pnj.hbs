@@ -1,0 +1,33 @@
+<div class="av-perfil">
+  <aside class="av-perfil-lado">
+    <figure class="av-perfil-retrato" {{#if editable}}data-action="retrato" data-tooltip="Encuadrar o cambiar el retrato"{{/if}}>
+      <img src="{{actor.img}}" alt="Retrato de {{actor.name}}" data-retrato="{{actor.id}}" data-lupa>
+    </figure>
+    <figure class="av-perfil-figura" {{#if editable}}data-action="figura" data-tooltip="Cambiar la figura (token)"{{/if}}>
+      <img src="{{figura}}" alt="Figura de {{actor.name}}" data-lupa>
+    </figure>
+  </aside>
+  <section class="av-hoja-cuerpo">
+    <header class="av-perfil-cab">
+      <input class="av-nombre" name="name" value="{{actor.name}}" aria-label="Nombre" {{#unless editable}}disabled{{/unless}}>
+      <input class="av-titulo" name="system.papel" value="{{system.papel}}" placeholder="Papel en la historia" aria-label="Papel" {{#unless editable}}disabled{{/unless}}>
+      <label class="av-globo av-globo-frase"><span class="av-oculto">Frase</span><input name="system.frase" value="{{system.frase}}" placeholder="Una frase suya" {{#unless editable}}disabled{{/unless}}></label>
+    </header>
+    <label class="av-campo"><span>Descripción</span><textarea name="system.descripcion" rows="4" {{#unless editable}}disabled{{/unless}}>{{system.descripcion}}</textarea></label>
+    <div class="av-vinetas">
+      <label class="av-vineta av-v-defecto"><span>Técnica Secreta <small>nombre a gritos</small></span><input name="system.tecnica" value="{{system.tecnica}}" {{#unless editable}}disabled{{/unless}}></label>
+      <label class="av-vineta av-v-presentacion"><span>Secreto o punto débil</span><textarea name="system.secreto" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.secreto}}</textarea></label>
+    </div>
+    <fieldset class="av-pelea-ficha">
+      <legend>¡PELEA!</legend>
+      <label class="av-campo"><span>Papel</span><select name="system.rol" {{#unless editable}}disabled{{/unless}}><option value="vecino" {{#if (eq system.rol "vecino")}}selected{{/if}}>Vecino</option><option value="rival" {{#if (eq system.rol "rival")}}selected{{/if}}>Rival (sale en la máquina)</option></select></label>
+      <label class="av-campo"><span>Dignidad por barra</span><input type="number" name="system.dignidad" value="{{system.dignidad}}" min="1" max="40" {{#unless editable}}disabled{{/unless}}></label>
+      <label class="av-campo"><span>Barras</span><input type="number" name="system.barras" value="{{system.barras}}" min="1" max="3" {{#unless editable}}disabled{{/unless}}></label>
+      <label class="av-campo"><span>Rondas a ganar</span><input type="number" name="system.rondas" value="{{system.rondas}}" min="1" max="3" {{#unless editable}}disabled{{/unless}}></label>
+    </fieldset>
+    <section class="av-notas-sec">
+      <h3>Notas</h3>
+      {{#if editable}}<prose-mirror name="system.notas" value="{{system.notas}}" toggled>{{{notas}}}</prose-mirror>{{else}}{{{notas}}}{{/if}}
+    </section>
+  </section>
+</div>

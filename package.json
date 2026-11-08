@@ -1,0 +1,19 @@
+{
+  "name": "mr-agua-va",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "MR- ¡Agua Va! · mini sistema y aventura para Foundry VTT",
+  "scripts": {
+    "contenido": "python3 scripts/contenido.py",
+    "arte": "python3 scripts/importar-arte.py",
+    "test": "node --test tests/*.test.mjs",
+    "build": "python3 scripts/gen-aventura.py && node scripts/build.mjs",
+    "pdf": "python3 scripts/pdf.py",
+    "zip": "python3 scripts/gen-aventura.py && node scripts/build.mjs && node scripts/zip.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "devDependencies": {
+    "classic-level": "^2.0.0"
+  }
+}

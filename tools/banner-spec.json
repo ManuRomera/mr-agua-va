@@ -1,0 +1,140 @@
+[
+ {
+  "src": "/Volumes/Datos_Dock/FoundryVTT/Trabajo AGUAVA/art/new/pdf-acto2.png",
+  "focus": 0.5,
+  "accent": [
+   18,
+   165,
+   214
+  ],
+  "kicker": "Semanal ¡PAM! · Especial Nerima",
+  "title": [
+   "¡AGUA",
+   "VA!"
+  ],
+  "subtitle": [
+   "Agua fría, animal; agua caliente, persona"
+  ],
+  "tagline": [
+   "Mini sistema y aventura · Foundry VTT 13–14 · Castellano"
+  ],
+  "fonts": {
+   "kicker": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/Bangers-Regular.ttf",
+    0
+   ],
+   "title": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/DelaGothicOne-Regular.ttf",
+    0
+   ],
+   "subtitle": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/ZenMaruGothic-Bold.ttf",
+    0
+   ],
+   "tagline": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/ZenMaruGothic-Bold.ttf",
+    0
+   ]
+  },
+  "colors": {
+   "kicker": [
+    255,
+    210,
+    63
+   ],
+   "title": [
+    255,
+    210,
+    63
+   ],
+   "subtitle": [
+    255,
+    255,
+    255
+   ],
+   "tagline": [
+    245,
+    238,
+    219
+   ]
+  },
+  "title_max": 0.2,
+  "title_track": 0.0,
+  "title_lead": 1.2,
+  "out": "docs/img/banner.webp",
+  "size": [
+   1600,
+   560
+  ],
+  "veil": 1.0
+ },
+ {
+  "src": "/Volumes/Datos_Dock/FoundryVTT/Trabajo AGUAVA/art/new/pdf-acto2.png",
+  "focus": 0.5,
+  "accent": [
+   18,
+   165,
+   214
+  ],
+  "kicker": "Semanal ¡PAM! · Especial Nerima",
+  "title": [
+   "¡AGUA",
+   "VA!"
+  ],
+  "subtitle": [
+   "Agua fría, animal; agua caliente, persona"
+  ],
+  "tagline": [
+   "Mini sistema y aventura · Foundry VTT 13–14 · Castellano"
+  ],
+  "fonts": {
+   "kicker": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/Bangers-Regular.ttf",
+    0
+   ],
+   "title": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/DelaGothicOne-Regular.ttf",
+    0
+   ],
+   "subtitle": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/ZenMaruGothic-Bold.ttf",
+    0
+   ],
+   "tagline": [
+    "/Volumes/Datos_Dock/FoundryVTT/Data/systems/mr-agua-va/scripts/fonts/ZenMaruGothic-Bold.ttf",
+    0
+   ]
+  },
+  "colors": {
+   "kicker": [
+    255,
+    210,
+    63
+   ],
+   "title": [
+    255,
+    210,
+    63
+   ],
+   "subtitle": [
+    255,
+    255,
+    255
+   ],
+   "tagline": [
+    245,
+    238,
+    219
+   ]
+  },
+  "title_max": 0.2,
+  "title_track": 0.0,
+  "title_lead": 1.2,
+  "out": "docs/img/social.png",
+  "size": [
+   1280,
+   640
+  ],
+  "veil": 1.0
+ }
+]

@@ -1,0 +1,62 @@
+<div class="av-perfil" style="--av-color-pj: {{color}}">
+  <aside class="av-perfil-lado">
+    <figure class="av-perfil-retrato" {{#if editable}}data-action="retrato" data-tooltip="Encuadrar o cambiar el retrato"{{/if}}>
+      <img src="{{dual}}" alt="Retrato de {{actor.name}} en sus dos formas" data-lupa>
+    </figure>
+    <figure class="av-perfil-figura" {{#if editable}}data-action="figura" data-tooltip="Cambiar la figura (token)"{{/if}}>
+      <img src="{{figura}}" alt="Figura de {{actor.name}}" data-lupa>
+    </figure>
+    <div class="av-forma" role="group" aria-label="Forma">
+      <button type="button" class="av-forma-btn seco {{#if seco}}activa{{/if}}" data-action="forma" data-forma="seco" aria-pressed="{{seco}}" {{#unless editable}}disabled{{/unless}}
+        data-tooltip="{{#if seco}}Forma humana{{else}}Agua caliente: volver a ser persona{{/if}}"><i class="fa-solid fa-sun" inert></i> SECO</button>
+      <button type="button" class="av-forma-btn mojado {{#if mojado}}activa{{/if}}" data-action="forma" data-forma="mojado" aria-pressed="{{mojado}}" {{#unless editable}}disabled{{/unless}}
+        data-tooltip="{{#if mojado}}Forma maldita{{else}}¡CHAPUZÓN! Agua fría{{/if}}"><i class="fa-solid fa-droplet" inert></i> MOJADO</button>
+    </div>
+    {{#if esGM}}<button type="button" class="av-silencio" data-action="silencio" data-tooltip="Cambiar de forma sin tarjeta ni gastar el Termo"><i class="fa-solid fa-hand-sparkles" inert></i> en silencio</button>{{/if}}
+  </aside>
+  <section class="av-hoja-cuerpo">
+    <header class="av-perfil-cab">
+      <input class="av-nombre" name="name" value="{{actor.name}}" aria-label="Nombre" {{#unless editable}}disabled{{/unless}}>
+      <input class="av-titulo" name="system.apodo" value="{{system.apodo}}" placeholder="Plancha de Hierro" aria-label="Apodo" {{#unless editable}}disabled{{/unless}}>
+      <input class="av-estilo" name="system.estilo" value="{{system.estilo}}" placeholder="Discípulo del Kempo de la Tintorería" aria-label="Estilo marcial" {{#unless editable}}disabled{{/unless}}>
+      <label class="av-globo av-globo-frase"><span class="av-oculto">Lema</span><input name="system.lema" value="{{system.lema}}" placeholder="¡Ni una arruga en mi kimono!" {{#unless editable}}disabled{{/unless}}></label>
+    </header>
+
+    <div class="av-acciones-pj">
+      <button type="button" class="av-boton av-boton-pam" data-action="tirar" {{#unless editable}}disabled{{/unless}}><i class="fa-solid fa-hand-fist" inert></i> ¡PAM!</button>
+      <button type="button" class="av-boton av-boton-cartel" data-action="cartel" {{#unless editable}}disabled{{/unless}} {{#unless mojado}}{{#unless esGM}}disabled{{/unless}}{{/unless}}
+        data-tooltip="{{#if mojado}}Levantar un Cartel de Madera (4 palabras){{else}}Solo en forma Mojada{{/if}}"><i class="fa-solid fa-signs-post" inert></i> Cartel</button>
+      <span class="av-estado-forma {{forma}}">{{#if mojado}}Mojado: solo gruñidos y Carteles{{else}}Seco: habla con normalidad{{/if}}</span>
+    </div>
+
+    <div class="av-vinetas">
+      <label class="av-vineta av-v-marcial {{#if seco}}viva{{/if}}"><span>Talento Marcial <small>forma Seca</small></span><textarea name="system.marcial" rows="3" {{#unless editable}}disabled{{/unless}}>{{system.marcial}}</textarea></label>
+      <label class="av-vineta av-v-bestia {{#if mojado}}viva{{/if}}"><span>Talento de Bestia <small>forma Mojada</small></span><textarea name="system.bestia" rows="3" {{#unless editable}}disabled{{/unless}}>{{system.bestia}}</textarea></label>
+      <label class="av-vineta av-v-maldicion"><span>Maldición de Jusenkyo</span>
+        <input name="system.maldicion" value="{{system.maldicion}}" placeholder="Fuente del Avestruz Ahogado" {{#unless editable}}disabled{{/unless}}>
+        <input name="system.animal" value="{{system.animal}}" placeholder="Animal" {{#unless editable}}disabled{{/unless}}></label>
+      <label class="av-vineta av-v-defecto"><span>Defecto cómico <small>en forma Mojada</small></span><textarea name="system.defecto" rows="3" {{#unless editable}}disabled{{/unless}}>{{system.defecto}}</textarea></label>
+      <label class="av-vineta av-v-vinculo"><span>Vínculos</span><textarea name="system.vinculo" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.vinculo}}</textarea></label>
+      <label class="av-vineta av-v-presentacion"><span>Presentación</span><textarea name="system.presentacion" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.presentacion}}</textarea></label>
+      <label class="av-vineta av-v-dignidad av-ancha"><span>Dignidad en la ¡PELEA! <small>la barra de vida: el orgullo, no la salud</small></span>
+        <input type="number" name="system.dignidad" value="{{system.dignidad}}" min="1" max="40" {{#unless editable}}disabled{{/unless}}></label>
+    </div>
+
+    {{#if privado}}
+    <section class="av-secreto" aria-label="Ficha privada">
+      <h3><i class="fa-solid fa-user-secret" inert></i> Solo para ti <small>quien dirige también la ve</small></h3>
+      <label class="av-campo"><span>Mi secreto vergonzoso</span><textarea name="system.secreto" rows="3">{{system.secreto}}</textarea></label>
+      <label class="av-campo"><span>Si algún día lo confieso…</span><input name="system.confesion" value="{{system.confesion}}" placeholder="No es obligatorio: nadie te lo va a arrancar"></label>
+      {{#if esGM}}<label class="av-campo av-gm"><span>Reto personal (dirección)</span><textarea name="system.reto" rows="2">{{system.reto}}</textarea></label>{{/if}}
+      <p class="av-nota">Los secretos son ficción del personaje: nadie tiene que confesar nada real. Quien confiesa gana +1d6 en su siguiente tirada; quien lo oculta, lo oculta, y el Juicio de las Maldiciones se lo recordará.</p>
+    </section>
+    {{else}}
+    <section class="av-secreto av-censurado" aria-label="Ficha privada de otra persona"><span>TOP SECRET</span></section>
+    {{/if}}
+
+    <section class="av-notas-sec">
+      <h3>Notas</h3>
+      {{#if editable}}<prose-mirror name="system.notas" value="{{system.notas}}" toggled>{{{notas}}}</prose-mirror>{{else}}{{{notas}}}{{/if}}
+    </section>
+  </section>
+</div>

@@ -1,0 +1,173 @@
+<div class="av-panel">
+  <nav class="av-pestanas tabs" role="tablist">
+    {{#each pestanas}}<button type="button" role="tab" class="{{#if activa}}active{{/if}}" aria-selected="{{activa}}" data-action="tab" data-group="panel" data-tab="{{id}}"><i class="fa-solid {{icono}}" inert></i> {{nombre}}</button>{{/each}}
+  </nav>
+
+  <section data-group="panel" data-tab="mesa" class="tab av-pestana {{#if (eq pestana "mesa")}}active{{/if}} av-mesa">
+    <div class="av-recuadro av-reloj">
+      <h3>Reloj real <small>120 minutos de mesa</small></h3>
+      <div class="av-reloj-fila">
+        <b class="av-reloj-num" aria-live="polite">{{reloj.texto}}</b>
+        <span class="av-reloj-tramo">{{reloj.tramo}}</span>
+        <span class="av-reloj-botones">
+          <button type="button" class="av-boton" data-action="reloj" data-op="marcha" data-tooltip="{{#if reloj.marcha}}Pausar{{else}}Poner en marcha{{/if}}"><i class="fa-solid {{#if reloj.marcha}}fa-pause{{else}}fa-play{{/if}}" inert></i></button>
+          <button type="button" class="av-boton av-boton-suave" data-action="reloj" data-op="menos" data-tooltip="−5 minutos">−5</button>
+          <button type="button" class="av-boton av-boton-suave" data-action="reloj" data-op="mas" data-tooltip="+5 minutos">+5</button>
+          <button type="button" class="av-boton av-boton-suave" data-action="reloj" data-op="cero" data-tooltip="Empezar de cero: reloj, marcadores, Termo, tablillas, retos y cortinillas"><i class="fa-solid fa-rotate-left" inert></i></button>
+        </span>
+      </div>
+      <div class="av-reloj-barra"><i style="width:{{reloj.pct}}%"></i></div>
+      {{#if reloj.aviso}}<p class="av-aviso"><i class="fa-solid fa-bell" inert></i> ¡Toca cortinilla! «{{reloj.aviso}}»</p>{{/if}}
+    </div>
+
+    <div class="av-dos">
+      <div class="av-recuadro av-medidor">
+        <h3>Desbarajuste Acuático <small>{{desbarajuste.valor}}/6</small></h3>
+        <div class="av-casillas" role="group" aria-label="Desbarajuste">
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="desbarajuste" data-delta="-1" aria-label="Bajar">−</button>
+          {{#each desbarajuste.casillas}}<button type="button" class="av-pip {{#if llena}}llena{{/if}}" data-action="marcador" data-clave="desbarajuste" data-valor="{{n}}" aria-label="Nivel {{n}}"></button>{{/each}}
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="desbarajuste" data-delta="1" aria-label="Subir">+</button>
+        </div>
+        <p>{{desbarajuste.texto}}</p>
+        <p class="av-nota">Sube con un desastre realmente nuevo; baja 1 si se dedica una escena a recoger y calmar.</p>
+      </div>
+      <div class="av-recuadro av-medidor av-noche">
+        <h3>Vapor Nocturno <small>{{vapor.valor}}/6 · Carteles de {{vapor.palabras}} palabra(s)</small></h3>
+        <div class="av-casillas" role="group" aria-label="Vapor">
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="vapor" data-delta="-1" aria-label="Bajar">−</button>
+          {{#each vapor.casillas}}<button type="button" class="av-pip {{#if llena}}llena{{/if}}" data-action="marcador" data-clave="vapor" data-valor="{{n}}" aria-label="Vapor {{n}}"></button>{{/each}}
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="vapor" data-delta="1" aria-label="Subir">+</button>
+        </div>
+        <p>{{vapor.texto}}</p>
+        <p class="av-nota">Solo en el Acto III: +1 por fiasco, por ronda de pelea y por pista sin descubrir; −1 por cerrar una válvula con brillante. A 6, Final C.</p>
+      </div>
+    </div>
+
+    <div class="av-dos">
+      <div class="av-recuadro av-termo">
+        <h3>Termo Portátil <small>{{termo.valor}}/3 cargas</small></h3>
+        <div class="av-casillas" role="group" aria-label="Termo">
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="termo" data-delta="-1" aria-label="Gastar una carga">−</button>
+          {{#each termo.casillas}}<button type="button" class="av-pip av-pip-termo {{#if llena}}llena{{/if}}" data-action="marcador" data-clave="termo" data-valor="{{n}}" aria-label="Carga {{n}}"><i class="fa-solid fa-mug-hot" inert></i></button>{{/each}}
+          <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="termo" data-delta="1" aria-label="Recargar">+</button>
+        </div>
+        <p class="av-nota">Cada carga devuelve a un personaje a su forma humana. Se rellena en cualquier fuente de calor grande; un ¡PERFECTO! regala una.</p>
+      </div>
+      <div class="av-recuadro av-tablillas">
+        <h3>Tablillas de Madera <small>antes de la medianoche</small></h3>
+        <div class="av-tablillas-fila">
+          {{#each tablillas}}<button type="button" class="av-tablilla {{#if tengo}}tengo{{/if}}" data-action="tablilla" data-n="{{n}}" aria-pressed="{{tengo}}" data-tooltip="Tablilla nº {{n}} (reto {{reto}})"><b>{{n}}</b><small>{{#if tengo}}¡en mano!{{else}}falta{{/if}}</small></button>{{/each}}
+        </div>
+        <p class="av-nota">Las que no se consigan en el día las lleva Hidetoshi a la Casa de Baños: duelo por la Escritura.</p>
+      </div>
+    </div>
+
+    <button type="button" class="av-chapuzon" data-action="chapuzonPantalla" data-tooltip="Ola de agua y sonido en todas las pantallas"><span>¡CHAPUZÓN!</span><small>un gag acuático para toda la mesa</small></button>
+
+    <h3 class="av-rotulo">Cortinillas del Guía de Jusenkyo</h3>
+    <div class="av-cortinillas">
+      {{#each cortinillas}}
+      <button type="button" class="av-cortinilla {{#if hecha}}hecha{{/if}}" data-action="cortinilla" data-id="{{id}}" data-tooltip="Activa la escena y lee la narración">
+        <img src="{{arte}}" alt=""><b>{{titulo}}</b><small>minuto {{minuto}}{{#if hecha}} · hecha{{/if}}</small>
+      </button>
+      {{/each}}
+    </div>
+    <p class="av-nota">Cortes obligatorios a los 45, 85 y 112 minutos. Si vais tarde, recortad retos: nunca cortinillas.</p>
+    <div class="av-fila-botones">
+      <button type="button" class="av-boton av-boton-suave" data-action="diario" data-clave="chuleta"><i class="fa-solid fa-note-sticky" inert></i> Chuleta</button>
+      <button type="button" class="av-boton av-boton-suave" data-action="diario" data-clave="guia"><i class="fa-solid fa-book-open" inert></i> La aventura</button>
+      <button type="button" class="av-boton av-boton-suave" data-action="seguridad"><i class="fa-solid fa-shield-heart" inert></i> Seguridad</button>
+    </div>
+  </section>
+
+  <section data-group="panel" data-tab="retos" class="tab av-pestana {{#if (eq pestana "retos")}}active{{/if}} av-retos">
+    <p class="av-nota">Elige de 6 a 8 en total. Situación → urgencia → opciones → giro de agua → secuela. Los de gran escala (R13–R16) se desbloquean con Desbarajuste 3 o más.</p>
+    <div class="av-chips">{{#each grupos}}<button type="button" class="av-chip {{#if activo}}activo{{/if}}" data-action="filtro" data-clave="{{clave}}">{{nombre}}</button>{{/each}}</div>
+    {{#each retos}}
+    <details class="av-reto {{estado}}" data-memoria="reto-{{id}}">
+      <summary><span class="av-reto-cod">{{id}}</span> <b>{{titulo}}</b> <small>{{quien}} · {{cuando}}</small>
+        {{#if tablilla}}<span class="av-sello av-sello-tablilla" data-tooltip="Tablilla nº {{tablilla}}">Tablilla {{tablilla}}</span>{{/if}}{{#if pelea}}<span class="av-sello av-sello-pelea">¡PELEA!</span>{{/if}}
+        {{#if reservado}}<span class="av-sello" data-tooltip="Se desbloquea con Desbarajuste 3 o más">Desbarajuste 3+</span>{{/if}}{{#if estado}}<span class="av-sello">{{estado}}</span>{{/if}}</summary>
+      <dl>
+        <dt>Situación</dt><dd>{{situacion}}</dd><dt>Urgencia</dt><dd>{{urgencia}}</dd><dt>Opciones</dt><dd>{{opciones}}</dd>
+        <dt>Giro de agua</dt><dd>{{giro}}</dd><dt>Secuela</dt><dd>{{secuela}}</dd>
+      </dl>
+      <div class="av-fila-botones">
+        <button type="button" class="av-boton" data-action="reto" data-id="{{id}}"><i class="fa-solid fa-droplet" inert></i> ¡A la mesa!</button>
+        <button type="button" class="av-boton av-boton-suave" data-action="escena" data-clave="{{escena}}"><i class="fa-solid fa-image" inert></i> Escena</button>
+        <button type="button" class="av-boton av-boton-suave" data-action="estadoReto" data-id="{{id}}"><i class="fa-solid fa-check" inert></i> {{#if (eq estado "resuelto")}}Reabrir{{else}}Resuelto{{/if}}</button>
+      </div>
+    </details>
+    {{/each}}
+    <div class="av-fila-botones"><button type="button" class="av-boton av-boton-fuerte" data-action="chaparron" data-tooltip="R18: un chaparrón empapa a todos los personajes"><i class="fa-solid fa-cloud-showers-heavy" inert></i> ¡Chaparrón de verano!</button></div>
+  </section>
+
+  <section data-group="panel" data-tab="pelea" class="tab av-pestana {{#if (eq pestana "pelea")}}active{{/if}} av-pestana-pelea">
+    {{#if pelea.activa}}
+    <div class="av-recuadro av-pelea-en-curso">
+      <h3>¡Pelea en curso! <small>{{#if (eq pelea.fase "fin")}}terminada{{else}}ronda {{pelea.ronda}}{{/if}}</small></h3>
+      <p>El marcador está arriba de la pantalla de toda la mesa. Cada jugador ve su mando abajo; tú manejas los bandos que no tienen dueño.</p>
+      <div class="av-fila-botones">
+        <button type="button" class="av-boton" data-action="peleaForzar"><i class="fa-solid fa-forward" inert></i> Resolver ya <small>(los que no han elegido, al azar)</small></button>
+        <button type="button" class="av-boton av-boton-fuerte" data-action="peleaTerminar"><i class="fa-solid fa-xmark" inert></i> Terminar</button>
+      </div>
+    </div>
+    {{else}}
+    <p class="av-nota">Un <b>Duelo de barrio</b> a lo máquina recreativa: Golpe &gt; Presa &gt; Parada, Dignidad, Furia, Técnica Secreta, K.O. En gente menor, una ronda; con jefes, mejor de tres.</p>
+    <h3 class="av-rotulo">Contendientes preparados <small>contra todo el grupo</small></h3>
+    <div class="av-rapidas">
+      {{#each pelea.rapidas}}<button type="button" class="av-rapida {{tipo}}" data-action="peleaRapida" data-clave="{{clave}}"><b>{{nombre}}</b><small>{{texto}}</small></button>{{/each}}
+    </div>
+    <h3 class="av-rotulo">O monta la tuya</h3>
+    <div class="av-dos av-pelea-montaje">
+      <fieldset class="av-bando"><legend>Bando A <small>los personajes</small></legend>
+        {{#each pelea.a}}<label class="av-casilla"><input type="checkbox" data-bando="a" value="{{id}}" {{#if marcado}}checked{{/if}}><img src="{{img}}" alt=""><span>{{nombre}}</span></label>{{else}}<p class="av-nota">No hay personajes jugadores.</p>{{/each}}</fieldset>
+      <fieldset class="av-bando"><legend>Bando B <small>rivales con Dignidad</small></legend>
+        {{#each pelea.b}}<label class="av-casilla"><input type="checkbox" data-bando="b" value="{{id}}" {{#if marcado}}checked{{/if}}><img src="{{img}}" alt=""><span>{{nombre}} <small>{{dignidad}}{{#if barras}} × {{barras}}{{/if}}</small></span></label>{{else}}<p class="av-nota">Importa la aventura para tener rivales.</p>{{/each}}</fieldset>
+    </div>
+    <div class="av-fila-botones av-opciones-pelea">
+      <label>Rondas a ganar <select name="rondas"><option value="0" {{#unless pelea.rondas}}selected{{/unless}}>según el rival</option><option value="1" {{#if (eq pelea.rondas 1)}}selected{{/if}}>1 (una ronda)</option><option value="2" {{#if (eq pelea.rondas 2)}}selected{{/if}}>2 (mejor de 3)</option></select></label>
+      <label>Cruces por ronda <input type="number" name="cruces" value="{{pelea.cruces}}" min="2" max="12" style="width:4em"></label>
+      <button type="button" class="av-boton av-boton-fuerte" data-action="pelea"><i class="fa-solid fa-hand-fist" inert></i> ¡A la máquina!</button>
+    </div>
+    {{/if}}
+  </section>
+
+  <section data-group="panel" data-tab="noche" class="tab av-pestana {{#if (eq pestana "noche")}}active{{/if}} av-noche-tab">
+    <div class="av-fila-botones av-izq">
+      <button type="button" class="av-boton" data-action="escena" data-clave="12-bano-exterior"><i class="fa-solid fa-building" inert></i> Casa de Baños</button>
+      <button type="button" class="av-boton" data-action="escena" data-clave="14-calderas"><i class="fa-solid fa-fire-burner" inert></i> Calderas</button>
+      <button type="button" class="av-boton" data-action="escena" data-clave="13-bano-interior"><i class="fa-solid fa-hot-tub-person" inert></i> Sala de baños</button>
+      <button type="button" class="av-boton av-boton-fuerte" data-action="tuberia"><i class="fa-solid fa-faucet-drip" inert></i> Tubería cruzada (d6)</button>
+    </div>
+    <h3 class="av-rotulo">Tres vías de información <small>nunca bloqueadas por tirada</small></h3>
+    {{#each vias}}<div class="av-recuadro"><b>{{titulo}}</b> <small>({{quien}})</small><p>{{texto}}</p></div>{{/each}}
+    <p class="av-nota">Con dos de las tres basta. Cada pista que falte: +1 Vapor de salida.</p>
+    <h3 class="av-rotulo">Finales <small>se anotan; la tarjeta solo la ves tú</small></h3>
+    <div class="av-finales">
+      {{#each finales}}<button type="button" class="av-final {{#if elegido}}elegido{{/if}}" data-action="final" data-id="{{id}}"><b>{{id}} · {{nombre}}</b><small>{{texto}}</small></button>{{/each}}
+    </div>
+    <h3 class="av-rotulo">Frases del Guía de Jusenkyo</h3>
+    <div class="av-chips">{{#each frases}}<button type="button" class="av-chip" data-action="frase" data-i="{{i}}">{{texto}}</button>{{/each}}</div>
+  </section>
+
+  <section data-group="panel" data-tab="reparto" class="tab av-pestana {{#if (eq pestana "reparto")}}active{{/if}} av-reparto">
+    <div class="av-reparto-rejilla">
+      {{#each reparto}}
+      <button type="button" class="av-tarjeta-pj {{#if mojado}}mojado{{/if}}" data-action="abrir" data-id="{{id}}">
+        <img src="{{img}}" alt="" data-retrato="{{id}}"><b>{{nombre}}</b><small>«{{apodo}}»</small>
+        <span class="av-ficha-mini {{#if mojado}}mojado{{/if}}" data-tooltip="{{#if mojado}}Mojado{{else}}Seco{{/if}}"><i class="fa-solid {{#if mojado}}fa-droplet{{else}}fa-sun{{/if}}" inert></i></span>
+        <em>{{#if duenos}}{{duenos}}{{else}}sin jugador asignado{{/if}}</em>
+      </button>
+      {{else}}<p class="av-nota">No hay personajes jugadores en el mundo.</p>{{/each}}
+    </div>
+    <p class="av-nota">Para repartir: clic derecho sobre el personaje en el directorio → Configurar propiedad, y que cada jugador lo elija en su configuración de usuario.</p>
+    <h3 class="av-rotulo">Vecinos y rivales</h3>
+    <div class="av-vecinos">{{#each vecinos}}<button type="button" data-action="abrir" data-id="{{id}}" data-tooltip="{{nombre}}"><img src="{{img}}" alt="{{nombre}}" data-retrato="{{id}}"></button>{{/each}}</div>
+    <h3 class="av-rotulo">Nerima vive sin nosotros <small>cameos en tres pasos: avistamiento, roce, despedida</small></h3>
+    {{#each cameos}}
+    <details class="av-reto" data-memoria="cameo-{{clave}}"><summary><b>{{nombre}}</b></summary>
+      <dl><dt>1 · Avistamiento</dt><dd>{{paso1}}</dd><dt>2 · Roce</dt><dd>{{paso2}}</dd><dt>3 · Despedida</dt><dd>{{paso3}}</dd></dl></details>
+    {{/each}}
+  </section>
+</div>

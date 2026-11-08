@@ -1,0 +1,24 @@
+<article class="av-tc av-tono-{{tono}} av-tipo-{{tipo}}">
+  <header class="av-tc-cabecera">
+    <span class="av-tc-cinta">{{#if icono}}<i class="{{icono}}" inert></i> {{/if}}{{etiqueta}}</span>
+    {{#if sfx}}<span class="av-tc-sfx" data-texto="{{sfx}}">{{sfx}}</span>{{/if}}
+  </header>
+  {{#if arte}}<figure class="av-tc-arte {{arteClase}}"><img src="{{arte}}" alt="{{arteAlt}}" {{#if retrato}}data-retrato="{{retrato}}"{{/if}}></figure>{{/if}}
+  {{#if cartel}}<div class="av-cartel-madera"><span>{{cartel}}</span></div>{{/if}}
+  {{#if dados}}
+  <div class="av-tc-dados" aria-label="Dados: {{#each dados}}{{valor}}{{#if cuenta}} (cuenta){{/if}} {{/each}}">
+    {{#each dados}}<span class="av-dado {{#if cuenta}}cuenta{{else}}fuera{{/if}}" data-cara="{{valor}}">{{valor}}</span>{{/each}}
+    <span class="av-tc-suma">= {{suma}}</span>
+  </div>
+  {{/if}}
+  {{#if titulo}}<h3 class="av-tc-titulo">{{titulo}}</h3>{{/if}}
+  {{#if globo}}<blockquote class="av-globo">{{{globo}}}</blockquote>{{/if}}
+  {{#if texto}}<div class="av-tc-texto">{{{texto}}}</div>{{/if}}
+  {{#if filas}}<dl class="av-tc-filas">{{#each filas}}<dt>{{clave}}</dt><dd>{{{valor}}}</dd>{{/each}}</dl>{{/if}}
+  {{#if botones}}
+  <footer class="av-tc-botones">
+    {{#each botones}}<button type="button" class="av-boton {{clase}}" data-av-accion="{{accion}}" {{{attrs}}}>{{#if icono}}<i class="{{icono}}" inert></i> {{/if}}{{etiqueta}}</button>{{/each}}
+  </footer>
+  {{/if}}
+  {{#if pie}}<p class="av-tc-pie">{{{pie}}}</p>{{/if}}
+</article>

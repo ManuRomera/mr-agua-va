@@ -1,0 +1,21 @@
+<div class="av-dialogo-cuerpo">
+  <p class="av-nota">Es una comedia, pero juega con secretos y vergüenza ficticia. Si un gag incomoda a alguien, <b>se cambia sin explicaciones</b>. Estas señales llegan a toda la mesa al instante y no dicen quién las ha pulsado.</p>
+  <div class="av-senales">
+    {{#each senales}}
+    <button type="button" class="av-boton av-senal av-senal-{{clave}}" data-action="senal" data-senal="{{clave}}">
+      <i class="fa-solid {{icono}}"></i><span>{{titulo}}</span>
+    </button>
+    {{/each}}
+  </div>
+
+  <section class="av-acuerdos">
+    <h3><i class="fa-solid fa-ban"></i> Líneas <small>no aparecen en la partida</small></h3>
+    {{#if esGM}}<textarea name="lineas" rows="3" placeholder="Una por línea">{{lineasTexto}}</textarea>
+    {{else}}{{#if lineas.length}}<ul>{{#each lineas}}<li>{{this}}</li>{{/each}}</ul>{{else}}<p class="av-tenue">Aún sin acordar.</p>{{/if}}{{/if}}
+    <h3><i class="fa-solid fa-eye-slash"></i> Velos <small>pasan fuera de plano, sin detalle</small></h3>
+    {{#if esGM}}<textarea name="velos" rows="3" placeholder="Una por línea">{{velosTexto}}</textarea>
+    {{else}}{{#if velos.length}}<ul>{{#each velos}}<li>{{this}}</li>{{/each}}</ul>{{else}}<p class="av-tenue">Aún sin acordar.</p>{{/if}}{{/if}}
+  </section>
+  {{#if esGM}}<div class="av-pie-formulario"><span class="av-tenue">Los acuerdos los guarda quien dirige.</span>
+    <button type="button" class="av-boton" data-action="guardar"><i class="fa-solid fa-floppy-disk"></i> Guardar</button></div>{{/if}}
+</div>
