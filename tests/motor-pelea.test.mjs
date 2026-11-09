@@ -184,3 +184,18 @@ test("Mandos: el banquillo ve los botones en gris y 'Pedir relevo'; los enemigos
   assert.deepEqual(misLados(p), [0, 1], "el GM ve los dos mandos");
   assert.match(htmlMando(p, 1), /rival · solo lo ves tú/);
 });
+
+test("El Jefe Final no tiene cronómetro: más de 6 Cruces no acaban la pelea por ¡TIEMPO!", async () => {
+  await reset([actor("k", "Kenji", "pj")], [actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi" })]);
+  assert.equal(estado().maxCruces, 0);
+  for (let i = 0; i < 9; i++) { await pick(0, "parada"); await pick(1, "parada"); }
+  assert.equal(estado().fase, "eleccion"); assert.equal(estado().cruce, 10);
+});
+
+test("Una pelea normal sí tiene cronómetro de 6 Cruces", async () => {
+  await reset([actor("k", "Kenji", "pj")], [actor("m", "Mariko", "pnj", { rol: "rival" })]);
+  assert.equal(estado().maxCruces, 6);
+  for (let i = 0; i < 6; i++) { await pick(0, "parada"); await pick(1, "parada"); }
+  // ¡TIEMPO! con la misma Dignidad: doble K.O. cómico y se repite la ronda (vuelve el cronómetro a empezar)
+  assert.equal(estado().ronda, 1); assert.equal(estado().cruce, 1); assert.equal(estado().lados[0].rondas + estado().lados[1].rondas, 0);
+});

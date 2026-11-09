@@ -45,7 +45,9 @@ export async function iniciarPelea({ a = [], b = [], rondasPara = 1, maxCruces =
   const lados = [ladoNuevo(a), ladoNuevo(b)];
   if (!lados[0].equipo.length || !lados[1].equipo.length) return ui.notifications.warn("Cada bando necesita al menos un luchador.");
   PICKS[0] = PICKS[1] = null;
-  await cambiarEstado({ pelea: { fase: "eleccion", ronda: 1, rondasPara: Math.max(1, Math.min(3, rondasPara)), cruce: 1, maxCruces, lados, ganador: null, peticiones: {}, relevos: {}, ayudas: {} } });
+  // Un Jefe Final no tiene cronómetro: la pelea acaba por K.O. (o por la cuenta atrás del Vapor), nunca por ¡TIEMPO!
+  const sinLimite = lados.some(l => l.equipo.some(f => f.jefe));
+  await cambiarEstado({ pelea: { fase: "eleccion", ronda: 1, rondasPara: Math.max(1, Math.min(3, rondasPara)), cruce: 1, maxCruces: sinLimite ? 0 : maxCruces, lados, ganador: null, peticiones: {}, relevos: {}, ayudas: {} } });
   banners([{ t: "RONDA 1", ms: 1500, sonido: "ronda" }, { t: "¡PELEA!", ms: 1100, sonido: "pelea", tono: "fuego" }]);
 }
 
@@ -404,7 +406,7 @@ async function resolverCruce() {
   let finRondaGanador = null, causa = null;
   const caidos = [caido(p.lados[0].equipo), caido(p.lados[1].equipo)];
   if (caidos[0] || caidos[1]) { causa = "ko"; finRondaGanador = caidos[0] && caidos[1] ? -1 : (caidos[0] ? 1 : 0); }
-  else { p.cruce += 1; if (p.cruce > p.maxCruces) { causa = "tiempo"; const t = tiempo(p.lados[0].equipo, p.lados[1].equipo); finRondaGanador = t === "doble" ? -1 : t === "a" ? 0 : 1; } }
+  else { p.cruce += 1; if (p.maxCruces && p.cruce > p.maxCruces) { causa = "tiempo"; const t = tiempo(p.lados[0].equipo, p.lados[1].equipo); finRondaGanador = t === "doble" ? -1 : t === "a" ? 0 : 1; } }
 
   let termoMas = 0, victoriaPJ = false;
   if (causa) {
@@ -574,12 +576,12 @@ function pintarHUD() {
   if (sig === firma) return;
   const previo = new Map([...hud.querySelectorAll(".av-luch")].map(el => [el.dataset.id, parseFloat(el.querySelector(".av-vida-dano")?.style.width) || 0]));
   firma = sig;
-  const restantes = Math.max(0, p.maxCruces - p.cruce + 1);
+  const restantes = p.maxCruces ? String(Math.max(0, p.maxCruces - p.cruce + 1)).padStart(2, "0") : "∞";
   const gm = game.user.isGM;
   const manejo = misLados(p);
   hud.innerHTML = `<div class="av-pelea-top">
       ${htmlLado(p.lados[0], 0, p)}
-      <div class="av-centro"><div class="av-cronometro" data-tooltip="Cruces que quedan en la ronda">${String(restantes).padStart(2, "0")}</div><div class="av-ronda-tit">${p.fase === "fin" ? "FIN" : `RONDA ${p.ronda}`}</div>
+      <div class="av-centro"><div class="av-cronometro ${p.maxCruces ? "" : "sin-limite"}" data-tooltip="${p.maxCruces ? "Cruces que quedan en la ronda" : "Sin cronómetro: se acaba por K.O."}">${restantes}</div><div class="av-ronda-tit">${p.fase === "fin" ? "FIN" : `RONDA ${p.ronda}`}</div>
         ${cuenta ? `<div class="av-cuenta" role="alert" data-tooltip="Vapor 6: vence al jefe o cierra una válvula antes de que explote">¡TIEMBLA!<b>${cuenta.restantes}</b><small>CRUCE${cuenta.restantes === 1 ? "" : "S"}</small></div>` : ""}
         ${gm ? `<div class="av-gm-mini"><button type="button" data-accion="forzar" class="av-mini" data-tooltip="Resolver ya (los que no han elegido, al azar)" ${p.fase !== "eleccion" ? "disabled" : ""}><i class="fa-solid fa-forward" inert></i></button><button type="button" data-accion="terminar" class="av-mini" data-tooltip="Terminar la pelea"><i class="fa-solid fa-xmark" inert></i></button></div>` : ""}</div>
       ${htmlLado(p.lados[1], 1, p)}

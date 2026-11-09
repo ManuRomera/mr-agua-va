@@ -1,5 +1,8 @@
 # Cambios
 
+## 1.1.2 · 2026-11-09
+- **Corregido:** el cronómetro de 6 Cruces también corría contra el Jefe Final y, al agotarse, la máquina daba **¡TIEMPO!** y proclamaba ganador al equipo con más porcentaje de Dignidad, sin que nadie hubiera caído. Ahora **un jefe no tiene cronómetro** (marca «∞» en el marcador): su pelea acaba por K.O. o por la cuenta atrás del Vapor. Las peleas normales mantienen su límite de 6 Cruces.
+
 ## 1.1.1 · 2026-11-09
 - **Sonido nuevo:** los efectos sintetizados (pitidos) se sustituyen por **muestras reales CC0** con aire de dibujos animados: chapuzón con splash, boing y plop; golpes con resortes; gong y «¡ding-dong!» en las cortinillas; toc de madera en los Carteles; campanitas en los éxitos, «¡uah!» en los fiascos; K.O. con golpe, boing de salir volando y el «kiiin» de la estrellita; ¡PERFECTO! con arpegio de campanas, alarma del QTE y vapor de agua caliente. El sintetizador queda como reserva si no cargan. Créditos en `assets/sfx/CREDITOS.md`.
 

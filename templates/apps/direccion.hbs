@@ -128,7 +128,7 @@
     </div>
     <div class="av-fila-botones av-opciones-pelea">
       <label>Rondas a ganar <select name="rondas"><option value="0" {{#unless pelea.rondas}}selected{{/unless}}>según el rival</option><option value="1" {{#if (eq pelea.rondas 1)}}selected{{/if}}>1 (una ronda)</option><option value="2" {{#if (eq pelea.rondas 2)}}selected{{/if}}>2 (mejor de 3)</option></select></label>
-      <label>Cruces por ronda <input type="number" name="cruces" value="{{pelea.cruces}}" min="2" max="12" style="width:4em"></label>
+      <label data-tooltip="Un jefe no tiene cronómetro: se acaba por K.O.">Cruces por ronda <input type="number" name="cruces" value="{{pelea.cruces}}" min="2" max="12" style="width:4em"></label>
       <button type="button" class="av-boton av-boton-fuerte" data-action="pelea"><i class="fa-solid fa-hand-fist" inert></i> ¡A la máquina!</button>
     </div>
     {{/if}}
