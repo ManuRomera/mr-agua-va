@@ -1,5 +1,9 @@
 # Cambios
 
+## 1.2.1 · 2026-11-09
+- **Corregido: el jefe no tenía ataques especiales en los mundos ya existentes.** Las actualizaciones no tocan los personajes que ya están en el mundo, así que Hidetoshi, Mariko y la Pandilla (importados con una versión anterior) no recibían sus ataques especiales ni su fase de jefe, y los personajes no tenían su técnica. Ahora, al arrancar la primera vez con una versión nueva, el sistema **pone al día los personajes de la aventura** (solo datos de combate de los rivales y técnica vacía de los PJ; nada de lo escrito a mano). También hay un botón en Configuración → ¡Agua Va! → «Poner al día los personajes».
+- **¡Round extra!** Si el jefe cae demasiado deprisa, un botón (en el marcador al terminar, y en el panel) lanza otro round: los personajes conservan su vida y su Furia, el rival sale con vida nueva (16 por defecto o la que elijas) y aparece un **ROUND 2** enorme en pantalla, más ¡PELEA!. Se puede repetir.
+
 ## 1.2.0 · 2026-11-09
 - **Modo oscuro rehecho:** los colores del sistema pasan a variables (fondo, línea, texto sobre color), así que fichas de personaje y de PNJ, panel, diarios, chuleta, tablas, código, tarjetas de chat y diálogos se leen bien en oscuro; el índice del diario resalta su selección con texto oscuro.
 - **Los retos ya no se cierran solos:** el panel repintaba toda la ventana cada pocos segundos mientras corría el reloj y plegaba lo que se estaba leyendo. Ahora el reloj se actualiza sin repintar, y las secciones plegables recuerdan si estaban abiertas aunque la ventana se repinte por otro motivo.

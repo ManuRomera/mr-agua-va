@@ -110,6 +110,7 @@
       <p>El marcador está arriba de la pantalla de toda la mesa. Cada jugador ve su mando abajo; tú manejas los bandos que no tienen dueño.</p>
       <div class="av-fila-botones">
         <button type="button" class="av-boton" data-action="peleaForzar"><i class="fa-solid fa-forward" inert></i> Resolver ya <small>(los que no han elegido, al azar)</small></button>
+        {{#if (eq pelea.fase "fin")}}<button type="button" class="av-boton av-boton-fuerte" data-action="peleaRound" data-tooltip="Otro round: los personajes como estén y el rival con vida nueva, con un ROUND enorme en pantalla"><i class="fa-solid fa-forward-fast" inert></i> ¡Round extra!</button>{{/if}}
         <button type="button" class="av-boton av-boton-fuerte" data-action="peleaTerminar"><i class="fa-solid fa-xmark" inert></i> Terminar</button>
       </div>
     </div>

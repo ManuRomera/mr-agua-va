@@ -52,6 +52,42 @@ export async function iniciarPelea({ a = [], b = [], rondasPara = 1, maxCruces =
   banners([{ t: "RONDA 1", ms: 1500, sonido: "ronda" }, { t: "¡PELEA!", ms: 1100, sonido: "pelea", tono: "fuego" }]);
 }
 
+/**
+ * ¡Round extra! Si el jefe cae demasiado deprisa: otro round con los personajes como estén (vida y Furia) y el rival con vida nueva,
+ * con un «ROUND 2» enorme en pantalla. Solo quien dirige.
+ */
+export async function nuevoRound() {
+  if (!game.user.isGM) return;
+  const p0 = estado().pelea; if (!p0) return;
+  const r = Math.max(0, p0.lados.findIndex(l => l.equipo.every(f => f.tipo === "pnj")));   // el bando rival (los PNJ)
+  const jefe = p0.lados[r].equipo.find(f => f.jefe) ?? p0.lados[r].equipo[0];
+  const vida = await DialogV2.prompt({
+    window: { title: "¡Round extra!", icon: "fa-solid fa-forward-fast" }, classes: ["mr-agua-va", "av-dialogo"],
+    content: `<div class="av-dialogo-cuerpo"><p class="av-nota">Los personajes siguen como están. ${esc(jefe.nombre)} sale con vida nueva y aparece un «ROUND ${p0.ronda + 1}» enorme en pantalla.</p>
+      <label class="av-campo"><span>Dignidad de ${esc(jefe.nombre)}</span><input type="number" name="vida" min="1" max="99" value="${jefe.max * jefe.barras}" autofocus></label></div>`,
+    ok: { label: `¡ROUND ${p0.ronda + 1}!`, icon: "fa-solid fa-forward-fast", callback: (e, b) => Number(b.form.elements.vida.value) || jefe.max * jefe.barras }, rejectClose: false
+  });
+  if (!vida) return;
+  const p = foundry.utils.deepClone(p0);
+  p.fase = "eleccion"; p.ganador = null; p.ronda += 1; p.cruce = 1; p.peticiones = {}; p.relevos = {}; p.ayudas = {};
+  p.rondasPara = Math.max(...p.lados.map(l => l.rondas)) + 1;
+  p.lados.forEach((lado, i) => {
+    lado.listo = false; lado.sinParada = false; lado.relevoPrevio = false; lado.danoRonda = 0;
+    if (i === r) {
+      lado.furia = 0; lado.activo = 0;
+      for (const f of lado.equipo) { f.max = Math.max(1, Math.ceil(vida / f.barras)); f.dig = f.max * f.barras; f.fase = 1; f.rojo = false; f.barraPrev = 1; f.provoco = false; f.enf = {}; f.entrada = false; }
+    } else {
+      if (activoDe(lado).dig <= 0) lado.activo = Math.max(0, lado.equipo.findIndex(f => f.dig > 0));
+      for (const f of lado.equipo) { f.entrada = false; f.provoco = false; f.rojo = barra(f).color === "roja" && f.dig > 0; }
+    }
+  });
+  PICKS[0] = PICKS[1] = null;
+  await cambiarEstado({ pelea: p });
+  await publicar({ tipo: "round", tono: "descomunal", icono: "fa-solid fa-forward-fast", etiqueta: `¡ROUND ${p.ronda}!`, sfx: "¡OTRA VEZ!", titulo: `¡Round ${p.ronda}!`,
+    texto: `<p>${esc(jefe.nombre)} se levanta con <b>${vida} de Dignidad</b>. Los personajes siguen con la que les quedaba.</p>`, fx: { texto: "", sonido: "gong", tono: "fuego" } }, { alias: "¡PELEA!" });
+  banners([{ t: `ROUND ${p.ronda}`, ms: 2600, sonido: "ko", tono: "ko" }, { t: "¡PELEA!", ms: 1100, sonido: "pelea", tono: "fuego" }]);
+}
+
 export async function terminarPelea() {
   if (!game.user.isGM) return;
   PICKS[0] = PICKS[1] = null;
@@ -603,7 +639,7 @@ export function htmlHUD(p) {
         ${gm ? `<div class="av-gm-mini"><button type="button" data-accion="forzar" class="av-mini" data-tooltip="Resolver ya (los que no han elegido, al azar)" ${p.fase !== "eleccion" ? "disabled" : ""}><i class="fa-solid fa-forward" inert></i></button><button type="button" data-accion="terminar" class="av-mini" data-tooltip="Terminar la pelea"><i class="fa-solid fa-xmark" inert></i></button></div>` : ""}</div>
       ${htmlLado(p.lados[1], 1, p)}
     </div>
-    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
+    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm && p.ganador !== null ? `<button type="button" class="av-boton av-boton-fuerte" data-accion="nuevoRound"><i class="fa-solid fa-forward-fast" inert></i> ¡Round ${p.ronda + 1}!</button>` : ""}${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
 }
 
 function pintarHUD() {
@@ -645,6 +681,7 @@ function alPulsar(ev) {
   const p = estado().pelea; if (!p) return;
   const accion = b.dataset.accion;
   if (accion === "terminar") return terminarPelea();
+  if (accion === "nuevoRound") return nuevoRound();
   if (accion === "forzar") return accionesMando.forzar();
   if (accion === "azar") return accionesMando.alAzar(i);
   const f = activoDe(p.lados[i]), st = local[i];

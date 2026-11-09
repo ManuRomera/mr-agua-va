@@ -5,6 +5,7 @@
 import { ID, ARTE } from "./mesa.mjs";
 import { DialogV2 } from "./compat.mjs";
 import { publicar } from "./chat.mjs";
+import AV from "./aventura.mjs";
 
 const PACK = `${ID}.aventura`;
 
@@ -33,6 +34,46 @@ export async function importarAventura({ confirmar = false } = {}) {
   await game.scenes.find(s => s.getFlag(ID, "escena") === "00-amanecer")?.activate();
   ui.notifications.info("¡Aventura importada! Empieza por el diario «¡Agua Va! · La aventura».");
   return true;
+}
+
+/**
+ * Pone al día los personajes de la aventura que ya estaban en el mundo (importados con una versión anterior): las actualizaciones del sistema
+ * no tocan los actores existentes, así que los rivales no tenían sus ataques especiales ni su fase de jefe, y los PJ no tenían su técnica.
+ * Solo se tocan los datos de combate de los rivales de la aventura y la técnica vacía de los PJ; nada de lo que hayas escrito a mano.
+ */
+export async function migrarAventura({ silencioso = false } = {}) {
+  if (!game.user.isGM) return 0;
+  let n = 0;
+  const llevan = (a, c) => a.getFlag(ID, "clave") === c;
+  for (const a of game.actors) {
+    if (a.type === "pnj") {
+      const r = AV.rivales.find(x => x.nombre === a.name || a.getFlag(ID, "rival") === x.clave);
+      if (!r) continue;
+      const s = a.system, poderes = r.poderes ?? [];
+      const igual = s.rol === "rival" && s.dignidad === r.dignidad && s.barras === r.barras && s.rondas === r.rondas && (s.jefe ?? "") === (r.jefe ?? "") && (s.poderes?.length ?? 0) === poderes.length;
+      if (igual && llevan(a, r.clave)) continue;
+      await a.update({ "system.rol": "rival", "system.dignidad": r.dignidad, "system.barras": r.barras, "system.rondas": r.rondas, "system.jefe": r.jefe ?? "", "system.poderes": poderes,
+        [`flags.${ID}.rival`]: r.clave, [`flags.${ID}.clave`]: r.clave });
+      n++;
+    } else if (a.type === "pj") {
+      const p = AV.pjs.find(x => x.nombre === a.name);
+      if (!p) continue;
+      const cambios = {};
+      if (!a.system.tecnica && p.tecnica) cambios["system.tecnica"] = p.tecnica;
+      if (!llevan(a, p.clave)) cambios[`flags.${ID}.clave`] = p.clave;
+      if (Object.keys(cambios).length) { await a.update(cambios); n++; }
+    }
+  }
+  if (n && !silencioso) ui.notifications.info(`¡Agua Va!: ${n} personaje${n === 1 ? "" : "s"} de la aventura puesto${n === 1 ? "" : "s"} al día (ataques especiales, jefe y técnicas).`);
+  return n;
+}
+
+async function migrarSiHaceFalta() {
+  if (!game.user.isGM || game.user !== game.users.activeGM) return;
+  const v = game.system.version;
+  if (game.settings.get(ID, "migrada") === v) return;
+  try { await migrarAventura(); await game.settings.set(ID, "migrada", v); }
+  catch (e) { console.error(`${ID} | la puesta al día de los personajes ha fallado`, e); }
 }
 
 async function instalarSiVacio() {
@@ -68,17 +109,19 @@ export function registrarInicio() {
     sec.innerHTML = `<h4 class="divider">¡Agua Va!</h4>
       <button type="button" data-av="panel"><i class="fa-solid fa-clapperboard" inert></i> Panel de dirección</button>
       <button type="button" data-av="escenas"><i class="fa-solid fa-sliders" inert></i> Configurador de escenas</button>
+      <button type="button" data-av="migrar"><i class="fa-solid fa-arrows-rotate" inert></i> Poner al día los personajes</button>
       <button type="button" data-av="importar"><i class="fa-solid fa-file-import" inert></i> Importar la aventura</button>`;
     sec.addEventListener("click", ev => {
       const a = ev.target.closest("button[data-av]")?.dataset.av;
       if (a === "panel") game.mrAguaVa.abrirDireccion();
       if (a === "escenas") game.mrAguaVa.abrirConfigurador();
+      if (a === "migrar") migrarAventura().then(n => { if (!n) ui.notifications.info("Los personajes de la aventura ya están al día."); });
       if (a === "importar") importarAventura({ confirmar: true });
     });
     sitio.after(sec);
   });
   Hooks.once("ready", async () => {
-    try { await instalarSiVacio(); }
+    try { await instalarSiVacio(); await migrarSiHaceFalta(); }
     catch (e) { console.error(`${ID} | la importación automática ha fallado`, e); ui.notifications.error("La importación automática ha fallado. Puedes hacerla desde Configuración → ¡Agua Va!."); }
     await bienvenida();
   });

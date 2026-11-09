@@ -18,7 +18,7 @@ import { registrarLupa } from "./module/lupa.mjs";
 import { registrarCoberturaDeFondo } from "./module/escenario.mjs";
 import { registrarInicio, importarAventura } from "./module/inicio.mjs";
 import { registrarDireccionMR, abrirConfigurador } from "./module/direccion-mr.mjs";
-import { registrarPelea, iniciarPelea, terminarPelea } from "./module/pelea.mjs";
+import { registrarPelea, iniciarPelea, terminarPelea, nuevoRound } from "./module/pelea.mjs";
 import { chapuzon, hervir, cartel, aplicarForma } from "./module/forma.mjs";
 
 Hooks.once("init", () => {
@@ -54,7 +54,7 @@ Hooks.once("init", () => {
     abrirSeguridad: () => PanelSeguridad.abrir(),
     abrirDiagnostico: () => PanelDiagnostico.abrir(),
     tirar, dialogoTirada, chapuzon, hervir, cartel, aplicarForma, chapuzonPantalla, onomatopeya, lanzarCortinilla, guiaHabla, activarEscena, importarAventura,
-    iniciarPelea, terminarPelea, estado, cambiarEstado, publicar, diagnostico
+    iniciarPelea, terminarPelea, nuevoRound, estado, cambiarEstado, publicar, diagnostico
   };
 });
 

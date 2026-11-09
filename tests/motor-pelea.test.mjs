@@ -11,7 +11,7 @@ const ajustes = new Map(); const chats = []; const socketOut = [];
 const fusion = (a, b) => { const o = structuredClone(a); for (const [k, v] of Object.entries(b ?? {})) o[k] = v && typeof v === "object" && !Array.isArray(v) && o[k] && typeof o[k] === "object" ? fusion(o[k], v) : v; return o; };
 class Cualquiera {}
 globalThis.foundry = {
-  applications: { api: { ApplicationV2: Cualquiera, HandlebarsApplicationMixin: Cualquiera, DialogV2: class { static confirm() { return true; } static prompt() { return null; } } }, sheets: { ActorSheetV2: Cualquiera }, apps: { DocumentSheetConfig: Cualquiera },
+  applications: { api: { ApplicationV2: Cualquiera, HandlebarsApplicationMixin: Cualquiera, DialogV2: class { static confirm() { return true; } static prompt() { return globalThis.__vida ?? null; } } }, sheets: { ActorSheetV2: Cualquiera }, apps: { DocumentSheetConfig: Cualquiera },
     ux: { TextEditor: { implementation: {} } }, handlebars: { renderTemplate: async () => "<article></article>", loadTemplates() {} }, instances: new Map() },
   utils: { deepClone: o => structuredClone(o), escapeHTML: s => String(s), mergeObject: (a, b) => fusion(a, b) }
 };
@@ -34,7 +34,7 @@ globalThis.game = { user: gm, users: { activeGM: gm, get: id => ({ gm, j1: jugad
   system: { version: "test" }, version: "13" };
 
 const actor = (id, name, type, sys = {}, dueno = true) => ({ id, name, type, img: `${id}.webp`, system: { forma: "seco", dignidad: type === "pj" ? 8 : 6, barras: 1, rondas: 1, jefe: "", ...sys },
-  prototypeToken: { texture: { src: `${id}.webp` } }, getFlag: () => null, testUserPermission: (u) => dueno && u.id === "j1", async update(c) { for (const [k, v] of Object.entries(c)) if (k.startsWith("system.")) this.system[k.slice(7)] = v; }, getActiveTokens: () => [] });
+  prototypeToken: { texture: { src: `${id}.webp` } }, getFlag(m, k) { return this._f?.[k] ?? null; }, testUserPermission: (u) => dueno && u.id === "j1", async update(c) { this._f ??= {}; for (const [k, v] of Object.entries(c)) { if (k.startsWith("system.")) this.system[k.slice(7)] = v; else if (k.startsWith("flags.mr-agua-va.")) this._f[k.slice(17)] = v; } }, getActiveTokens: () => [] });
 
 const mesa = await import("../module/mesa.mjs");
 const { iniciarPelea, accionesMando } = await import("../module/pelea.mjs");
@@ -232,4 +232,30 @@ test("Una pelea normal sí tiene cronómetro de 6 Cruces", async () => {
   for (let i = 0; i < 6; i++) { await pick(0, "parada"); await pick(1, "parada"); }
   // ¡TIEMPO! con la misma Dignidad: doble K.O. cómico y se repite la ronda (vuelve el cronómetro a empezar)
   assert.equal(estado().ronda, 1); assert.equal(estado().cruce, 1); assert.equal(estado().lados[0].rondas + estado().lados[1].rondas, 0);
+});
+
+test("¡Round extra!: los personajes conservan su vida y el jefe sale con vida nueva", async () => {
+  const jefe = actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi", poderes: [CHORRO] });
+  await reset([actor("k", "Kenji", "pj"), actor("d", "Daiki", "pj")], [jefe]);
+  await cambia(p => { p.fase = "fin"; p.ganador = 0; p.lados[0].rondas = 1; p.lados[0].equipo[0].dig = 5; p.lados[0].equipo[1].dig = 3; p.lados[0].furia = 2; p.lados[1].equipo[0].dig = 0; p.lados[1].furia = 3; });
+  const { nuevoRound } = await import("../module/pelea.mjs");
+  globalThis.__vida = 16; await nuevoRound(); globalThis.__vida = null;
+  const p = estado();
+  assert.equal(p.fase, "eleccion"); assert.equal(p.ronda, 2); assert.equal(p.cruce, 1); assert.equal(p.rondasPara, 2);
+  assert.deepEqual(p.lados[0].equipo.map(f => f.dig), [5, 3], "los personajes conservan su vida");
+  assert.equal(p.lados[0].furia, 2);
+  assert.equal(p.lados[1].equipo[0].dig, 16); assert.equal(p.lados[1].furia, 0); assert.equal(p.lados[1].equipo[0].fase, 1);
+  assert.ok(chats.some(c => c.flags?.["mr-agua-va"]?.tipo === "round"));
+});
+
+test("Migración: los rivales importados con una versión antigua reciben jefe y ataques especiales", async () => {
+  const viejo = actor("h", "Capitán Hidetoshi", "pnj", { rol: "vecino", dignidad: 8, barras: 2, rondas: 2, poderes: [] });
+  const kenji = actor("k", "Kenji", "pj", { tecnica: "" });
+  game.actors._l = [viejo, kenji]; game.actors[Symbol.iterator] = function* () { yield* this._l; };
+  const { migrarAventura } = await import("../module/inicio.mjs");
+  assert.equal(await migrarAventura({ silencioso: true }), 2);
+  assert.equal(viejo.system.jefe, "hidetoshi"); assert.equal(viejo.system.dignidad, 16); assert.equal(viejo.system.barras, 1); assert.equal(viejo.system.rol, "rival");
+  assert.ok(viejo.system.poderes.length >= 3 && viejo.system.poderes.every(p => p.nombre && p.frase));
+  assert.match(kenji.system.tecnica, /Plancha/);
+  assert.equal(await migrarAventura({ silencioso: true }), 0, "la segunda vez no cambia nada");
 });

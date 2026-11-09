@@ -10,7 +10,7 @@ import { DESBARAJUSTE, VAPOR, tramo, minutosReloj, cortinillaPendiente, maxPalab
 import { publicar } from "../chat.mjs";
 import { chapuzonPantalla } from "../efectos.mjs";
 import { pintarRetratos } from "../retrato.mjs";
-import { iniciarPelea, terminarPelea, accionesMando } from "../pelea.mjs";
+import { iniciarPelea, terminarPelea, nuevoRound, accionesMando } from "../pelea.mjs";
 import { chapuzon, formaDe, tokenForma } from "../forma.mjs";
 import { abrirConfigurador, accionDireccion, escenasDeLaAventura, api as apiDireccion } from "../direccion-mr.mjs";
 import AV from "../aventura.mjs";
@@ -88,7 +88,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
       final: PanelDireccion.#final, abrir: (ev, b) => game.actors.get(b.dataset.id)?.sheet.render(true),
       diario: (ev, b) => game.journal.find(j => j.getFlag(ID, "clave") === b.dataset.clave)?.sheet.render(true),
       seguridad: () => game.mrAguaVa.abrirSeguridad(), filtro: PanelDireccion.#filtro,
-      pelea: PanelDireccion.#pelea, peleaRapida: PanelDireccion.#peleaRapida, peleaTerminar: () => terminarPelea(), peleaForzar: () => accionesMando.forzar()
+      pelea: PanelDireccion.#pelea, peleaRapida: PanelDireccion.#peleaRapida, peleaTerminar: () => terminarPelea(), peleaRound: () => nuevoRound(), peleaForzar: () => accionesMando.forzar()
     }
   };
   static PARTS = { panel: { template: `${RUTA}/templates/apps/direccion.hbs`, scrollable: [".av-pestana"] } };
