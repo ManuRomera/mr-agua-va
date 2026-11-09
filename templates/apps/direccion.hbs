@@ -153,6 +153,27 @@
     <div class="av-chips">{{#each frases}}<button type="button" class="av-chip" data-action="frase" data-i="{{i}}">{{texto}}</button>{{/each}}</div>
   </section>
 
+  <section data-group="panel" data-tab="escenas" class="tab av-pestana {{#if (eq pestana "escenas")}}active{{/if}} av-escenas">
+    <p class="av-nota">El <b>configurador de escenas</b> es el de <b>MR- Dirección</b>: reparto de cada escena, línea del horizonte y puntos de apoyo del suelo (la figura se escala sola según la profundidad), tamaño y posición relativa de las fichas. ¡Agua Va! ya le entrega el reparto y los apoyos de sus 17 escenas; aquí los afinas.</p>
+    {{#unless direccionActiva}}<p class="av-aviso"><i class="fa-solid fa-triangle-exclamation" inert></i> MR- Dirección no está activo en este mundo. <button type="button" class="av-boton av-boton-suave" data-action="configurador">Cómo instalarlo</button></p>{{/unless}}
+    <div class="av-fila-botones av-izq">
+      <button type="button" class="av-boton av-boton-fuerte" data-action="configurador"><i class="fa-solid fa-sliders" inert></i> Configurar la escena actual</button>
+      <button type="button" class="av-boton" data-action="colocar" data-tooltip="Coloca en la escena que estás viendo a su reparto, con tamaño por perspectiva"><i class="fa-solid fa-people-group" inert></i> Colocar el reparto</button>
+      <button type="button" class="av-boton" data-action="tamano" data-tooltip="Pone todas las fichas de la escena al tamaño elegido (con perspectiva si hay suelo marcado)"><i class="fa-solid fa-up-right-and-down-left-from-center" inert></i> Tamaño de las figuras</button>
+      <button type="button" class="av-boton av-boton-suave" data-action="tamanoSel" data-tooltip="Solo las fichas seleccionadas"><i class="fa-solid fa-arrows-up-down-left-right" inert></i> Solo seleccionadas</button>
+    </div>
+    <div class="av-escenas-rejilla">
+      {{#each escenas}}
+      <figure class="av-escena {{#if activa}}activa{{/if}}">
+        <img src="{{thumb}}" alt="" loading="lazy">
+        <figcaption><b>{{nombre}}</b><small>{{#if reparto}}{{reparto}} figura(s){{else}}sin reparto{{/if}}{{#if vista}} · la estás viendo{{/if}}</small></figcaption>
+        <div class="av-escena-botones"><button type="button" class="av-boton av-boton-suave" data-action="escenaVer" data-id="{{id}}" aria-label="Ver la escena"><i class="fa-solid fa-eye" inert></i></button>
+          <button type="button" class="av-boton av-boton-suave" data-action="escenaConfig" data-id="{{id}}" aria-label="Configurar la escena"><i class="fa-solid fa-sliders" inert></i></button></div>
+      </figure>
+      {{/each}}
+    </div>
+  </section>
+
   <section data-group="panel" data-tab="reparto" class="tab av-pestana {{#if (eq pestana "reparto")}}active{{/if}} av-reparto">
     <div class="av-reparto-rejilla">
       {{#each reparto}}

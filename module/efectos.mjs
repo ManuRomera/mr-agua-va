@@ -121,15 +121,29 @@ export function sonar(clave) {
 
 const sinMovimiento = () => document.body.classList.contains("av-sin-movimiento");
 
-/** Onomatopeya grande que cruza la pantalla. */
+/**
+ * Cola única de mensajes a pantalla completa (onomatopeyas y carteles de la ¡PELEA!): salen de uno en uno,
+ * para que nunca se pisen y se pueda leer cada uno. `fn` muestra el mensaje y devuelve cuántos ms debe durar.
+ */
+let cola = Promise.resolve();
+export function colaPantalla(fn) {
+  cola = cola.then(() => new Promise(res => { let ms = 0; try { ms = fn() || 0; } catch (e) { console.warn(`${ID} |`, e); } setTimeout(res, ms); })).catch(() => {});
+  return cola;
+}
+
+/** Onomatopeya grande que cruza la pantalla (en cola con los demás mensajes). */
 export function onomatopeya(texto, { tono = "amarillo", anillos = false } = {}) {
-  if (!game.settings.get(ID, "efectos")) return;
-  const capa = document.createElement("div");
-  capa.className = `mr-agua-va av-fx av-fx-${tono}${anillos ? " av-fx-anillos" : ""}${sinMovimiento() ? " quieto" : ""}`;
-  capa.setAttribute("aria-hidden", "true");
-  capa.innerHTML = `${anillos ? "<i></i><i></i><i></i>" : ""}<b data-texto="${texto}">${texto}</b>`;
-  document.body.append(capa);
-  setTimeout(() => capa.remove(), sinMovimiento() ? 900 : 1700);
+  if (!texto || !game.settings.get(ID, "efectos")) return;
+  colaPantalla(() => {
+    const dur = sinMovimiento() ? 900 : 1300;
+    const capa = document.createElement("div");
+    capa.className = `mr-agua-va av-fx av-fx-${tono}${anillos ? " av-fx-anillos" : ""}${sinMovimiento() ? " quieto" : ""}`;
+    capa.setAttribute("aria-hidden", "true");
+    capa.innerHTML = `${anillos ? "<i></i><i></i><i></i>" : ""}<b data-texto="${texto}">${texto}</b>`;
+    document.body.append(capa);
+    setTimeout(() => capa.remove(), dur);
+    return dur;
+  });
 }
 
 /** ¡CHAPUZÓN! de pantalla para toda la mesa. */

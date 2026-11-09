@@ -1,0 +1,1293 @@
+{
+ "schema": 1,
+ "id": "mr-agua-va",
+ "title": "¡Agua Va!",
+ "version": "1.2.0",
+ "author": "Manu Romera",
+ "license": "MIT",
+ "settings": {
+  "fade": 3.5,
+  "motifs": [],
+  "effects": [
+   {
+    "id": "chapuzon",
+    "label": "¡Chapuzón!",
+    "icon": "droplet",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/splash_a.mp3"
+    }
+   },
+   {
+    "id": "boing",
+    "label": "Boing",
+    "icon": "burst",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/boing_a.mp3"
+    }
+   },
+   {
+    "id": "golpe",
+    "label": "Golpe",
+    "icon": "hand-fist",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/hit_c.mp3"
+    }
+   },
+   {
+    "id": "madera",
+    "label": "Cartel de madera",
+    "icon": "signs-post",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/wood_a.mp3"
+    }
+   },
+   {
+    "id": "gong",
+    "label": "Gong",
+    "icon": "bell",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/gong_a.mp3"
+    }
+   },
+   {
+    "id": "dingdong",
+    "label": "¡Ding-dong!",
+    "icon": "bell-concierge",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/bell_c.mp3"
+    }
+   },
+   {
+    "id": "kiin",
+    "label": "Estrellita",
+    "icon": "star",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/bell_b.mp3"
+    }
+   },
+   {
+    "id": "plop",
+    "label": "Plop",
+    "icon": "circle-dot",
+    "sound": {
+     "src": "systems/mr-agua-va/assets/sfx/plop.mp3"
+    }
+   }
+  ],
+  "markers": {
+   "milestones": [],
+   "clocks": []
+  }
+ },
+ "scenes": [
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "00-amanecer"
+    ]
+   },
+   "order": 0,
+   "name": "Cortinilla · Buenos días",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/00-amanecer-thumb.webp",
+   "stage": {
+    "mode": "none"
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "01-mediodia"
+    ]
+   },
+   "order": 1,
+   "name": "Cortinilla · A comer",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/01-mediodia-thumb.webp",
+   "stage": {
+    "mode": "none"
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "02-noche"
+    ]
+   },
+   "order": 2,
+   "name": "Cortinilla · Buenas noches",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/02-noche-thumb.webp",
+   "stage": {
+    "mode": "none"
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "03-nuevo-amanecer"
+    ]
+   },
+   "order": 3,
+   "name": "Cortinilla · Nuevo amanecer",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/03-nuevo-amanecer-thumb.webp",
+   "stage": {
+    "mode": "none"
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "04-dojo-exterior"
+    ]
+   },
+   "order": 4,
+   "name": "El Bambú Torcido",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yuzuki"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/04-dojo-exterior-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "05-dojo-interior"
+    ]
+   },
+   "order": 5,
+   "name": "Dentro del dojo",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/05-dojo-interior-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.45,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "06-calle-nerima"
+    ]
+   },
+   "order": 6,
+   "name": "La calle comercial",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "tendera"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/06-calle-nerima-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.48,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "07-mercadillo"
+    ]
+   },
+   "order": 7,
+   "name": "El mercadillo",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/07-mercadillo-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.46,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "08-supermercado"
+    ]
+   },
+   "order": 8,
+   "name": "El supermercado",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mariko"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/08-supermercado-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.45,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "09-canal"
+    ]
+   },
+   "order": 9,
+   "name": "El canal",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "ramen"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/09-canal-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "10-jardin-te"
+    ]
+   },
+   "order": 10,
+   "name": "El jardín de té",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "matsu"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/10-jardin-te-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "11-lavanderia"
+    ]
+   },
+   "order": 11,
+   "name": "La lavandería",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/11-lavanderia-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.45,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "12-bano-exterior"
+    ]
+   },
+   "order": 12,
+   "name": "El Vapor Feliz",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/12-bano-exterior-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "13-bano-interior"
+    ]
+   },
+   "order": 13,
+   "name": "La sala de baños",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "hidetoshi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "pandilla"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yuzuki"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/13-bano-interior-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.42,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "14-calderas"
+    ]
+   },
+   "order": 14,
+   "name": "La sala de calderas",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/14-calderas-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.45,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "15-tejados"
+    ]
+   },
+   "order": 15,
+   "name": "Los tejados",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/15-tejados-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  },
+  {
+   "ref": {
+    "flag": [
+     "mr-agua-va",
+     "escena",
+     "16-estanque-caos"
+    ]
+   },
+   "order": 16,
+   "name": "El estanque",
+   "reading": null,
+   "music": null,
+   "motifs": [],
+   "cues": [],
+   "ambient": null,
+   "figures": [
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "kenji"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "mako"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "daiki"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "yumi"
+      ]
+     },
+     "label": ""
+    },
+    {
+     "ref": {
+      "flag": [
+       "mr-agua-va",
+       "clave",
+       "hidetoshi"
+      ]
+     },
+     "label": ""
+    }
+   ],
+   "handouts": [],
+   "notes": "",
+   "thumb": "systems/mr-agua-va/assets/escenas/16-estanque-caos-thumb.webp",
+   "stage": {
+    "mode": "horizon",
+    "eye": 0.5,
+    "anchors": [
+     [
+      0.3,
+      0.86
+     ],
+     [
+      0.5,
+      0.9
+     ],
+     [
+      0.7,
+      0.86
+     ]
+    ]
+   }
+  }
+ ]
+}

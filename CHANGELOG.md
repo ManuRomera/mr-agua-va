@@ -1,5 +1,15 @@
 # Cambios
 
+## 1.2.0 · 2026-11-09
+- **Modo oscuro rehecho:** los colores del sistema pasan a variables (fondo, línea, texto sobre color), así que fichas de personaje y de PNJ, panel, diarios, chuleta, tablas, código, tarjetas de chat y diálogos se leen bien en oscuro; el índice del diario resalta su selección con texto oscuro.
+- **Los retos ya no se cierran solos:** el panel repintaba toda la ventana cada pocos segundos mientras corría el reloj y plegaba lo que se estaba leyendo. Ahora el reloj se actualiza sin repintar, y las secciones plegables recuerdan si estaban abiertas aunque la ventana se repinte por otro motivo.
+- **El talento en combate siempre ayuda:** los personajes suman +1d6 automático por su Talento (Marcial o de Bestia) en cada tirada de ¡PELEA!; ya no hay casilla que marcar. Quien dirige decide el de los PNJ.
+- **Ataques especiales de los PNJ:** cada PNJ puede tener varios, editables en su ficha (nombre, frase, coste de Furia, daño extra, recarga, área). En el mando de quien dirige son botones que **dicen su frase solos** (tarjeta de chat y cartel en pantalla). Los jefes los tienen baratos o gratis para **atacar antes que los demás**: Hidetoshi (Chorro Cristalino, Salto de Trampolín, Torrente Olímpico de área, Estilo Libre Desatado), Mariko y la Pandilla. El Torrente del jefe pasa a ser un ataque de área genérico con QTE.
+- **Técnica Secreta sugerida:** cada personaje tiene su técnica en la ficha, y el mando se la sugiere en la línea del nombre del golpe y la rellena al pulsar Técnica Secreta.
+- **Mensajes sin pisarse:** onomatopeyas y carteles de la pelea comparten una cola única y salen de uno en uno.
+- **Configurador de escenas (MR- Dirección):** el paquete `content/direccion-es.json` entrega al módulo el reparto de las 17 escenas, el horizonte, los puntos de apoyo del suelo y 8 efectos de sonido; el Panel tiene una pestaña **Escenas** (ver, configurar, colocar el reparto, tamaño de las figuras), hay botón en Configuración y en la barra de herramientas. Si el módulo no está activo, se explica cómo instalarlo (el sistema lo recomienda).
+- Pruebas: 37 (con arnés visual del modo oscuro y del marcador de la pelea).
+
 ## 1.1.2 · 2026-11-09
 - **Corregido:** el cronómetro de 6 Cruces también corría contra el Jefe Final y, al agotarse, la máquina daba **¡TIEMPO!** y proclamaba ganador al equipo con más porcentaje de Dignidad, sin que nadie hubiera caído. Ahora **un jefe no tiene cronómetro** (marca «∞» en el marcador): su pelea acaba por K.O. o por la cuenta atrás del Vapor. Las peleas normales mantienen su límite de 6 Cruces.
 

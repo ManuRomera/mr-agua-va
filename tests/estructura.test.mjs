@@ -48,3 +48,21 @@ test("todas las muestras de sonido que cita efectos.mjs existen", () => {
   assert.ok(nombres.length > 20);
   for (const n of new Set(nombres)) assert.ok(fs.existsSync(`assets/sfx/${n}.mp3`), n);
 });
+
+test("el paquete de MR- Dirección cubre las 17 escenas y sus actores existen en la aventura", () => {
+  const pack = JSON.parse(leer("content/direccion-es.json"));
+  assert.equal(pack.scenes.length, 17);
+  const aventura = JSON.parse(leer("_data/aventura.json"))[0];
+  const claves = new Set(aventura.actors.map(a => a.flags["mr-agua-va"].clave));
+  const escenas = new Set(aventura.scenes.map(s => s.flags["mr-agua-va"].escena));
+  for (const s of pack.scenes) {
+    assert.ok(escenas.has(s.ref.flag[2]), s.ref.flag[2]);
+    for (const f of s.figures) assert.ok(claves.has(f.ref.flag[2]), f.ref.flag[2]);
+  }
+});
+
+test("el modo oscuro redefine las variables de fondo, línea y texto", () => {
+  const css = leer("styles/mr-agua-va.css");
+  const oscuro = css.slice(css.indexOf("body.av-oscuro {"), css.indexOf("}", css.indexOf("body.av-oscuro {")));
+  for (const v of ["--av-papel", "--av-tinta", "--av-linea", "--av-blanco", "--av-campo"]) assert.ok(oscuro.includes(v), v);
+});

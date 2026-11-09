@@ -38,6 +38,8 @@
       <label class="av-vineta av-v-defecto"><span>Defecto cómico <small>en forma Mojada</small></span><textarea name="system.defecto" rows="3" {{#unless editable}}disabled{{/unless}}>{{system.defecto}}</textarea></label>
       <label class="av-vineta av-v-vinculo"><span>Vínculos</span><textarea name="system.vinculo" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.vinculo}}</textarea></label>
       <label class="av-vineta av-v-presentacion"><span>Presentación</span><textarea name="system.presentacion" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.presentacion}}</textarea></label>
+      <label class="av-vineta av-v-tecnica av-ancha"><span>Técnica Secreta <small>nombre a gritos: se sugiere en el mando de combate</small></span>
+        <input name="system.tecnica" value="{{system.tecnica}}" placeholder="¡Kempo de la Plancha Voladora!" {{#unless editable}}disabled{{/unless}}></label>
       <label class="av-vineta av-v-dignidad av-ancha"><span>Dignidad en la ¡PELEA! <small>la barra de vida: el orgullo, no la salud</small></span>
         <input type="number" name="system.dignidad" value="{{system.dignidad}}" min="1" max="40" {{#unless editable}}disabled{{/unless}}></label>
     </div>

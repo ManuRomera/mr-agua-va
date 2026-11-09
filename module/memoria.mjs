@@ -89,6 +89,9 @@ export function ConMemoria(Base) {
     async _onRender(context, options) {
       await super._onRender(context, options);
       for (const d of this.element.querySelectorAll("details[data-memoria]")) {
+        // Al repintar (cambia un marcador, corre el reloj…) cada sección conserva su estado abierto o cerrado.
+        const guardada = this._memoria.secciones[d.dataset.memoria];
+        if (guardada !== undefined) d.open = guardada;
         d.addEventListener("toggle", () => this.#recordarSeccion(d.dataset.memoria, d.open));
       }
       if (options.isFirstRender) {

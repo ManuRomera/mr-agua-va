@@ -107,7 +107,7 @@ def ficha_pj(p):
   {img(f"retratos/pj-{k}.webp", "pj2-dual")}
   <p class="globo pj-frase">«{e(p["lema"])}»</p>
   <div class="pj2-formas">
-    <div class="forma-caja seco"><h2>SECO <span>humano</span></h2><dl><dt>Talento Marcial</dt><dd>{e(p["marcial"])}</dd><dt>Presentación</dt><dd>{e(p["presentacion"])}</dd><dt>Vínculos</dt><dd>{e(p["vinculo"])}</dd></dl></div>
+    <div class="forma-caja seco"><h2>SECO <span>humano</span></h2><dl><dt>Talento Marcial</dt><dd>{e(p["marcial"])}</dd><dt>Técnica Secreta</dt><dd>{e(p["tecnica"])}</dd><dt>Vínculos</dt><dd>{e(p["vinculo"])}</dd></dl></div>
     <div class="forma-caja mojado"><h2>MOJADO <span>{e(p["animal"])}</span></h2><dl><dt>{e(p["maldicion"])}</dt><dd>{e(p["descripcion_animal"])}</dd><dt>Talento de Bestia</dt><dd>{e(p["bestia"])}</dd><dt>Defecto cómico</dt><dd>{e(p["defecto"])}</dd></dl></div>
   </div>
   <div class="pj2-secreto"><b>SOLO DIRECCIÓN Y JUGADOR</b> Secreto vergonzoso: {e(p["secreto"])} <b>Confesión posible</b> {e(p["confesion"])}<br><b>Reto personal</b> {e(p["reto"])}</div>

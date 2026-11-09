@@ -30,11 +30,11 @@ for i, p in enumerate(AV["pjs"]):
     if not (hay(f"personajes/pj-{k}-seco.webp") and hay(f"personajes/pj-{k}-mojado.webp")): continue
     formas = {f: {"img": f"{R}/personajes/pj-{k}-{f}-cara.webp", "cara": f"{R}/personajes/pj-{k}-{f}-cara.webp", "token": f"{R}/personajes/pj-{k}-{f}.webp"} for f in ("seco", "mojado")}
     actores.append({"_id": uid(f"pj-{k}"), "name": p["nombre"], "type": "pj", "img": formas["seco"]["img"], "folder": F["Personajes malditos"], "sort": i,
-        "system": {"apodo": p["apodo"], "estilo": p["estilo"], "lema": p["lema"], "forma": "seco", "marcial": p["marcial"], "maldicion": p["maldicion"], "animal": p["animal"],
+        "system": {"tecnica": p.get("tecnica", ""), "apodo": p["apodo"], "estilo": p["estilo"], "lema": p["lema"], "forma": "seco", "marcial": p["marcial"], "maldicion": p["maldicion"], "animal": p["animal"],
                    "bestia": p["bestia"], "defecto": p["defecto"], "vinculo": p["vinculo"], "presentacion": p["presentacion"], "secreto": p["secreto"],
                    "confesion": p["confesion"], "reto": p["reto"], "dignidad": 8, "notas": ""},
         "prototypeToken": token(formas["seco"]["token"], nombre=p["nombre"]), "ownership": {"default": 0},
-        "flags": {ID: {"formas": formas, "retratoDual": f"{R}/retratos/pj-{k}.webp", "color": p["color"]}}})
+        "flags": {ID: {"clave": k, "formas": formas, "retratoDual": f"{R}/retratos/pj-{k}.webp", "color": p["color"]}}})
 
 RIV = {r["clave"]: r for r in AV["rivales"]}
 PNJ = [  # (archivo, nombre, papel, frase, descripción, rival?)
@@ -54,9 +54,9 @@ for i, (k, nombre, papel, frase, desc, rival) in enumerate(PNJ):
     ancho = 1.6 if k in ("pnj-esbirro", "guia-manana") else 1.2
     actores.append({"_id": uid(f"pnj-{k}"), "name": nombre, "type": "pnj", "img": f"{R}/personajes/{k}-cara.webp", "folder": F["Rivales y vecinos"], "sort": i,
         "system": {"papel": papel, "frase": frase, "descripcion": desc, "tecnica": r.get("tecnica", ""), "secreto": r.get("secreto", ""),
-                   "rol": "rival" if rival else "vecino", "jefe": r.get("jefe", ""), "dignidad": r.get("dignidad", 6), "barras": r.get("barras", 1), "rondas": r.get("rondas", 1), "notas": ""},
+                   "rol": "rival" if rival else "vecino", "jefe": r.get("jefe", ""), "poderes": r.get("poderes", []), "dignidad": r.get("dignidad", 6), "barras": r.get("barras", 1), "rondas": r.get("rondas", 1), "notas": ""},
         "prototypeToken": token(f"{R}/personajes/{k}.webp", ancho, 1.8, nombre) | {"disposition": -1 if rival else 0, "actorLink": True},
-        "ownership": {"default": 0}, "flags": {ID: ({"rival": rival} if rival else {})}})
+        "ownership": {"default": 0}, "flags": {ID: ({"rival": rival} if rival else {}) | {"clave": rival or k.replace("pnj-", "").replace("-manana", "")}}})
 
 # ---------- Escenas ----------
 ESCENAS = [  # clave, nombre, carpeta, nav

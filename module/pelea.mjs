@@ -9,13 +9,13 @@
 import { ID, estado, cambiarEstado, alRecibir, difundir, SOCKET } from "./mesa.mjs";
 import { DialogV2 } from "./compat.mjs";
 import { publicar } from "./chat.mjs";
-import { sonar } from "./efectos.mjs";
+import { sonar, colaPantalla } from "./efectos.mjs";
 import { POSTURAS, MAX_FURIA, CRUCES_POR_RONDA, CURA_SERENIDAD, dominante, danoDe, barra, tiempo, caido } from "./reglas.mjs";
 import { lanzarPam } from "./tirada.mjs";
 import { formaDe, tokenForma, caraForma, chapuzon, hervir } from "./forma.mjs";
 
 const esc = s => foundry.utils.escapeHTML(String(s ?? ""));
-const ELECCIONES = ["golpe", "presa", "parada", "hervir", "serenidad", "evasion", "tecnica"];
+const ELECCIONES = ["golpe", "presa", "parada", "hervir", "serenidad", "evasion", "tecnica", "poder"];
 const PASIVAS = ["hervir", "serenidad"];                  // cuentan como Parada, sin contraataque
 const CUESTAN_FURIA = ["tecnica", "evasion", "serenidad"]; // gastan los 3 puntos
 const QTE_MS = 4000;
@@ -32,7 +32,8 @@ const PICKS = [null, null];
 export function luchador(actor) {
   const s = actor.system, pj = actor.type === "pj";
   const max = Math.max(1, s.dignidad || (pj ? 8 : 6)), barras = pj ? 1 : Math.max(1, s.barras || 1);
-  return { id: actor.id, nombre: actor.name, apodo: s.apodo ?? "", tipo: actor.type, max, barras, dig: max * barras, jefe: pj ? "" : (s.jefe ?? ""), fase: 1,
+  return { id: actor.id, nombre: actor.name, apodo: s.apodo ?? "", tipo: actor.type, max, barras, dig: max * barras, jefe: pj ? "" : (s.jefe ?? ""), fase: 1, tecnica: pj ? (s.tecnica ?? "") : "", enf: {},
+    poderes: pj ? [] : (s.poderes ?? []).map(p => ({ nombre: p.nombre, frase: p.frase, coste: p.coste, extra: p.extra, recarga: p.recarga, area: Boolean(p.area) })),
     forma: pj ? formaDe(actor) : "seco", cara: caraForma(actor), entrada: false, provoco: false, rojo: false, barraPrev: 1, rondas: s.rondas ?? 1 };
 }
 
@@ -84,8 +85,15 @@ const RECEPTORES = {
     if (CUESTAN_FURIA.includes(eleccion) && lado.furia < MAX_FURIA) return ui.notifications.warn("Faltan los 3 puntos de Furia.");
     if (eleccion === "parada" && lado.sinParada) return;
     if (eleccion === "hervir" && f.forma !== "mojado") return;
+    if (eleccion === "poder") {
+      const pw = f.poderes?.[Number(d.poder)];
+      if (!pw || f.tipo === "pj") return;
+      if (lado.furia < pw.coste) return ui.notifications.warn(`Faltan puntos de Furia para «${pw.nombre}».`);
+      if ((f.enf?.[d.poder] ?? 0) > 0) return ui.notifications.warn(`«${pw.nombre}» se está recargando.`);
+    }
     const prev = PICKS[d.lado];
-    PICKS[d.lado] = { eleccion, talento: Boolean(d.talento), entorno: Boolean(d.entorno), asistentes: prev?.asistentes ?? [], relevo: prev?.relevo ?? null,
+    // El talento de un PJ en combate siempre ayuda (es su arte marcial): +1d6 automático. Quien dirige decide el de los PNJ.
+    PICKS[d.lado] = { eleccion, poder: eleccion === "poder" ? Number(d.poder) : null, talento: f.tipo === "pj" ? true : Boolean(d.talento), entorno: Boolean(d.entorno), asistentes: prev?.asistentes ?? [], relevo: prev?.relevo ?? null,
       golpe: String(d.golpe ?? "").slice(0, 50), fuente: d.fuente === "escena" ? "escena" : "termo" };
     await marcarListo(d.lado, true);
     if (PICKS[0]?.eleccion && PICKS[1]?.eleccion) return resolver();
@@ -170,8 +178,11 @@ export const accionesMando = {
   async alAzar(lado) {
     if (!game.user.isGM) return;
     const p = estado().pelea, l = p.lados[lado];
-    const opciones = ["golpe", "presa", ...(l.sinParada ? [] : ["parada"]), ...(l.furia >= MAX_FURIA ? ["tecnica"] : [])];
-    return RECEPTORES.pick({ lado, eleccion: azar(opciones), golpe: "", talento: Math.random() < 0.5, entorno: false }, game.user);
+    const f = activoDe(l);
+    const listos = (f.poderes ?? []).map((pw, k) => [pw, k]).filter(([pw, k]) => l.furia >= pw.coste && !(f.enf?.[k] > 0));
+    const opciones = ["golpe", "presa", ...(l.sinParada ? [] : ["parada"]), ...listos.map(([, k]) => `poder:${k}`), ...(f.tipo === "pj" && l.furia >= MAX_FURIA ? ["tecnica"] : [])];
+    const e = azar(opciones), esPoder = e.startsWith("poder:");
+    return RECEPTORES.pick({ lado, eleccion: esPoder ? "poder" : e, poder: esPoder ? Number(e.slice(6)) : null, golpe: "", talento: Math.random() < 0.5, entorno: false }, game.user);
   },
   async forzar() { if (game.user.isGM) return resolver(); }
 };
@@ -221,7 +232,7 @@ async function tirarLado(p, i, pick) {
   const lado = p.lados[i], f = activoDe(lado), actor = game.actors.get(f.id);
   const ayudas = (pick.asistentes ?? []).filter(id => lado.equipo.some((x, k) => x.id === id && k !== lado.activo && x.dig > 0)).length;
   const canon = f.jefe === "hidetoshi" && f.fase === 1 ? 1 : 0;   // el cañón de agua da +1d6 en la fase 1
-  const r = await lanzarPam({ talento: pick.talento, ayudas, extra: (pick.entorno ? 1 : 0) + (pick.eleccion === "tecnica" ? 1 : 0) + (f.entrada ? 1 : 0) + canon });
+  const r = await lanzarPam({ talento: pick.talento, ayudas, extra: (pick.entorno ? 1 : 0) + (["tecnica", "poder"].includes(pick.eleccion) ? 1 : 0) + (f.entrada ? 1 : 0) + canon });
   return { ...r, actor, ayudas };
 }
 
@@ -256,18 +267,29 @@ async function resolverCruce() {
     PICKS[i] = { ...(PICKS[i] ?? { asistentes: [], relevo: null }), eleccion: azar(base), talento: false, entorno: false, golpe: "", fuente: "escena" };
   }
   const [pa, pb] = PICKS;
-  const golpes = [pa.golpe, pb.golpe];
-  const dom = dominante(pa.eleccion, pb.eleccion);
   const F = [activoDe(p.lados[0]), activoDe(p.lados[1])];
+  // Un poder de PNJ actúa como una Técnica Secreta (rompe la Parada); su nombre y su frase salen solos
+  const poderDe = i => (PICKS[i].eleccion === "poder" ? F[i].poderes?.[PICKS[i].poder] : null);
+  const efectiva = i => (PICKS[i].eleccion === "poder" ? "tecnica" : PICKS[i].eleccion);
+  const golpes = [pa.eleccion === "poder" ? poderDe(0)?.nombre : pa.golpe, pb.eleccion === "poder" ? poderDe(1)?.nombre : pb.golpe];
+  const dom = dominante(efectiva(0), efectiva(1));
   const lineas = [], extra = [], mojar = [];
   const nombres = [F[0].nombre, F[1].nombre];
-  const NOMBRE_ELECCION = { tecnica: "Técnica Secreta", hervir: "Hervir (cuenta como Parada)", serenidad: "Recobrar la compostura (cuenta como Parada)", evasion: "Evasión Ridícula Absoluta" };
+  const NOMBRE_ELECCION = { poder: "Ataque especial", tecnica: "Técnica Secreta", hervir: "Hervir (cuenta como Parada)", serenidad: "Recobrar la compostura (cuenta como Parada)", evasion: "Evasión Ridícula Absoluta" };
   const dichos = [pa, pb].map(k => NOMBRE_ELECCION[k.eleccion] ?? POSTURAS[k.eleccion].nombre);
   lineas.push({ clave: "Posturas", valor: `${esc(nombres[0])}: <b>${dichos[0]}</b> · ${esc(nombres[1])}: <b>${dichos[1]}</b>` });
   const faseInicio = F.map(f => f.fase);
+  for (const i of [0, 1]) {
+    const pw = poderDe(i); if (!pw) continue;
+    await publicar({ tipo: "poder", tono: "descomunal", icono: "fa-solid fa-bolt", etiqueta: "¡Ataque especial!", sfx: "¡KIAAA!", arte: tokenForma(game.actors.get(F[i].id)), arteClase: "figura mini", arteAlt: F[i].nombre,
+      titulo: pw.nombre, globo: esc(pw.frase || `¡${pw.nombre}!`), fx: { texto: "", sonido: "tecnica", tono: "fuego" } }, { actor: game.actors.get(F[i].id) });
+  }
 
   // Los escudos de Furia (y la Técnica) gastan los 3 puntos aunque no sirvan de nada
-  for (const i of [0, 1]) if (CUESTAN_FURIA.includes(PICKS[i].eleccion)) p.lados[i].furia = 0;
+  for (const i of [0, 1]) {
+    if (CUESTAN_FURIA.includes(PICKS[i].eleccion)) p.lados[i].furia = 0;
+    else if (PICKS[i].eleccion === "poder") p.lados[i].furia = Math.max(0, p.lados[i].furia - (poderDe(i)?.coste ?? 0));
+  }
   // Recobrar la compostura: se peina en medio del caos y recupera Dignidad
   for (const i of [0, 1]) if (PICKS[i].eleccion === "serenidad") {
     const tope = F[i].max * F[i].barras, antes = F[i].dig;
@@ -293,18 +315,18 @@ async function resolverCruce() {
     for (const i of [0, 1]) tiradas[i] = await tirarLado(p, i, PICKS[i]);
     const [sa, sb] = [tiradas[0].suma, tiradas[1].suma];
     if (sa === sb) { lineas.push({ clave: "Choque", valor: "¡Doble impacto cómico! Los dos pierden 1 de Dignidad." }); dano = -1; }
-    else { ganador = sa > sb ? 0 : 1; tirada = tiradas[ganador]; tecnica = PICKS[ganador].eleccion === "tecnica"; dano = danoDe(tirada.r.clave, { tecnica, choque: true }); }
+    else { ganador = sa > sb ? 0 : 1; tirada = tiradas[ganador]; tecnica = PICKS[ganador].eleccion === "tecnica"; dano = danoDe(tirada.r.clave, { tecnica, choque: true }) + (poderDe(ganador)?.extra ?? 0); }
   } else {
     ganador = dom === "a" ? 0 : 1;
     if (PASIVAS.includes(PICKS[ganador].eleccion)) { lineas.push({ clave: "Resultado", valor: `${esc(nombres[ganador])} bloquea mientras se recompone: nadie pierde Dignidad.` }); dano = 0; }
-    else { tirada = tiradas[ganador] = await tirarLado(p, ganador, PICKS[ganador]); tecnica = PICKS[ganador].eleccion === "tecnica"; dano = danoDe(tirada.r.clave, { tecnica }); }
+    else { tirada = tiradas[ganador] = await tirarLado(p, ganador, PICKS[ganador]); tecnica = PICKS[ganador].eleccion === "tecnica"; dano = danoDe(tirada.r.clave, { tecnica }) + (poderDe(ganador)?.extra ?? 0); }
   }
 
   const ladoPerdedor = ganador === null ? null : otro(ganador);
   // Daño
   if (dano === -1) { for (const i of [0, 1]) { F[i].dig = Math.max(0, F[i].dig - 1); p.lados[i].danoRonda += 1; } }
   else if (ganador !== null && dano > 0) { F[ladoPerdedor].dig = Math.max(0, F[ladoPerdedor].dig - dano); p.lados[ladoPerdedor].danoRonda += dano; }
-  if (ganador !== null && dano > 0) lineas.push({ clave: "Daño", valor: `${esc(nombres[ganador])} gana el Cruce: <b>−${dano} de Dignidad</b> para ${esc(nombres[ladoPerdedor])}${tecnica ? " (Técnica Secreta)" : ""}${dom === "choque" ? " (Choque)" : ""}.` });
+  if (ganador !== null && dano > 0) lineas.push({ clave: "Daño", valor: `${esc(nombres[ganador])} gana el Cruce: <b>−${dano} de Dignidad</b> para ${esc(nombres[ladoPerdedor])}${tecnica ? " (Técnica Secreta)" : poderDe(ganador) ? ` («${esc(poderDe(ganador).nombre)}»)` : ""}${dom === "choque" ? " (Choque)" : ""}.` });
 
   // Furia (ganar el Cruce con daño: +1 a los dos; la Técnica ya la gastó)
   if (ganador !== null && dano > 0) {
@@ -331,26 +353,28 @@ async function resolverCruce() {
   let salpicadura = false; const bloqueoRelevo = [false, false];
   const ji = [0, 1].find(i => F[i].jefe === "hidetoshi");
   if (ji !== undefined) {
-    const J = F[ji], rival = otro(ji);
+    const rival = otro(ji);
     if (ganador === ji && dano > 0 && F[rival].tipo === "pj") {
       if (faseInicio[ji] === 1) { salpicadura = true; lineas.push({ clave: "Salpicadura", valor: `El cañón de agua salpica a todo el banquillo: pierden <b>1 de Dignidad</b> y no descansan este Cruce.` }); }
       if (tirada?.r.clave === "aparatoso") { bloqueoRelevo[rival] = true; lineas.push({ clave: "Aislamiento", valor: `${esc(F[rival].nombre)} sale empapado y <b>estampado contra la pared</b>: no se le puede relevar al final de este Cruce.` }); }
     }
-    // Torrente Olímpico: ola de área contra el banquillo, con QTE
-    if (PICKS[ji].eleccion === "tecnica" && dom !== "anulado") {
-      const bando = p.lados[rival], ids = bando.equipo.filter((x, k) => k !== bando.activo && x.dig > 0).map(x => x.id);
-      if (ids.length) {
-        extra.push({ t: "¡TORRENTE OLÍMPICO!", ms: 1500, sonido: "alarma", tono: "tecnica" });
-        const salvados = await esperarQTE(ids, J.nombre);
-        for (const id of ids) {
-          const x = bando.equipo.find(h => h.id === id);
-          if (salvados.has(id)) lineas.push({ clave: "Ola", valor: `${esc(x.nombre)} <b>esquiva a tiempo</b> la ola del banquillo.` });
-          else {
-            x.dig = Math.max(0, x.dig - 2); bando.danoRonda += 2;
-            if (x.tipo === "pj" && x.forma === "seco") mojar.push(x.id);
-            lineas.push({ clave: "Ola", valor: `${esc(x.nombre)} no reacciona: <b>impacto directo, −2 de Dignidad</b>${x.tipo === "pj" && x.forma === "seco" ? " y ¡CHAPUZÓN!" : ""}.` });
-          }
-        }
+  }
+
+  // Ataques de área (el Torrente Olímpico del jefe, la Tormenta de Globos…): una ola contra el banquillo, con QTE
+  for (const i of [0, 1]) {
+    const pw = poderDe(i);
+    if (!pw?.area || dom === "anulado") continue;
+    const rival = otro(i), bando = p.lados[rival], ids = bando.equipo.filter((x, k) => k !== bando.activo && x.dig > 0).map(x => x.id);
+    if (!ids.length) continue;
+    extra.push({ t: `¡${pw.nombre.replace(/^¡|!$/g, "").toUpperCase()}!`, ms: 1500, sonido: "alarma", tono: "tecnica" });
+    const salvados = await esperarQTE(ids, F[i].nombre);
+    for (const id of ids) {
+      const x = bando.equipo.find(h => h.id === id);
+      if (salvados.has(id)) lineas.push({ clave: "Ola", valor: `${esc(x.nombre)} <b>esquiva a tiempo</b> la ola del banquillo.` });
+      else {
+        x.dig = Math.max(0, x.dig - 2); bando.danoRonda += 2;
+        if (x.tipo === "pj" && x.forma === "seco") mojar.push(x.id);
+        lineas.push({ clave: "Ola", valor: `${esc(x.nombre)} no reacciona: <b>impacto directo, −2 de Dignidad</b>${x.tipo === "pj" && x.forma === "seco" ? " y ¡CHAPUZÓN!" : ""}.` });
       }
     }
   }
@@ -402,7 +426,10 @@ async function resolverCruce() {
   p.peticiones = Object.fromEntries([0, 1].map(i => [i, (p0.peticiones?.[i] ?? []).filter(id => p.lados[i].equipo.some((f, n) => f.id === id && n !== p.lados[i].activo && f.dig > 0))]));
 
   // Fin de ronda
-  const banners_ = [...[0, 1].filter(i => PICKS[i].eleccion === "tecnica" && !(ji === i && extra.some(b => b.t === "¡TORRENTE OLÍMPICO!"))).map(i => ({ t: (golpes[i] || "¡TÉCNICA SECRETA!").toUpperCase().slice(0, 44), ms: 1700, sonido: "tecnica", tono: "tecnica" })), ...extra];
+  const banners_ = [...[0, 1].filter(i => PICKS[i].eleccion === "tecnica" || (PICKS[i].eleccion === "poder" && !poderDe(i)?.area)).map(i => ({ t: (golpes[i] || "¡TÉCNICA SECRETA!").toUpperCase().slice(0, 44), ms: 1500, sonido: "tecnica", tono: "tecnica" })), ...extra];
+  // Recarga de los poderes: bajan 1 por Cruce y el que se acaba de usar empieza su cuenta
+  for (const l of p.lados) for (const f of l.equipo) for (const k of Object.keys(f.enf ?? {})) f.enf[k] = Math.max(0, f.enf[k] - 1);
+  for (const i of [0, 1]) { const pw = poderDe(i); if (pw?.recarga) F[i].enf[PICKS[i].poder] = pw.recarga; }
   let finRondaGanador = null, causa = null;
   const caidos = [caido(p.lados[0].equipo), caido(p.lados[1].equipo)];
   if (caidos[0] || caidos[1]) { causa = "ko"; finRondaGanador = caidos[0] && caidos[1] ? -1 : (caidos[0] ? 1 : 0); }
@@ -468,18 +495,19 @@ async function resolverCruce() {
 
 export function banners(lista) { difundir("banners", { lista }); }
 
-let cola = Promise.resolve();
 function mostrarBanners({ lista = [] } = {}) {
-  for (const b of lista) cola = cola.then(() => new Promise(res => {
+  for (const b of lista) colaPantalla(() => {
     if (b.sonido) sonar(b.sonido);
-    if (!game.settings.get(ID, "efectos")) return res();
+    if (!game.settings.get(ID, "efectos")) return 0;
     const el = document.createElement("div");
     el.className = `mr-agua-va av-banner av-banner-${b.tono ?? "ronda"}${document.body.classList.contains("av-sin-movimiento") ? " quieto" : ""}`;
     el.setAttribute("aria-hidden", "true");
     el.innerHTML = `<b data-texto="${esc(b.t)}">${esc(b.t)}</b>`;
     document.body.append(el);
-    setTimeout(() => { el.remove(); res(); }, b.ms ?? 1400);
-  }));
+    const ms = (b.ms ?? 1400) + 150;
+    setTimeout(() => el.remove(), ms);
+    return ms;   // el siguiente mensaje espera a que este acabe
+  });
 }
 
 /* ───────────────────────── HUD y mando ───────────────────────── */
@@ -537,15 +565,18 @@ export function htmlMando(p, i) {
     ${activoMio ? `<div class="av-mando-botones">
       ${btn("golpe", "GOLPE", "fa-hand-fist")}${btn("presa", "PRESA", "fa-hands-holding")}${btn("parada", "PARADA", "fa-shield-halved", lado.sinParada ? "data-tooltip=\"¡Provocado! No puedes parar este Cruce\"" : "", lado.sinParada)}
       ${f.forma === "mojado" ? btn("hervir", "AGUA CALIENTE", "fa-mug-hot", `data-fuente="${e.termo ? "termo" : "escena"}" data-tooltip="${e.termo ? "Termo: " + e.termo + " carga(s)" : "Fuente de calor de la escena"}"`) : ""}
-      ${furiaMax ? btn("tecnica", "TÉCNICA SECRETA", "fa-bolt") : ""}
+      ${furiaMax && f.tipo === "pj" ? btn("tecnica", "TÉCNICA SECRETA", "fa-bolt", `data-tooltip="${esc(f.tecnica || "Grita el nombre de tu técnica")}"`) : ""}
+      ${f.tipo !== "pj" ? (f.poderes ?? []).map((pw, k) => { const rec = f.enf?.[k] ?? 0, falta = lado.furia < pw.coste;
+        return btn("poder", esc(pw.nombre), pw.area ? "fa-burst" : "fa-bolt", `data-poder="${k}" data-tooltip="${esc(pw.frase || "")} · cuesta ${pw.coste} de Furia${pw.extra ? ` · +${pw.extra} de daño` : ""}${pw.area ? " · de área (QTE al banquillo)" : ""}${rec ? ` · se recarga ${rec}` : ""}"`, falta || rec > 0).replace("</span>", `</span><small class="av-poder-coste">${rec ? "⟳" + rec : "●".repeat(pw.coste) || "gratis"}</small>`); }).join("") : ""}
       ${furiaMax ? btn("evasion", "EVASIÓN RIDÍCULA", "fa-person-running", "data-tooltip=\"Gasta los 3 de Furia: cancela cualquier ataque, hasta una Técnica, sin tirar\"") : ""}
       ${furiaMax ? btn("serenidad", "PEINARSE", "fa-wand-magic-sparkles", `data-tooltip="Gasta los 3 de Furia: recobras la compostura y +${CURA_SERENIDAD} de Dignidad (cuenta como Parada)"`) : ""}
     </div>
     <div class="av-mando-extras">
-      <label><input type="checkbox" data-campo="talento" ${st.talento ? "checked" : ""}> Mi talento ayuda <small>+1d6</small></label>
+      ${f.tipo === "pj" ? `<span class="av-talento-auto" data-tooltip="El talento de un personaje siempre ayuda en combate: es su arte marcial">Talento ${f.forma === "mojado" ? "de Bestia" : "Marcial"} <small>+1d6 siempre</small></span>`
+        : `<label><input type="checkbox" data-campo="talento" ${st.talento ? "checked" : ""}> Su talento ayuda <small>+1d6</small></label>`}
       <label><input type="checkbox" data-campo="entorno" ${st.entorno ? "checked" : ""}> Uso el entorno <small>+1d6</small></label>
-      <input type="text" data-campo="golpe" placeholder="Nombre del golpe (¡Plancha Vertical!)" maxlength="50" value="${esc(st.golpe)}">
-      ${furiaMax ? `<input type="text" data-campo="tecnica" placeholder="¡Grita tu Técnica Secreta!" maxlength="60" value="${esc(st.tecnica)}" class="av-tecnica-nombre">` : ""}
+      <input type="text" data-campo="golpe" placeholder="${esc(f.tecnica ? `Nombre del golpe (p. ej. ${f.tecnica})` : "Nombre del golpe (¡Plancha Vertical!)")}" maxlength="50" value="${esc(st.golpe)}">
+      ${furiaMax && f.tipo === "pj" ? `<input type="text" data-campo="tecnica" placeholder="¡Grita tu Técnica Secreta!" maxlength="60" value="${esc(st.tecnica || f.tecnica || "")}" class="av-tecnica-nombre">` : ""}
     </div>
     <div class="av-mando-fila">
       <button type="button" class="av-boton av-boton-suave" data-accion="provocar" ${f.provoco ? "disabled" : ""} data-tooltip="Una por ronda: si hace gracia, el rival no puede Parar"><i class="fa-solid fa-face-grin-tongue-squint" inert></i> Provocar</button>
@@ -557,6 +588,22 @@ export function htmlMando(p, i) {
       <button type="button" class="av-boton av-boton-suave ${ayudas.includes(x.id) ? "activo" : ""}" data-accion="asistir" data-actor="${x.id}" aria-pressed="${ayudas.includes(x.id)}" data-tooltip="Asistencia: +1d6, pero pierde 1 de Dignidad si el bando pierde el Cruce o saca fiasco">Asistir</button>
       <button type="button" class="av-boton av-boton-suave ${pidenIds.includes(x.id) ? "activo" : ""}" data-accion="pedirRelevo" data-actor="${x.id}" aria-pressed="${pidenIds.includes(x.id)}" ${lado.relevoPrevio ? "disabled" : ""} data-tooltip="Pedir relevo: pulsa otra vez para anular la petición">${pidenIds.includes(x.id) ? "Anular relevo" : "Pedir relevo"}</button></div>`).join("")}</div>` : ""}
   </div>`;
+}
+
+/** HTML del marcador y del mando (separado para poder probarlo y fotografiarlo). */
+export function htmlHUD(p) {
+  const cuenta = estado().cuentaAtras;
+  const restantes = p.maxCruces ? String(Math.max(0, p.maxCruces - p.cruce + 1)).padStart(2, "0") : "∞";
+  const gm = game.user.isGM;
+  const manejo = misLados(p);
+  return `<div class="av-pelea-top">
+      ${htmlLado(p.lados[0], 0, p)}
+      <div class="av-centro"><div class="av-cronometro ${p.maxCruces ? "" : "sin-limite"}" data-tooltip="${p.maxCruces ? "Cruces que quedan en la ronda" : "Sin cronómetro: se acaba por K.O."}">${restantes}</div><div class="av-ronda-tit">${p.fase === "fin" ? "FIN" : `RONDA ${p.ronda}`}</div>
+        ${cuenta ? `<div class="av-cuenta" role="alert" data-tooltip="Vapor 6: vence al jefe o cierra una válvula antes de que explote">¡TIEMBLA!<b>${cuenta.restantes}</b><small>CRUCE${cuenta.restantes === 1 ? "" : "S"}</small></div>` : ""}
+        ${gm ? `<div class="av-gm-mini"><button type="button" data-accion="forzar" class="av-mini" data-tooltip="Resolver ya (los que no han elegido, al azar)" ${p.fase !== "eleccion" ? "disabled" : ""}><i class="fa-solid fa-forward" inert></i></button><button type="button" data-accion="terminar" class="av-mini" data-tooltip="Terminar la pelea"><i class="fa-solid fa-xmark" inert></i></button></div>` : ""}</div>
+      ${htmlLado(p.lados[1], 1, p)}
+    </div>
+    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
 }
 
 function pintarHUD() {
@@ -572,21 +619,11 @@ function pintarHUD() {
   const claveCruce = `${p.ronda}-${p.cruce}`;
   if (claveCruce !== ultimaClave) { ultimaClave = claveCruce; for (const i of [0, 1]) local[i] = { talento: false, entorno: false, golpe: "", tecnica: "" }; }
   const cuenta = estado().cuentaAtras;
-  const sig = JSON.stringify([p.fase, p.ronda, p.cruce, p.ganador, p.lados.map(l => [l.activo, l.furia, l.rondas, l.listo, l.sinParada, l.relevoPrevio, l.equipo.map(f => [f.id, f.dig, f.forma, f.fase])]), p.ayudas, p.peticiones, p.relevos, estado().termo, cuenta, game.user.id]);
+  const sig = JSON.stringify([p.fase, p.ronda, p.cruce, p.ganador, p.lados.map(l => [l.activo, l.furia, l.rondas, l.listo, l.sinParada, l.relevoPrevio, l.equipo.map(f => [f.id, f.dig, f.forma, f.fase, f.enf])]), p.ayudas, p.peticiones, p.relevos, estado().termo, cuenta, game.user.id]);
   if (sig === firma) return;
   const previo = new Map([...hud.querySelectorAll(".av-luch")].map(el => [el.dataset.id, parseFloat(el.querySelector(".av-vida-dano")?.style.width) || 0]));
   firma = sig;
-  const restantes = p.maxCruces ? String(Math.max(0, p.maxCruces - p.cruce + 1)).padStart(2, "0") : "∞";
-  const gm = game.user.isGM;
-  const manejo = misLados(p);
-  hud.innerHTML = `<div class="av-pelea-top">
-      ${htmlLado(p.lados[0], 0, p)}
-      <div class="av-centro"><div class="av-cronometro ${p.maxCruces ? "" : "sin-limite"}" data-tooltip="${p.maxCruces ? "Cruces que quedan en la ronda" : "Sin cronómetro: se acaba por K.O."}">${restantes}</div><div class="av-ronda-tit">${p.fase === "fin" ? "FIN" : `RONDA ${p.ronda}`}</div>
-        ${cuenta ? `<div class="av-cuenta" role="alert" data-tooltip="Vapor 6: vence al jefe o cierra una válvula antes de que explote">¡TIEMBLA!<b>${cuenta.restantes}</b><small>CRUCE${cuenta.restantes === 1 ? "" : "S"}</small></div>` : ""}
-        ${gm ? `<div class="av-gm-mini"><button type="button" data-accion="forzar" class="av-mini" data-tooltip="Resolver ya (los que no han elegido, al azar)" ${p.fase !== "eleccion" ? "disabled" : ""}><i class="fa-solid fa-forward" inert></i></button><button type="button" data-accion="terminar" class="av-mini" data-tooltip="Terminar la pelea"><i class="fa-solid fa-xmark" inert></i></button></div>` : ""}</div>
-      ${htmlLado(p.lados[1], 1, p)}
-    </div>
-    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
+  hud.innerHTML = htmlHUD(p);
   // Estela de daño: la barra blanca baja despacio detrás de la roja
   for (const el of hud.querySelectorAll(".av-luch")) {
     const d = el.querySelector(".av-vida-dano"), r = el.querySelector(".av-vida-relleno");
@@ -613,9 +650,10 @@ function alPulsar(ev) {
   const f = activoDe(p.lados[i]), st = local[i];
   if (accion === "pick") {
     const eleccion = b.dataset.eleccion;
-    if (eleccion === "tecnica" && !st.tecnica.trim()) { ui.notifications.warn("¡Grita el nombre de tu Técnica Secreta!"); hud.querySelector(`.av-mando-lado[data-lado="${i}"] .av-tecnica-nombre`)?.focus(); return; }
-    const golpe = eleccion === "tecnica" ? `¡${st.tecnica.trim().replace(/^¡|!$/g, "")}!` : st.golpe.trim();
-    return accionesMando.pick({ lado: i, eleccion, talento: st.talento, entorno: st.entorno, golpe, fuente: b.dataset.fuente });
+    const nombreTecnica = (st.tecnica || f.tecnica || "").trim();
+    if (eleccion === "tecnica" && !nombreTecnica) { ui.notifications.warn("¡Grita el nombre de tu Técnica Secreta!"); hud.querySelector(`.av-mando-lado[data-lado="${i}"] .av-tecnica-nombre`)?.focus(); return; }
+    const golpe = eleccion === "tecnica" ? `¡${nombreTecnica.replace(/^¡|!$/g, "")}!` : st.golpe.trim();
+    return accionesMando.pick({ lado: i, eleccion, poder: b.dataset.poder, talento: st.talento, entorno: st.entorno, golpe, fuente: b.dataset.fuente });
   }
   if (accion === "asistir") return accionesMando.asistir({ lado: i, actor: b.dataset.actor, on: b.getAttribute("aria-pressed") !== "true" });
   if (accion === "pedirRelevo") return accionesMando.pedirRelevo({ lado: i, actor: b.dataset.actor });

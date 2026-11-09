@@ -15,9 +15,24 @@
     </header>
     <label class="av-campo"><span>Descripción</span><textarea name="system.descripcion" rows="4" {{#unless editable}}disabled{{/unless}}>{{system.descripcion}}</textarea></label>
     <div class="av-vinetas">
-      <label class="av-vineta av-v-defecto"><span>Técnica Secreta <small>nombre a gritos</small></span><input name="system.tecnica" value="{{system.tecnica}}" {{#unless editable}}disabled{{/unless}}></label>
       <label class="av-vineta av-v-presentacion"><span>Secreto o punto débil</span><textarea name="system.secreto" rows="2" {{#unless editable}}disabled{{/unless}}>{{system.secreto}}</textarea></label>
     </div>
+    <section class="av-poderes">
+      <h3>Ataques especiales <small>botones automáticos en el mando de quien dirige; la frase sale sola</small></h3>
+      {{#each poderes}}
+      <div class="av-poder-fila">
+        <input class="av-p-nombre" name="system.poderes.{{@index}}.nombre" value="{{nombre}}" placeholder="¡Torrente Olímpico!" aria-label="Nombre del ataque" {{#unless ../editable}}disabled{{/unless}}>
+        <input class="av-p-frase" name="system.poderes.{{@index}}.frase" value="{{frase}}" placeholder="Lo que grita al lanzarlo" aria-label="Frase" {{#unless ../editable}}disabled{{/unless}}>
+        <label>Furia <input type="number" min="0" max="3" name="system.poderes.{{@index}}.coste" value="{{coste}}" {{#unless ../editable}}disabled{{/unless}}></label>
+        <label>+Daño <input type="number" min="0" max="3" name="system.poderes.{{@index}}.extra" value="{{extra}}" {{#unless ../editable}}disabled{{/unless}}></label>
+        <label>Recarga <input type="number" min="0" max="6" name="system.poderes.{{@index}}.recarga" value="{{recarga}}" {{#unless ../editable}}disabled{{/unless}}></label>
+        <label class="av-p-area"><input type="checkbox" name="system.poderes.{{@index}}.area" {{#if area}}checked{{/if}} {{#unless ../editable}}disabled{{/unless}}> Área (QTE)</label>
+        {{#if ../editable}}<button type="button" class="av-boton av-boton-suave av-p-quitar" data-action="poderQuitar" data-i="{{@index}}" aria-label="Quitar"><i class="fa-solid fa-trash" inert></i></button>{{/if}}
+      </div>
+      {{/each}}
+      {{#if editable}}<button type="button" class="av-boton av-boton-suave" data-action="poderAnadir"><i class="fa-solid fa-plus" inert></i> Añadir ataque especial</button>{{/if}}
+      <p class="av-nota">Furia: puntos que gasta (0 = gratis, útil para que un jefe ataque antes que nadie). +Daño: se suma al resultado. Recarga: Cruces hasta poder repetirlo. Área: lanza una ola contra el banquillo de los personajes, que tiene unos segundos para esquivar.</p>
+    </section>
     <fieldset class="av-pelea-ficha">
       <legend>¡PELEA!</legend>
       <label class="av-campo"><span>Papel</span><select name="system.rol" {{#unless editable}}disabled{{/unless}}><option value="vecino" {{#if (eq system.rol "vecino")}}selected{{/if}}>Vecino</option><option value="rival" {{#if (eq system.rol "rival")}}selected{{/if}}>Rival (sale en la máquina)</option></select></label>

@@ -13,7 +13,7 @@ class HojaBase extends ConMemoria(HandlebarsApplicationMixin(ActorSheetV2)) {
     window: { resizable: true },
     actions: {
       retrato: HojaBase.#retrato, figura: HojaBase.#figura, tirar: HojaBase.#tirar,
-      forma: HojaBase.#forma, silencio: HojaBase.#silencio, cartel: HojaBase.#cartel
+      forma: HojaBase.#forma, silencio: HojaBase.#silencio, cartel: HojaBase.#cartel, poderAnadir: HojaBase.#poderAnadir, poderQuitar: HojaBase.#poderQuitar
     }
   };
   static SCROLL_MEMORIA = [".av-hoja-cuerpo"];
@@ -31,6 +31,7 @@ class HojaBase extends ConMemoria(HandlebarsApplicationMixin(ActorSheetV2)) {
       forma, seco: forma === "seco", mojado: forma === "mojado", color: a.getFlag(ID, "color") || "#2b8fc4",
       figura: tokenForma(a, forma),
       dual: a.getFlag(ID, "retratoDual") || a.img,
+      poderes: (a.system.poderes ?? []).map(p => ({ ...p })),
       notas: await enriquecer(a.system.notas, a)
     };
   }
@@ -57,6 +58,15 @@ class HojaBase extends ConMemoria(HandlebarsApplicationMixin(ActorSheetV2)) {
   /** Solo quien dirige: cambiar de forma sin tarjeta ni gastar nada. */
   static async #silencio() { if (game.user.isGM) await aplicarForma(this.document, formaDe(this.document) === "seco" ? "mojado" : "seco"); }
   static #cartel() { return cartel(this.document); }
+  /** Ataques especiales de un PNJ: se editan aquí y salen como botones en el mando de quien dirige. */
+  static async #poderAnadir() {
+    const a = this.document, ya = (a.system.poderes ?? []).map(p => ({ nombre: p.nombre, frase: p.frase, coste: p.coste, extra: p.extra, recarga: p.recarga, area: p.area }));
+    await a.update({ "system.poderes": [...ya, { nombre: "", frase: "", coste: 2, extra: 0, recarga: 0, area: false }] });
+  }
+  static async #poderQuitar(ev, b) {
+    const a = this.document, i = Number(b.dataset.i);
+    await a.update({ "system.poderes": (a.system.poderes ?? []).filter((_, k) => k !== i).map(p => ({ nombre: p.nombre, frase: p.frase, coste: p.coste, extra: p.extra, recarga: p.recarga, area: p.area })) });
+  }
 }
 
 export class HojaPJ extends HojaBase {

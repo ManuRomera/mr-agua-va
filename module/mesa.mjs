@@ -39,6 +39,7 @@ export function registrarAjustes() {
     onChange: () => Hooks.callAll("aguava.estado", estado())
   });
   game.settings.register(ID, "bienvenida", { scope: "world", config: false, type: String, default: "" });
+  game.settings.register(ID, "avisoDireccion", { scope: "world", config: false, type: Boolean, default: false });
   game.settings.register(ID, "importada", { scope: "world", config: false, type: Boolean, default: false });
   game.settings.register(ID, "efectos", {
     name: "Efectos de pantalla",

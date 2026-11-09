@@ -12,6 +12,7 @@ import { chapuzonPantalla } from "../efectos.mjs";
 import { pintarRetratos } from "../retrato.mjs";
 import { iniciarPelea, terminarPelea, accionesMando } from "../pelea.mjs";
 import { chapuzon, formaDe, tokenForma } from "../forma.mjs";
+import { abrirConfigurador, accionDireccion, escenasDeLaAventura, api as apiDireccion } from "../direccion-mr.mjs";
 import AV from "../aventura.mjs";
 
 const GRUPOS = [
@@ -82,6 +83,8 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
       cortinilla: (ev, b) => lanzarCortinilla(b.dataset.id), escena: (ev, b) => activarEscena(b.dataset.clave),
       reto: PanelDireccion.#reto, estadoReto: PanelDireccion.#estadoReto, frase: (ev, b) => guiaHabla(FRASES_GUIA[b.dataset.i]),
       tablilla: PanelDireccion.#tablilla, tuberia: PanelDireccion.#tuberia, chaparron: PanelDireccion.#chaparron, valvula: PanelDireccion.#valvula,
+      configurador: () => abrirConfigurador(), escenaConfig: (ev, b) => abrirConfigurador(b.dataset.id), escenaVer: (ev, b) => game.scenes.get(b.dataset.id)?.view(),
+      colocar: () => accionDireccion("figures"), tamano: () => accionDireccion("resize"), tamanoSel: () => accionDireccion("resize-selected"),
       final: PanelDireccion.#final, abrir: (ev, b) => game.actors.get(b.dataset.id)?.sheet.render(true),
       diario: (ev, b) => game.journal.find(j => j.getFlag(ID, "clave") === b.dataset.clave)?.sheet.render(true),
       seguridad: () => game.mrAguaVa.abrirSeguridad(), filtro: PanelDireccion.#filtro,
@@ -110,7 +113,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     const casillas = (n, max) => Array.from({ length: max }, (_, i) => ({ n: i + 1, llena: i + 1 <= n }));
     return {
       pestana: this.tabGroups.panel,
-      pestanas: [["mesa", "La mesa", "fa-sun"], ["retos", "Retos", "fa-burst"], ["pelea", "¡Pelea!", "fa-hand-fist"], ["noche", "La noche", "fa-moon"], ["reparto", "Reparto", "fa-users"]]
+      pestanas: [["mesa", "La mesa", "fa-sun"], ["retos", "Retos", "fa-burst"], ["pelea", "¡Pelea!", "fa-hand-fist"], ["noche", "La noche", "fa-moon"], ["escenas", "Escenas", "fa-images"], ["reparto", "Reparto", "fa-users"]]
         .map(([id, nombre, icono]) => ({ id, nombre, icono, activa: id === this.tabGroups.panel })),
       reloj: { texto: mmss(min), marcha: Boolean(e.reloj.inicio), tramo: t.nombre, pct: Math.min(100, (min / 120) * 100), aviso: pendiente ? AV.cortinillas.find(c => c.id === pendiente)?.titulo : "" },
       desbarajuste: { valor: e.desbarajuste, texto: DESBARAJUSTE[e.desbarajuste], casillas: casillas(e.desbarajuste, 6) },
@@ -129,6 +132,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
         rondas: this.sel.rondas, cruces: this.sel.cruces,
         rapidas: AV.rivales.map(r => ({ clave: r.clave, nombre: r.nombre, texto: `${r.dignidad}${r.barras > 1 ? ` × ${r.barras}` : ""} de Dignidad · ${r.rondas === 1 ? "una ronda" : `mejor de ${r.rondas * 2 - 1}`}`, tipo: r.tipo }))
       },
+      escenas: escenasDeLaAventura(), direccionActiva: Boolean(apiDireccion()),
       vias: AV.vias,
       finales: AV.finales.map(f => ({ ...f, elegido: e.final === f.id })),
       cameos: AV.cameos,
@@ -146,7 +150,17 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     this.element.querySelector("[name=rondas]")?.addEventListener("change", ev => { this.sel.rondas = Number(ev.target.value); });
     this.element.querySelector("[name=cruces]")?.addEventListener("change", ev => { this.sel.cruces = Number(ev.target.value) || 6; });
     clearInterval(this._tic);
-    this._tic = setInterval(() => { if (this.rendered && estado().reloj.inicio) this.render({ parts: ["panel"] }); }, 10000);
+    // El reloj corre sin repintar la ventana (repintar cerraba los retos que se estaban leyendo).
+    this._tic = setInterval(() => { if (this.rendered && estado().reloj.inicio) this.#actualizarReloj(); }, 5000);
+  }
+
+  #actualizarReloj() {
+    const e = estado(), min = minutosReloj(e.reloj), t = tramo(min), r = this.element;
+    const num = r.querySelector(".av-reloj-num"); if (num) num.textContent = mmss(min);
+    const tr = r.querySelector(".av-reloj-tramo"); if (tr) tr.textContent = t.nombre;
+    const barra = r.querySelector(".av-reloj-barra i"); if (barra) barra.style.width = `${Math.min(100, (min / 120) * 100)}%`;
+    const pend = cortinillaPendiente(min, e.cortinillas), aviso = r.querySelector(".av-aviso:not(.av-aviso-tiembla)");
+    if (pend && !aviso) this.render({ parts: ["panel"] });          // solo se repinta cuando toca una cortinilla nueva
   }
 
   async close(o) { clearInterval(this._tic); return super.close(o); }

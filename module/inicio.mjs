@@ -67,10 +67,12 @@ export function registrarInicio() {
     sec.className = "av-ajustes flexcol";
     sec.innerHTML = `<h4 class="divider">¡Agua Va!</h4>
       <button type="button" data-av="panel"><i class="fa-solid fa-clapperboard" inert></i> Panel de dirección</button>
+      <button type="button" data-av="escenas"><i class="fa-solid fa-sliders" inert></i> Configurador de escenas</button>
       <button type="button" data-av="importar"><i class="fa-solid fa-file-import" inert></i> Importar la aventura</button>`;
     sec.addEventListener("click", ev => {
       const a = ev.target.closest("button[data-av]")?.dataset.av;
       if (a === "panel") game.mrAguaVa.abrirDireccion();
+      if (a === "escenas") game.mrAguaVa.abrirConfigurador();
       if (a === "importar") importarAventura({ confirmar: true });
     });
     sitio.after(sec);

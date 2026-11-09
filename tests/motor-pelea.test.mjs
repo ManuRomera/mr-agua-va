@@ -76,7 +76,7 @@ test("Pifia Cómica con ayuda: se la lleva el ayudante; con el Talento los 3 son
   const k = actor("k", "Kenji", "pj"), d = actor("d", "Daiki", "pj");
   await reset([k, d], [actor("m", "Mariko", "pnj", { rol: "rival" })]);
   await accionesMando.asistir({ lado: 0, actor: "d", on: true });
-  globalThis.__dados = [[3, 3, 6]];                       // dobles bajos (3-3) y suma 9: brillante, pero hay Pifia
+  globalThis.__dados = [[2, 2, 6, 5]];                    // talento (siempre) + ayuda = 4d6: dobles bajos (2-2) y suma 11: brillante, pero hay Pifia
   await pick(0, "golpe"); await pick(1, "presa");
   const cruce = chats.find(c => c.flags?.["mr-agua-va"]?.tipo === "cruce");
   assert.ok(cruce, "hay tarjeta del Cruce");
@@ -101,12 +101,15 @@ test("Jefe Final: salpicadura en fase 1, cañón roto en fase 2 con Furia 3", as
   assert.equal(p.lados[1].equipo[0].fase, 2); assert.equal(p.lados[1].furia, 3);
 });
 
-test("Torrente Olímpico: el banquillo esquiva con QTE o recibe 2 de Dignidad", async () => {
+const TORRENTE = { nombre: "¡Torrente Olímpico!", frase: "¡Que se mojen hasta los de la última fila!", coste: 2, extra: 1, recarga: 3, area: true };
+const CHORRO = { nombre: "¡Chorro Cristalino!", frase: "¡Perfección olímpica!", coste: 0, extra: 0, recarga: 2, area: false };
+
+test("Torrente Olímpico (poder de área): el banquillo esquiva con QTE o recibe 2 de Dignidad", async () => {
   const pjs = [actor("k", "Kenji", "pj"), actor("d", "Daiki", "pj"), actor("y", "Yumi", "pj")];
-  await reset(pjs, [actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi" })]);
-  await cambia(p => { p.lados[1].furia = 3; });
-  globalThis.__dados = [[6, 5, 5], [6, 5]];
-  const hecho = pick(0, "golpe").then(() => pick(1, "tecnica", { golpe: "¡Torrente Olímpico!" }));
+  await reset(pjs, [actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi", poderes: [TORRENTE] })]);
+  await cambia(p => { p.lados[1].furia = 2; });
+  globalThis.__dados = [[6, 5, 5, 4], [6, 5]];
+  const hecho = pick(0, "golpe").then(() => pick(1, "poder", { poder: 0 }));
   await espera(300);
   accionesMando.qteResp({ actor: "d" });                    // Daiki esquiva; Yumi no
   await hecho; await espera(5200);
@@ -115,6 +118,37 @@ test("Torrente Olímpico: el banquillo esquiva con QTE o recibe 2 de Dignidad", 
   assert.equal(p.lados[0].equipo[1].dig, 7, "Daiki esquiva la ola");
   assert.equal(p.lados[0].equipo[2].dig, 5, "Yumi recibe el impacto directo");
   assert.equal(game.actors.get("y").system.forma, "mojado");
+  assert.equal(p.lados[1].furia >= 1 && p.lados[1].furia <= 3, true);
+  assert.ok(chats.some(c => c.flags?.["mr-agua-va"]?.tipo === "poder"), "sale la tarjeta con la frase");
+});
+
+test("Poderes de PNJ: gratis desde el primer Cruce, con recarga y con coste de Furia", async () => {
+  const jefe = actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi", poderes: [CHORRO, TORRENTE] });
+  await reset([actor("k", "Kenji", "pj")], [jefe]);
+  // el jefe ataca antes que nadie: su Chorro cuesta 0 de Furia
+  globalThis.__dados = [[6, 5, 3, 2], [6, 5]];
+  await pick(0, "parada"); await pick(1, "poder", { poder: 0 });
+  assert.equal(estado().lados[0].equipo[0].dig < 8, true, "el poder rompe la Parada");
+  const frase = chats.find(c => c.flags?.["mr-agua-va"]?.tipo === "poder");
+  assert.ok(frase, "la frase se dice sola al activar el poder");
+  assert.equal(estado().lados[1].equipo[0].enf[0], 2, "recarga de 2 Cruces");
+  // recargando: no se puede repetir
+  await pick(0, "parada"); await pick(1, "poder", { poder: 0 });
+  assert.equal(estado().lados[1].listo, false, "recargándose");
+  // sin Furia no hay Torrente (cuesta 2)
+  await pick(1, "poder", { poder: 1 });
+  assert.equal(estado().lados[1].listo, false, "falta Furia");
+});
+
+test("El talento de un PJ siempre ayuda en combate (+1d6 automático) y un PJ no puede usar poderes de PNJ", async () => {
+  await reset([actor("k", "Kenji", "pj")], [actor("m", "Mariko", "pnj", { rol: "rival", poderes: [CHORRO] })]);
+  globalThis.__dados = [[6, 5, 1]];
+  await pick(0, "golpe", { talento: false }); await pick(1, "parada");        // Golpe gana a Presa… aquí Parada gana a Golpe: no tira Kenji
+  const dados = chats.find(c => c.flags?.["mr-agua-va"]?.tipo === "cruce");
+  assert.ok(dados);
+  await reset([actor("k", "Kenji", "pj")], [actor("m", "Mariko", "pnj", { rol: "rival", poderes: [CHORRO] })]);
+  await pick(0, "poder", { poder: 0 });
+  assert.equal(estado().lados[0].listo, false, "un PJ no tiene poderes de PNJ");
 });
 
 test("Relevo: pide el del banquillo, elige el activo y entra al final del Cruce", async () => {
