@@ -5,3 +5,5 @@
 El arte se ha generado con herramientas de IA para este proyecto a partir de diseños propios y originales. Si algún titular de derechos lo pide, se retirará el material afectado.
 
 Código bajo licencia MIT (LICENSE). Tipografías bajo SIL Open Font License 1.1 (fonts/OFL.txt y fonts/OFL-PressStart2P.txt).
+
+Los efectos de sonido (`assets/sfx`) son CC0 de OpenGameArt.org (rubberduck, ezduzziteh): ver `assets/sfx/CREDITOS.md`.

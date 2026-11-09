@@ -70,7 +70,7 @@ export async function hervir(actor, { fuente = null } = {}) {
     arte: tokenForma(actor, "seco"), arteClase: "figura", arteAlt: actor.name,
     titulo: `${actor.name} vuelve a ser persona`,
     texto: `<p>${fuente === "termo" ? "Una carga del Termo Portátil" : "Una fuente de calor de la escena"} y el vapor hace su trabajo. ${fuente === "termo" ? `Quedan ${estado().termo} cargas.` : ""}</p>`,
-    fx: { texto: "¡FUUUSH!", sonido: "brillante", tono: "caliente" }
+    fx: { texto: "¡FUUUSH!", sonido: "vapor", tono: "caliente" }
   }, { actor });
 }
 

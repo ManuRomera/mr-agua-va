@@ -2,7 +2,7 @@
   "id": "mr-agua-va",
   "title": "MR- ¡Agua Va!",
   "description": "Mini sistema y aventura de inicio para Foundry VTT: una comedia fan, no oficial, de enredos acuáticos y artes marciales en un barrio de Tokio de los años 90. Cuatro alumnos de un dojo ruinoso, malditos por unas sales de Jusenkyo, se vuelven animales con agua fría y personas con agua caliente mientras corren por Nerima el día del Gran Remojo de Verano. Tiradas ¡PAM! 2.0 (2d6 a 4d6, suman los dos mejores; dobles altos = Caos de Nerima, dobles bajos = Pifia Cómica), doble forma Seco/Mojado con Carteles de Madera, Termo Portátil, Desbarajuste Acuático y Vapor Nocturno, reloj real de 120 minutos, 18 retos flotantes y ¡PELEA!: combates al estilo de las recreativas de lucha, con barras de Dignidad, Furia (ataque o escudo), Técnicas Secretas, equipos tag con relevo dinámico y un Jefe Final de un solo round con QTE. Incluye la aventura completa, que se instala sola en un mundo vacío, y su PDF.",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13.351",

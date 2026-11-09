@@ -40,3 +40,11 @@ test("el texto publicable no lleva notas de producción ni prompts de arte", asy
   const texto = JSON.stringify(AV);
   assert.doesNotMatch(texto, /\bprompts?\b|cel art|Estudio Deen|1:1 avatar|REF_[A-Z]|image_gen|Rumiko/i);
 });
+
+test("todas las muestras de sonido que cita efectos.mjs existen", () => {
+  const src = leer("module/efectos.mjs");
+  const bloque = src.slice(src.indexOf("export const CAPAS"), src.indexOf("const NOMBRES"));
+  const nombres = [...bloque.matchAll(/"([a-z]+_[a-z]|plop|charge|boom|pot)"/g)].map(m => m[1]);
+  assert.ok(nombres.length > 20);
+  for (const n of new Set(nombres)) assert.ok(fs.existsSync(`assets/sfx/${n}.mp3`), n);
+});

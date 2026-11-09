@@ -3,7 +3,7 @@
  * y las onomatopeyas de las tiradas, con su sonido sintetizado (Web Audio, sin archivos).
  * Respetan «Reducir movimiento» de accesibilidad y los ajustes de cada navegador.
  */
-import { ID, alRecibir, difundir } from "./mesa.mjs";
+import { ID, RUTA, alRecibir, difundir } from "./mesa.mjs";
 
 let ctx = null;
 const sonando = () => game.settings.get(ID, "sonido") && game.settings.get(ID, "sonidoVolumen") > 0;
@@ -48,7 +48,8 @@ function golpe(t = 0, fuerza = 1) {
   tono({ de: 140, a: 45, dur: 0.3, t, fuerza: 1.4 * fuerza });
 }
 
-export const SONIDOS = {
+/** Sonidos sintetizados: solo de reserva si no cargan las muestras. */
+const SINTE = {
   chapuzon: () => { golpe(0, 0.7); tono({ tipo: "sine", de: 900, a: 140, dur: 0.7, fuerza: 0.7, vibrato: 30 }); tono({ tipo: "triangle", de: 300, a: 700, dur: 0.25, t: 0.55, fuerza: 0.4 }); },
   fiasco: () => { tono({ tipo: "triangle", de: 520, a: 90, dur: 0.7, fuerza: 0.8 }); golpe(0.65, 0.8); },
   aparatoso: () => { golpe(0); tono({ tipo: "square", de: 300, a: 600, dur: 0.18, t: 0.2, fuerza: 0.3 }); },
@@ -66,6 +67,53 @@ export const SONIDOS = {
   alarma: () => { [0, 0.35, 0.7].forEach(t => { tono({ tipo: "square", de: 880, a: 660, dur: 0.3, t, fuerza: 0.4 }); tono({ tipo: "square", de: 660, a: 880, dur: 0.3, t: t + 0.17, fuerza: 0.3 }); }); },
   perfecto: () => { [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tono({ tipo: "triangle", de: f, a: f, dur: 0.3, t: i * 0.08, fuerza: 0.6 })); }
 };
+
+/* ───────── Muestras CC0 (assets/sfx, ver CREDITOS.md): capas [nombre | [variantes], retardo s, velocidad, ganancia] ───────── */
+const GOLPES = ["hit_a", "hit_b", "hit_c", "hit_d"];
+export const CAPAS = {
+  chapuzon: [[["splash_a", "splash_b"], 0, 1, 1], ["boing_a", 0.22, 1, 0.7], ["plop", 0.55, 1.1, 0.5]],
+  fiasco: [[["fail_uah", "fail_blah"], 0, 1, 1], ["boing_c", 0.12, 0.85, 0.5]],
+  aparatoso: [[GOLPES, 0, 1, 0.9], ["boing_b", 0.07, 1.15, 0.7], ["plop", 0.3, 0.9, 0.4]],
+  brillante: [["bell_b", 0, 1.25, 0.9], ["bell_b", 0.11, 1.6, 0.75], ["bell_b", 0.22, 2, 0.6]],
+  descomunal: [["gong_b", 0, 1, 1], [GOLPES, 0, 0.9, 0.8], ["bell_c", 0.25, 1.3, 0.6]],
+  gong: [["gong_a", 0, 1, 1]],
+  campanilla: [["bell_c", 0, 1, 0.9], ["bell_a", 0.38, 0.84, 0.9]],      // ¡ding-dong!
+  madera: [[["wood_a", "wood_b"], 0, 1, 1]],
+  ronda: [["gong_b", 0, 1.1, 0.9]],
+  pelea: [["slam_a", 0, 1, 1], [GOLPES, 0.05, 0.9, 0.8], ["bell_b", 0.12, 1.9, 0.5]],
+  golpe: [[GOLPES, 0, 1, 1], ["slam_a", 0.02, 1.1, 0.5]],
+  tecnica: [["charge", 0, 1, 0.9], ["boom", 0.85, 1, 1], ["gong_b", 0.85, 0.8, 0.5]],
+  ko: [["slam_b", 0, 1, 1], ["hit_d", 0.02, 0.8, 0.8], ["boing_c", 0.28, 1, 0.8], ["bell_a", 1.15, 2.2, 0.6], ["bell_b", 1.4, 2.8, 0.5]],   // y se va volando: ¡kiiin!
+  perfecto: [["bell_b", 0, 1, 0.8], ["bell_b", 0.13, 1.26, 0.8], ["bell_b", 0.26, 1.5, 0.8], ["bell_b", 0.39, 2, 0.9], ["gong_b", 0.5, 1.4, 0.5]],
+  alarma: [["bell_b", 0, 1.8, 0.8], ["bell_b", 0.2, 1.4, 0.8], ["bell_b", 0.4, 1.8, 0.8], ["bell_b", 0.6, 1.4, 0.8], ["pot", 0.05, 1, 0.3]],
+  vapor: [["bubble_a", 0, 1, 0.9], ["bubble_b", 0.25, 1.2, 0.6], ["bell_b", 0.45, 2.2, 0.4]]
+};
+const NOMBRES = [...new Set(Object.values(CAPAS).flat().flatMap(([n]) => [n].flat()))];
+const buffers = new Map();
+function cargar(nombre) {
+  if (!buffers.has(nombre)) buffers.set(nombre, (async () => {
+    try { const r = await fetch(`${RUTA}/assets/sfx/${nombre}.mp3`); if (!r.ok) return null; return await audio()?.decodeAudioData(await r.arrayBuffer()); }
+    catch { return null; }
+  })());
+  return buffers.get(nombre);
+}
+const azar = x => (Array.isArray(x) ? x[Math.floor(Math.random() * x.length)] : x);
+
+async function reproducir(capas) {
+  const c = audio(); if (!c) return false;
+  const lista = capas.map(([n, t, v, g]) => [azar(n), t, v, g]);
+  const bufs = await Promise.all(lista.map(([n]) => cargar(n)));
+  if (bufs.some(b => !b)) return false;
+  const t0 = c.currentTime + 0.01, vol = (game.settings.get(ID, "sonidoVolumen") / 100) * 0.8;
+  lista.forEach(([, t, v, g], i) => {
+    const s = c.createBufferSource(), gn = c.createGain();
+    s.buffer = bufs[i]; s.playbackRate.value = v; gn.gain.value = vol * g;
+    s.connect(gn).connect(c.destination); s.start(t0 + t);
+  });
+  return true;
+}
+
+export const SONIDOS = Object.fromEntries(Object.keys({ ...SINTE, ...CAPAS }).map(k => [k, () => (CAPAS[k] ? reproducir(CAPAS[k]).then(ok => { if (!ok) SINTE[k]?.(); }) : SINTE[k]?.())]));
 
 export function sonar(clave) {
   if (sonando()) SONIDOS[clave]?.();
@@ -108,5 +156,5 @@ export function registrarEfectos() {
       setTimeout(() => Hooks.off("diceSoNiceRollComplete", id), 15000);
     } else lanzar();
   });
-  document.addEventListener("pointerdown", () => { if (ctx?.state === "suspended") ctx.resume(); }, { passive: true });
+  document.addEventListener("pointerdown", () => { if (ctx?.state === "suspended") ctx.resume(); NOMBRES.forEach(cargar); }, { passive: true, once: false });
 }

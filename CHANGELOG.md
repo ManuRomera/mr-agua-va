@@ -1,5 +1,8 @@
 # Cambios
 
+## 1.1.1 · 2026-11-09
+- **Sonido nuevo:** los efectos sintetizados (pitidos) se sustituyen por **muestras reales CC0** con aire de dibujos animados: chapuzón con splash, boing y plop; golpes con resortes; gong y «¡ding-dong!» en las cortinillas; toc de madera en los Carteles; campanitas en los éxitos, «¡uah!» en los fiascos; K.O. con golpe, boing de salir volando y el «kiiin» de la estrellita; ¡PERFECTO! con arpegio de campanas, alarma del QTE y vapor de agua caliente. El sintetizador queda como reserva si no cargan. Créditos en `assets/sfx/CREDITOS.md`.
+
 ## 1.1.0 · 2026-11-09
 - **¡PAM! 2.0 — Pifia Cómica:** los dobles se buscan en **todos** los dados tirados (también los descartados). Dobles altos (4-5-6) = **Caos de Nerima**, un gag a favor del jugador; dobles bajos (1-2-3) = **Pifia Cómica**, un desastre o ¡CHAPUZÓN! aunque la acción saliera bien. Si hay de los dos, manda el Caos; con el dado de Talento, los dobles de 3 son Caos. Con ayuda complicada, la Pifia la paga el ayudante. La tarjeta de tirada lo explica y ofrece el ¡CHAPUZÓN! a quien corresponde.
 - **¡PELEA!:** *Parada contra Parada* ya no tira ni resta Dignidad: chocan las espaldas y cada uno gana +1 de Furia. **Furia defensiva:** con 3 puntos, *Evasión Ridícula Absoluta* (anula cualquier ataque, hasta una Técnica) o *peinarse* (+4 de Dignidad, cuenta como Parada sin contraataque). Las Pifias y el Caos también se juegan dentro de los Cruces.
