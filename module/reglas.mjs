@@ -34,8 +34,19 @@ export function probabilidad(n, objetivo) {
   return si / total;
 }
 
-/** Caos de Nerima: éxito (6+) con los dos dados que cuentan iguales. */
-export const esDobles = (dosDados, suma) => dosDados.length === 2 && dosDados[0] === dosDados[1] && suma >= 6;
+/**
+ * Dobles de la reserva entera (también los dados descartados). Dobles altos (4, 5, 6) = Caos de Nerima, un gag a favor del jugador;
+ * dobles bajos (1, 2, 3) = Pifia Cómica, aunque la acción saliera bien. Si hay de los dos, manda el Caos.
+ * Con el dado de Talento, su pericia sube los dobles de 3 a altos: la Pifia solo salta con dobles de 1 o 2.
+ */
+export function analizarDados(caras, { talento = false } = {}) {
+  const veces = {};
+  for (const c of caras) veces[c] = (veces[c] ?? 0) + 1;
+  const pares = Object.keys(veces).filter(v => veces[v] >= 2).map(Number);
+  const alto = v => v >= 4 || (talento && v === 3);
+  const altos = pares.filter(alto), bajos = pares.filter(v => !alto(v));
+  return { evento: altos.length ? "caos" : bajos.length ? "pifia" : null, altos, bajos };
+}
 
 export const DESBARAJUSTE = [
   "Calma chicha: solo cubos de vecinos con buena intención.",
@@ -47,6 +58,9 @@ export const DESBARAJUSTE = [
   "¡Inundación! Si de noche no se calma, amenaza el Final C."
 ];
 
+/** Vapor 6: tiembla el edificio y empieza la cuenta atrás de Cruces de combate (derrotar al jefe o cerrar una válvula). */
+export const CUENTA_ATRAS = 2;
+
 export const VAPOR = [
   "Aire tibio: Carteles de 4 palabras.",
   "Aire tibio: Carteles de 4 palabras.",
@@ -54,7 +68,7 @@ export const VAPOR = [
   "Niebla: Carteles de 3 palabras; las distancias engañan.",
   "Calor espeso: Carteles de 2 palabras; tuberías cruzadas.",
   "Calor espeso: Carteles de 2 palabras; tuberías cruzadas.",
-  "¡La caldera explota! Carteles de 1 palabra. Final C."
+  "¡TIEMBLA EL EDIFICIO! Carteles de 1 palabra. Dos Cruces para vencer al jefe o cerrar una válvula; si no, Final C."
 ];
 
 export const acota = (v, min, max) => Math.min(max, Math.max(min, Math.round(Number(v) || 0)));
@@ -100,13 +114,20 @@ export const POSTURAS = {
   parada: { nombre: "Parada", gana: "golpe", icono: "fa-shield-halved" }
 };
 export const MAX_FURIA = 3;
+/** Los 3 puntos de Furia también sirven de escudo: Evasión Ridícula (anula cualquier ataque) o recobrar la compostura (peinarse). */
+export const CURA_SERENIDAD = 4;
 export const CRUCES_POR_RONDA = 6;
 
-/** Postura efectiva de una elección (Hervir cuenta como Parada). */
-export const posturaDe = eleccion => (eleccion === "hervir" ? "parada" : eleccion);
+/** Postura efectiva de una elección (Hervir y recobrar la compostura cuentan como Parada, sin contraataque). */
+export const posturaDe = eleccion => (["hervir", "serenidad"].includes(eleccion) ? "parada" : eleccion);
 
-/** Quién domina el Cruce: «a», «b» o «choque». La Técnica Secreta rompe cualquier Parada y solo choca con otra Técnica. */
+/**
+ * Quién domina el Cruce: «a», «b», «choque», «espaldas» (Parada contra Parada: sin tirada ni daño, +1 Furia a cada uno)
+ * o «anulado» (una Evasión Ridícula cancela cualquier ataque, incluso una Técnica). La Técnica Secreta rompe cualquier Parada.
+ */
 export function dominante(a, b) {
+  if (a === "evasion" || b === "evasion") return "anulado";
+  if (posturaDe(a) === "parada" && posturaDe(b) === "parada") return "espaldas";
   if (a === "tecnica" && b === "tecnica") return "choque";
   if (a === "tecnica") return "a";
   if (b === "tecnica") return "b";

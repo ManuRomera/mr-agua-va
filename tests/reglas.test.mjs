@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { resultado, reserva, dosMejores, probabilidad, esDobles, maxPalabras, recortarCartel, tramo, cortinillaPendiente,
+import { resultado, reserva, dosMejores, probabilidad, analizarDados, maxPalabras, recortarCartel, tramo, cortinillaPendiente,
   dominante, danoDe, barra, tiempo, caido } from "../module/reglas.mjs";
 
 test("tabla de resultados de ¡PAM!", () => {
@@ -23,10 +23,19 @@ test("los dos mejores dados y las probabilidades", () => {
   assert.ok(probabilidad(4, 9) > probabilidad(2, 9));
 });
 
-test("dobles del caos solo en éxito", () => {
-  assert.equal(esDobles([4, 4], 8), true);
-  assert.equal(esDobles([2, 2], 4), false);
-  assert.equal(esDobles([4, 5], 9), false);
+test("dobles de la reserva entera: Caos arriba, Pifia abajo y el Caos manda", () => {
+  assert.equal(analizarDados([6, 6]).evento, "caos");
+  assert.equal(analizarDados([1, 1]).evento, "pifia");
+  assert.equal(analizarDados([3, 3, 5]).evento, "pifia");
+  assert.equal(analizarDados([2, 5, 2, 6]).evento, "pifia");        // el dado descartado también cuenta
+  assert.equal(analizarDados([6, 6, 1, 1]).evento, "caos");         // manda el Caos
+  assert.equal(analizarDados([4, 5, 2, 1]).evento, null);
+});
+
+test("el Talento convierte los dobles de 3 en Caos", () => {
+  assert.equal(analizarDados([3, 3, 5], { talento: true }).evento, "caos");
+  assert.equal(analizarDados([2, 2, 5], { talento: true }).evento, "pifia");
+  assert.equal(analizarDados([1, 1, 3, 3], { talento: true }).evento, "caos");
 });
 
 test("los Carteles pierden palabras con el Vapor", () => {
@@ -50,8 +59,18 @@ test("triángulo de posturas: Golpe > Presa > Parada > Golpe", () => {
   assert.equal(dominante("golpe", "parada"), "b"); assert.equal(dominante("golpe", "golpe"), "choque");
 });
 
+test("Parada contra Parada: espaldas sin daño; la Evasión anula todo", () => {
+  assert.equal(dominante("parada", "parada"), "espaldas");
+  assert.equal(dominante("hervir", "parada"), "espaldas");
+  assert.equal(dominante("serenidad", "hervir"), "espaldas");
+  assert.equal(dominante("evasion", "tecnica"), "anulado");
+  assert.equal(dominante("golpe", "evasion"), "anulado");
+  assert.equal(dominante("serenidad", "presa"), "b");
+});
+
 test("Hervir cuenta como Parada y la Técnica rompe la guardia", () => {
   assert.equal(dominante("hervir", "golpe"), "a");
+  assert.equal(dominante("serenidad", "golpe"), "a");
   assert.equal(dominante("tecnica", "parada"), "a"); assert.equal(dominante("parada", "tecnica"), "b");
   assert.equal(dominante("tecnica", "tecnica"), "choque");
 });

@@ -63,6 +63,7 @@ export const SONIDOS = {
   golpe: () => { golpe(0, 1); tono({ tipo: "square", de: 220, a: 90, dur: 0.12, fuerza: 0.3 }); },
   tecnica: () => { tono({ tipo: "sawtooth", de: 150, a: 1400, dur: 0.6, fuerza: 0.4 }); golpe(0.55, 1.6); },
   ko: () => { golpe(0, 1.8); tono({ tipo: "sawtooth", de: 900, a: 60, dur: 1.1, fuerza: 0.5, vibrato: 25 }); [262, 196, 147].forEach((f, i) => tono({ tipo: "square", de: f, a: f, dur: 0.3, t: 0.7 + i * 0.28, fuerza: 0.3 })); },
+  alarma: () => { [0, 0.35, 0.7].forEach(t => { tono({ tipo: "square", de: 880, a: 660, dur: 0.3, t, fuerza: 0.4 }); tono({ tipo: "square", de: 660, a: 880, dur: 0.3, t: t + 0.17, fuerza: 0.3 }); }); },
   perfecto: () => { [523, 659, 784, 1047, 1319, 1568].forEach((f, i) => tono({ tipo: "triangle", de: f, a: f, dur: 0.3, t: i * 0.08, fuerza: 0.6 })); }
 };
 

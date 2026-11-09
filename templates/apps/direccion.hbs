@@ -39,7 +39,8 @@
           <button type="button" class="av-boton av-boton-suave" data-action="marcador" data-clave="vapor" data-delta="1" aria-label="Subir">+</button>
         </div>
         <p>{{vapor.texto}}</p>
-        <p class="av-nota">Solo en el Acto III: +1 por fiasco, por ronda de pelea y por pista sin descubrir; −1 por cerrar una válvula con brillante. A 6, Final C.</p>
+        {{#if vapor.cuenta}}<p class="av-aviso av-aviso-tiembla"><i class="fa-solid fa-triangle-exclamation" inert></i> ¡Tiembla el edificio! Quedan {{vapor.cuenta}} Cruce(s) de combate. <button type="button" class="av-boton av-boton-suave" data-action="valvula"><i class="fa-solid fa-gauge-high" inert></i> Válvula cerrada</button></p>{{/if}}
+        <p class="av-nota">Solo en el Acto III: +1 por fiasco, por ronda de pelea y por pista sin descubrir; −1 por cerrar una válvula con brillante. A 6 tiembla el edificio: 2 Cruces para vencer al jefe o cerrar una válvula; si no, Final C.</p>
       </div>
     </div>
 
@@ -139,6 +140,7 @@
       <button type="button" class="av-boton" data-action="escena" data-clave="14-calderas"><i class="fa-solid fa-fire-burner" inert></i> Calderas</button>
       <button type="button" class="av-boton" data-action="escena" data-clave="13-bano-interior"><i class="fa-solid fa-hot-tub-person" inert></i> Sala de baños</button>
       <button type="button" class="av-boton av-boton-fuerte" data-action="tuberia"><i class="fa-solid fa-faucet-drip" inert></i> Tubería cruzada (d6)</button>
+      <button type="button" class="av-boton" data-action="valvula" data-tooltip="Cierra una válvula de seguridad: Vapor a 4 y fuera la cuenta atrás"><i class="fa-solid fa-gauge-high" inert></i> Válvula cerrada</button>
     </div>
     <h3 class="av-rotulo">Tres vías de información <small>nunca bloqueadas por tirada</small></h3>
     {{#each vias}}<div class="av-recuadro"><b>{{titulo}}</b> <small>({{quien}})</small><p>{{texto}}</p></div>{{/each}}

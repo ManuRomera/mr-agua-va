@@ -81,7 +81,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
       reloj: PanelDireccion.#reloj, marcador: PanelDireccion.#marcador, chapuzonPantalla: () => chapuzonPantalla(),
       cortinilla: (ev, b) => lanzarCortinilla(b.dataset.id), escena: (ev, b) => activarEscena(b.dataset.clave),
       reto: PanelDireccion.#reto, estadoReto: PanelDireccion.#estadoReto, frase: (ev, b) => guiaHabla(FRASES_GUIA[b.dataset.i]),
-      tablilla: PanelDireccion.#tablilla, tuberia: PanelDireccion.#tuberia, chaparron: PanelDireccion.#chaparron,
+      tablilla: PanelDireccion.#tablilla, tuberia: PanelDireccion.#tuberia, chaparron: PanelDireccion.#chaparron, valvula: PanelDireccion.#valvula,
       final: PanelDireccion.#final, abrir: (ev, b) => game.actors.get(b.dataset.id)?.sheet.render(true),
       diario: (ev, b) => game.journal.find(j => j.getFlag(ID, "clave") === b.dataset.clave)?.sheet.render(true),
       seguridad: () => game.mrAguaVa.abrirSeguridad(), filtro: PanelDireccion.#filtro,
@@ -114,7 +114,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
         .map(([id, nombre, icono]) => ({ id, nombre, icono, activa: id === this.tabGroups.panel })),
       reloj: { texto: mmss(min), marcha: Boolean(e.reloj.inicio), tramo: t.nombre, pct: Math.min(100, (min / 120) * 100), aviso: pendiente ? AV.cortinillas.find(c => c.id === pendiente)?.titulo : "" },
       desbarajuste: { valor: e.desbarajuste, texto: DESBARAJUSTE[e.desbarajuste], casillas: casillas(e.desbarajuste, 6) },
-      vapor: { valor: e.vapor, texto: VAPOR[e.vapor], palabras: maxPalabras(e.vapor), casillas: casillas(e.vapor, 6) },
+      vapor: { valor: e.vapor, texto: VAPOR[e.vapor], palabras: maxPalabras(e.vapor), casillas: casillas(e.vapor, 6), cuenta: e.cuentaAtras?.restantes ?? 0 },
       termo: { valor: e.termo, casillas: casillas(e.termo, 3) },
       tablillas: [1, 2, 3].map(n => ({ n, tengo: e.tablillas.includes(n), reto: `R0${n}` })),
       cortinillas: AV.cortinillas.map(c => ({ ...c, hecha: e.cortinillas.includes(c.id), arte: `${ARTE}/personajes/${c.guia}.webp` })),
@@ -159,7 +159,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     if (accion === "marcha") nuevo = r.inicio ? { inicio: null, acumulado: r.acumulado + (ahora - r.inicio) } : { inicio: ahora, acumulado: r.acumulado };
     if (accion === "menos" || accion === "mas") nuevo = { inicio: r.inicio, acumulado: Math.max(0, r.acumulado + (accion === "mas" ? 5 : -5) * 60000) };
     if (accion === "cero") nuevo = { inicio: null, acumulado: 0 };
-    await cambiarEstado({ reloj: nuevo, ...(accion === "cero" ? { cortinillas: [], desbarajuste: 0, vapor: 0, termo: 3, tablillas: [], retos: {}, final: "", pelea: null } : {}) });
+    await cambiarEstado({ reloj: nuevo, ...(accion === "cero" ? { cortinillas: [], desbarajuste: 0, vapor: 0, termo: 3, tablillas: [], retos: {}, final: "", cuentaAtras: null, pelea: null } : {}) });
   }
 
   static async #marcador(ev, b) {
@@ -204,6 +204,13 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
       arte: `${ARTE}/escenas/14-calderas-thumb.webp`, arteClase: "banner", titulo: "Algo gorgotea en las tuberías", texto: `<p>${TUBERIAS[n - 1]}</p>`,
       fx: { texto: "¡PSSSHH!", sonido: "aparatoso", tono: "caliente" }
     }, { alias: "La caldera", tirada: roll });
+  }
+
+  /** Vapor 6: cerrar una válvula de seguridad apaga la cuenta atrás y baja el Vapor. */
+  static async #valvula() {
+    await cambiarEstado({ vapor: 4, cuentaAtras: null });
+    return publicar({ tipo: "valvula", tono: "brillante", icono: "fa-solid fa-gauge-high", etiqueta: "Válvula de seguridad", sfx: "¡PSSSHH!", arte: `${ARTE}/escenas/14-calderas-thumb.webp`, arteClase: "banner",
+      titulo: "¡Válvula cerrada!", texto: "<p>La presión baja de golpe, el temblor cesa y la cuenta atrás se detiene. <b>El Vapor baja a 4.</b></p>", fx: { texto: "¡PSSSHH!", sonido: "brillante", tono: "caliente" } }, { alias: "La caldera" });
   }
 
   /** R18: un chaparrón empapa a todos los personajes. */

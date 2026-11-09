@@ -27,6 +27,8 @@ export class ModeloPNJ extends foundry.abstract.TypeDataModel {
     return {
       papel: texto(), frase: texto(), descripcion: texto(), tecnica: texto(), secreto: texto(),
       rol: new StringField({ required: true, choices: ["vecino", "rival"], initial: "vecino" }),
+      // Jefe con reglas propias en la ¡PELEA! (Hidetoshi: cañón de agua, salpicadura, segunda fase y Torrente Olímpico de área).
+      jefe: new StringField({ required: true, blank: true, choices: ["", "hidetoshi"], initial: "" }),
       // ¡PELEA!: Dignidad por barra, número de barras y rondas a ganar.
       dignidad: entero(6, 1, 40), barras: entero(1, 1, 3), rondas: entero(1, 1, 3),
       notas: new HTMLField({ required: true, blank: true })

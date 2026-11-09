@@ -30,6 +30,10 @@ Kenji («Plancha de Hierro», avestruz con gafas), Mako («Cucharón Relámpago�
 
 <p align="center"><img src="docs/img/fichas.webp" alt="Fichas de personaje: forma seca y forma mojada" width="100%"></p>
 
+## ¡PAM! 2.0: dobles con consecuencias
+
+2d6 (hasta 4d6), suman los dos mejores. Pero los **dobles se buscan en todos los dados**: dobles altos (4-5-6) = **Caos de Nerima** (un gag a tu favor); dobles bajos (1-2-3) = **Pifia Cómica** (¡CHAPUZÓN! o desastre, aunque salga bien). Si hay de los dos, manda el Caos; con tu Talento, los dobles de 3 también son Caos; y si pediste ayuda, la Pifia se la lleva el ayudante.
+
 ## Doble forma, Carteles de Madera y Termo
 
 Mojarse (**¡CHAPUZÓN!**) cambia el retrato y la figura —también los tokens ya colocados en escena— y el personaje **solo puede gruñir y levantar Carteles de Madera de cuatro palabras** (el botón *Cartel* los pone en el chat; el **Vapor Nocturno** de la Casa de Baños los va recortando hasta una sola palabra). Para volver a ser persona hace falta agua caliente: una fuente de calor de la escena o una carga del **Termo Portátil**.
@@ -38,11 +42,13 @@ Mojarse (**¡CHAPUZÓN!**) cambia el retrato y la figura —también los tokens 
 
 La novedad del sistema: una regla de **combate de barrio al estilo de las máquinas de lucha 1 contra 1 y por equipos (*tag*)**. Arriba de la pantalla aparecen los **nombres, los retratos, las barras de vida (la Dignidad: orgullo, no salud), la Furia, el cronómetro y las rondas**; abajo, el mando de cada jugador.
 
-- **Golpe > Presa > Parada > Golpe**, elegidos a la vez y en secreto; quien gana el triángulo tira ¡PAM! y el resultado dice la Dignidad que pierde el rival (1 · 2 y ¡CHAPUZÓN! · 3 · 4).
-- **Furia** y **Técnica Secreta**: con tres puntos, se grita el nombre de una técnica inventada, vinculada a un oficio normal («¡Kempo de la Plancha Voladora!»), que sale en pantalla a lo grande.
+- **Golpe > Presa > Parada > Golpe**, elegidos a la vez y en secreto; quien gana el triángulo tira ¡PAM! y el resultado dice la Dignidad que pierde el rival (1 · 2 y ¡CHAPUZÓN! · 3 · 4). **Parada contra Parada**: sin tirada ni daño, chocan las espaldas y +1 de Furia a cada uno.
+- **Furia** (ataque o escudo): con tres puntos, una **Técnica Secreta** a gritos, vinculada a un oficio normal («¡Kempo de la Plancha Voladora!»); o una **Evasión Ridícula** que anula cualquier ataque; o **peinarse** en pleno caos y recobrar Dignidad.
 - **Provocación**: una pulla a la cara sobre el defecto o el secreto del rival; si hace gracia, no puede Parar este Cruce.
 - **Entorno** (+1d6 por usar un cubo, una manguera, una tetera…), **asistencia** y **relevo** en equipos, **¡PERFECTO!** (regala una carga de Termo), **¡TIEMPO!** y **¡K.O.!** con quien cae decidiendo cómo sale volando.
-- Rondas: una para gente menor, mejor de tres con jefes (el Capitán tiene dos barras).
+- **Equipos con relevo dinámico:** quien espera en el banquillo ve sus botones en gris y puede **pedir el relevo**; el luchador activo elige a quién da entrada. **Los mandos de los enemigos solo los ve el máster.**
+- **Jefe Final en un solo round:** el Capitán Hidetoshi tiene una barra de 16 en dos fases (cañón de agua con salpicadura, y cañón roto en furia máxima), aísla a quien empapa y lanza el **Torrente Olímpico** contra el banquillo, que tiene unos segundos para **esquivar** con un botón que tiembla en pantalla (QTE).
+- **Vapor 6:** el edificio tiembla y quedan **2 Cruces** para vencer al jefe o cerrar una válvula; si no, explota (Final C).
 
 <p align="center"><img src="docs/img/pelea.webp" alt="La máquina de ¡PELEA! en Foundry: nombres, barras de Dignidad, Furia, cronómetro y mando" width="100%"></p>
 

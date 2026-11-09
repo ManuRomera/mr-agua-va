@@ -5,7 +5,7 @@
  */
 import { olvidarTodo } from "./memoria.mjs";
 import { ApplicationV2 } from "./compat.mjs";
-import { acota } from "./reglas.mjs";
+import { acota, CUENTA_ATRAS } from "./reglas.mjs";
 
 export const ID = "mr-agua-va";
 export const SOCKET = `system.${ID}`;
@@ -21,6 +21,7 @@ export const ESTADO_INICIAL = {
   retos: {},          // R01: "activo" | "resuelto"
   cortinillas: [],    // ids ya lanzadas
   final: "",
+  cuentaAtras: null,  // Vapor 6: {restantes} Cruces de combate para vencer al jefe o cerrar una válvula; si no, Final C
   pelea: null         // ¡PELEA! en curso (solo la escribe quien dirige; ver pelea.mjs)
 };
 
@@ -67,6 +68,7 @@ function sanear(cambios = {}) {
   if ("vapor" in cambios) v.vapor = acota(cambios.vapor, 0, 6);
   if ("termo" in cambios) v.termo = acota(cambios.termo, 0, 3);
   if (Array.isArray(cambios.tablillas)) v.tablillas = [...new Set(cambios.tablillas.map(Number).filter(n => [1, 2, 3].includes(n)))].sort();
+  if ("cuentaAtras" in cambios) v.cuentaAtras = cambios.cuentaAtras ? { restantes: acota(cambios.cuentaAtras.restantes, 0, CUENTA_ATRAS) } : null;
   if ("pelea" in cambios) v.pelea = cambios.pelea && typeof cambios.pelea === "object" ? cambios.pelea : null;
   if (cambios.reloj && typeof cambios.reloj === "object") v.reloj = { inicio: Number(cambios.reloj.inicio) || null, acumulado: Math.max(0, Number(cambios.reloj.acumulado) || 0) };
   if (cambios.retos && typeof cambios.retos === "object") v.retos = Object.fromEntries(Object.entries(cambios.retos).filter(([k, e]) => /^R\d\d$/.test(k) && ["activo", "resuelto"].includes(e)));
@@ -78,7 +80,17 @@ function sanear(cambios = {}) {
 /** Cambia el estado. Los objetos (reloj, retos) se sustituyen enteros. */
 export async function cambiarEstado(cambios) {
   const validos = sanear(cambios);
-  if (game.user.isGM) return game.settings.set(ID, "estado", { ...estado(), ...validos });
+  if (game.user.isGM) {
+    // Vapor 6 enciende la cuenta atrás (¡tiembla el edificio!); bajar de 6 la apaga.
+    const antes = estado();
+    if ("vapor" in validos) {
+      if (validos.vapor >= 6 && antes.vapor < 6 && !antes.cuentaAtras && !("cuentaAtras" in validos)) {
+        validos.cuentaAtras = { restantes: CUENTA_ATRAS };
+        difundir("banners", { lista: [{ t: "¡TIEMBLA EL EDIFICIO!", ms: 2200, sonido: "alarma", tono: "ko" }] });
+      } else if (validos.vapor < 6 && antes.cuentaAtras && !("cuentaAtras" in validos)) validos.cuentaAtras = null;
+    }
+    return game.settings.set(ID, "estado", { ...antes, ...validos });
+  }
   if (!game.users.activeGM) return ui.notifications.warn("Hace falta que quien dirige esté conectado.");
   game.socket.emit(SOCKET, { op: "estado", datos: validos });
 }

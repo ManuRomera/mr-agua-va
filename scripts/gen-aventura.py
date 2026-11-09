@@ -54,7 +54,7 @@ for i, (k, nombre, papel, frase, desc, rival) in enumerate(PNJ):
     ancho = 1.6 if k in ("pnj-esbirro", "guia-manana") else 1.2
     actores.append({"_id": uid(f"pnj-{k}"), "name": nombre, "type": "pnj", "img": f"{R}/personajes/{k}-cara.webp", "folder": F["Rivales y vecinos"], "sort": i,
         "system": {"papel": papel, "frase": frase, "descripcion": desc, "tecnica": r.get("tecnica", ""), "secreto": r.get("secreto", ""),
-                   "rol": "rival" if rival else "vecino", "dignidad": r.get("dignidad", 6), "barras": r.get("barras", 1), "rondas": r.get("rondas", 1), "notas": ""},
+                   "rol": "rival" if rival else "vecino", "jefe": r.get("jefe", ""), "dignidad": r.get("dignidad", 6), "barras": r.get("barras", 1), "rondas": r.get("rondas", 1), "notas": ""},
         "prototypeToken": token(f"{R}/personajes/{k}.webp", ancho, 1.8, nombre) | {"disposition": -1 if rival else 0, "actorLink": True},
         "ownership": {"default": 0}, "flags": {ID: ({"rival": rival} if rival else {})}})
 

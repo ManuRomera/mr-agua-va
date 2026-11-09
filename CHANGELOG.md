@@ -1,5 +1,14 @@
 # Cambios
 
+## 1.1.0 · 2026-11-09
+- **¡PAM! 2.0 — Pifia Cómica:** los dobles se buscan en **todos** los dados tirados (también los descartados). Dobles altos (4-5-6) = **Caos de Nerima**, un gag a favor del jugador; dobles bajos (1-2-3) = **Pifia Cómica**, un desastre o ¡CHAPUZÓN! aunque la acción saliera bien. Si hay de los dos, manda el Caos; con el dado de Talento, los dobles de 3 son Caos. Con ayuda complicada, la Pifia la paga el ayudante. La tarjeta de tirada lo explica y ofrece el ¡CHAPUZÓN! a quien corresponde.
+- **¡PELEA!:** *Parada contra Parada* ya no tira ni resta Dignidad: chocan las espaldas y cada uno gana +1 de Furia. **Furia defensiva:** con 3 puntos, *Evasión Ridícula Absoluta* (anula cualquier ataque, hasta una Técnica) o *peinarse* (+4 de Dignidad, cuenta como Parada sin contraataque). Las Pifias y el Caos también se juegan dentro de los Cruces.
+- **Vapor 6:** ya no activa el Final C al instante. El edificio tiembla y hay una **cuenta atrás de 2 Cruces** para vencer al jefe o cerrar una válvula (botón *Válvula cerrada* en el panel); si no, explota. Aviso en la cartela, el panel y el marcador de la pelea.
+- **Jefe Final (Capitán Hidetoshi) en un solo round:** una barra de 16 en dos fases. Fase 1 (16–9): cañón de agua con +1d6 y **salpicadura** (si gana un Cruce, el banquillo pierde 1 y no descansa). Fase 2 (8–0): el cañón se rompe y entra con 3 de Furia. **Aislamiento** por ¡CHAPUZÓN! (el personaje estampado no puede ser relevado ese Cruce) y **Torrente Olímpico** de área con **QTE**: los del banquillo ven un botón ¡ESQUIVAR! que tiembla con un temporizador de 4 segundos; quien no reacciona pierde 2 de Dignidad y, si está Seco, se moja.
+- **Interfaz de la pelea:** los del banquillo ven sus botones de combate **en gris** y un botón de **Pedir relevo** (se anula pulsándolo otra vez); el luchador activo ve quién lo pide y **elige a quién da entrada**. **Los mandos de los enemigos solo los ve y maneja quien dirige** (también se rechazan en el servidor las peticiones de un jugador sobre un PNJ).
+- Manual y PDF actualizados (capítulos 2, 3, 4, 11 y 12); 18 pruebas de reglas y 12 del motor de la pelea con un Foundry de pega.
+- Arreglo: la miniatura doble del retrato de la hoja había perdido su marco (regla CSS rota).
+
 ## 1.0.0 · 2026-11-08
 - Primera versión: mini sistema y aventura de inicio «¡Agua Va!» (Especial Nerima) para Foundry VTT 13–14, en castellano.
 - **¡PAM! 2.0:** 2d6 a 4d6, suman los dos mejores; talento de la forma, ayuda complicada y bono de huida estando Mojado; dobles de éxito = gag del Caos de Nerima.

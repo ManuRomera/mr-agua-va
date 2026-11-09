@@ -161,7 +161,8 @@
   background: repeating-conic-gradient(from 0deg at 50% 38%, rgba(255, 255, 255, .22) 0 2deg, transparent 2deg 7deg);
   pointer-events: none;
 }
-&  position: relative; margin: 14px 20px 0 14px; flex: 0 0 auto;
+.av-perfil-retrato {
+  position: relative; margin: 14px 20px 0 14px; flex: 0 0 auto;
   border: var(--av-borde); box-shadow: var(--av-sombra); background: #fff; transform: rotate(-2deg);
   cursor: pointer;
 }
@@ -655,3 +656,39 @@ body.av-en-pelea .av-cartela { display: none; }
 @keyframes av-parpadeo { 50% { opacity: .55; } }
 @keyframes av-sacudida { 0%, 100% { transform: none; } 15% { transform: translate(-5px, 2px); } 30% { transform: translate(5px, -2px); } 45% { transform: translate(-4px, 0); } 60% { transform: translate(4px, 1px); } 75% { transform: translate(-2px, 0); } }
 @media (max-width: 900px) { .av-mando { flex-direction: column; align-items: stretch; } .av-mando-lado { width: 96vw; } }
+
+/* ═════ ¡PELEA! 1.1: jefe en dos fases, banquillo, relevo dinámico, cuenta atrás y QTE ═════ */
+.av-fase { font-family: var(--av-arcade); font-size: 9px; color: #fff; background: #d6194d; border: 2px solid #000; padding: 2px 6px; align-self: center; -webkit-text-stroke: 0; text-shadow: none; }
+.av-luch.jefe .av-vida { height: 32px; }
+.av-vida-corte { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 4px; margin-left: -2px; background: #fff; box-shadow: 0 0 0 1px #000; z-index: 3; transition: none; }
+.av-cuenta { display: flex; flex-direction: column; align-items: center; line-height: 1; padding: 4px 8px; background: #b3001b; color: #fff; border: 3px solid #fff; outline: 3px solid #000; font-family: var(--av-arcade); font-size: 9px; animation: av-tiembla .35s linear infinite; }
+.av-cuenta b { font-size: 26px; color: #ffe84a; text-shadow: 2px 2px 0 #000; margin: 3px 0; }
+.av-cuenta small { font-size: 8px; }
+@keyframes av-tiembla { 0%, 100% { transform: translate(0, 0) rotate(0); } 20% { transform: translate(-2px, 1px) rotate(-1.5deg); } 40% { transform: translate(2px, -1px) rotate(1.5deg); } 60% { transform: translate(-1px, -2px); } 80% { transform: translate(1px, 2px) rotate(1deg); } }
+.av-mando-lado.en-banquillo { border-color: #9aa7c0; outline-color: #333; }
+.av-mando-gris { margin-bottom: 4px; }
+.av-mando-gris .av-arcade { filter: grayscale(1) brightness(.55); box-shadow: inset 0 4px 0 rgba(255, 255, 255, .15), 0 3px 0 #000; }
+.av-mando-relevos { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; border-top: 2px dashed rgba(255, 255, 255, .35); padding-top: 6px; }
+.av-mando-relevos > span { flex: 1 1 100%; font-size: 12px; font-weight: 800; color: #ffe84a; }
+.av-chip-relevo { display: inline-flex; align-items: center; gap: 6px; height: auto; padding: 3px 10px 3px 4px; background: #fff; color: var(--av-tinta); border: 3px solid #000; border-radius: 999px; font-weight: 800; font-size: 13px; cursor: pointer; }
+.av-chip-relevo img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; border: 2px solid #000; }
+.av-chip-relevo.pide { background: #ffe84a; animation: av-parpadeo 1s steps(2) infinite; }
+.av-chip-relevo.elegido { background: #6bff8b; animation: none; box-shadow: 0 0 0 3px #fff; }
+.av-banq-fila .av-boton.activo { background: #6bff8b; }
+.av-aviso-tiembla { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; animation: av-latido 1s infinite alternate; }
+.av-aviso-tiembla .av-boton { min-height: 26px; padding: 2px 10px; font-size: 14px; }
+
+/* QTE: la ola del jefe contra el banquillo */
+.av-qte { position: fixed; z-index: 99989; left: 50%; bottom: 26px; transform: translateX(-50%); width: min(640px, 96vw); padding: 14px 16px 12px; text-align: center; font-family: var(--av-texto);
+  background: rgba(150, 0, 20, .92); border: 4px solid #fff; outline: 4px solid #000; box-shadow: 0 0 60px rgba(255, 40, 60, .8); animation: av-tiembla .25s linear infinite; }
+.av-qte-aviso { margin: 0 0 10px; font: 900 20px/1.2 var(--av-titular); color: #ffe84a; text-shadow: 2px 2px 0 #000; text-transform: uppercase; }
+.av-qte-botones { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.av-qte-boton { display: flex; flex-direction: column; align-items: center; gap: 4px; height: auto; padding: 14px 26px; cursor: pointer; font: 400 30px/1 var(--av-titular); color: #3a0a00; background: linear-gradient(#fff6a0, #ffb81f); border: 4px solid #000; border-radius: 14px; box-shadow: 0 6px 0 #000; animation: av-tiembla .12s linear infinite; }
+.av-qte-boton i { font-size: 34px; }
+.av-qte-boton small { font: 800 12px var(--av-texto); }
+.av-qte-boton.salvo { background: #6bff8b; animation: none; color: #06300f; }
+.av-qte-tiempo { height: 12px; margin-top: 12px; border: 3px solid #000; background: #000; }
+.av-qte-tiempo i { display: block; height: 100%; width: 100%; background: #ffe84a; animation-name: av-vaciar; animation-timing-function: linear; animation-fill-mode: forwards; }
+@keyframes av-vaciar { to { width: 0; } }
+.av-qte.quieto, .av-qte.quieto .av-qte-boton, .av-cuenta { animation-duration: 1s; }
+body.av-sin-movimiento :is(.av-qte, .av-qte-boton, .av-cuenta) { animation: none !important; }
