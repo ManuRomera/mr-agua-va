@@ -1,5 +1,5 @@
 /**
- * La cartela del día: un rótulo flotante para toda la mesa con la hora (Amanecer, Acto I…), el Desbarajuste Acuático,
+ * La cartela del día: un rótulo flotante para todos los jugadores con la hora (Amanecer, Acto I…), el Desbarajuste Acuático,
  * el Termo, las tablillas y, de noche, el Vapor. Se arrastra con el botón derecho; quien dirige abre el panel con un clic.
  */
 import { ID, ARTE, estado } from "./mesa.mjs";
@@ -34,7 +34,7 @@ export function pintarCartela() {
   caja.classList.toggle("noche", noche);
   caja.classList.toggle("gm", game.user.isGM);
   const pips = (n, max, clase = "") => Array.from({ length: max }, (_, i) => `<i class="${clase} ${i < n ? "llena" : ""}"></i>`).join("");
-  const guia = noche ? "guia-noche" : "guia-manana";
+  const guia = noche ? "presentador-noche" : "presentador-manana";
   caja.innerHTML = `<img src="${ARTE}/personajes/${guia}-cara.webp" alt="">
     <span class="av-cartela-tramo">${t.nombre}</span>
     <span class="av-cartela-medidor" data-tooltip="Desbarajuste Acuático ${e.desbarajuste}/6"><b>Agua</b>${pips(e.desbarajuste, 6)}</span>

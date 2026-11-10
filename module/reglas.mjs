@@ -81,7 +81,7 @@ export function recortarCartel(texto, vapor = 0) {
   return { texto: palabras.slice(0, max).join(" "), recortado: palabras.length > max, max };
 }
 
-/** Tramos del reloj real (minutos de mesa). */
+/** Tramos del reloj real (minutos de sesión). */
 export const TRAMOS = [
   { desde: 0, clave: "amanecer", nombre: "Amanecer en Nerima", noche: false },
   { desde: 5, clave: "montaje", nombre: "Montaje matinal", noche: false },
@@ -168,3 +168,25 @@ export function tiempo(bandoA, bandoB) {
 
 /** ¿Está todo el bando a cero? */
 export const caido = bando => bando.every(l => l.dig <= 0);
+
+/**
+ * Las Tablillas pesan en el combate final contra el Capitán Hidetoshi.
+ * Las que tenga el grupo: nº 1 = +1 Furia al empezar · nº 2 = el cañón queda tocado (−2 de Dignidad al Capitán) · nº 3 = el Torrente Olímpico empieza enfriándose.
+ * Cada una que se haya llevado el Cisne le da al Capitán un escudo de madera: +2 de Dignidad.
+ */
+export const ESCUDO_TABLILLA = 2;
+export function efectosTablillas(tengo = []) {
+  const grupo = [...new Set(tengo.map(Number).filter(n => [1, 2, 3].includes(n)))];
+  const cisne = 3 - grupo.length;
+  return { grupo, cisne, furia: grupo.includes(1) ? 1 : 0, canon: grupo.includes(2) ? 2 : 0, torrente: grupo.includes(3) ? 3 : 0, escudo: cisne * ESCUDO_TABLILLA };
+}
+
+/** ¿Hay Round 2? Una sola vez y solo contra el Capitán, si los personajes ganan habiendo reunido menos Tablillas que el Cisne o sin haber descubierto el secreto de sus manguitos. */
+export const DIGNIDAD_ROUND2 = 8;
+export function motivoRound2({ tablillas = [], secreto = false, round2 = false } = {}) {
+  if (round2) return "";
+  const fx = efectosTablillas(tablillas);
+  if (fx.cisne > fx.grupo.length) return "tablillas";
+  if (!secreto) return "secreto";
+  return "";
+}

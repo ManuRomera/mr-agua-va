@@ -79,10 +79,10 @@ portada = f'''<section class="portada">
 indice_filas = "".join(f'<li><a href="#c{n}"><span class="ix-n">{EP[n]:02d}</span><b>{e(cap[n]["titulo"])}</b><span class="ix-p"></span></a></li>' for n, _ in SECCIONES)
 indice = f'''<section class="indice">
   <h1 class="ix-titulo">ÍNDICE <small>もくじ</small></h1>
-  <div class="ix-promesa"><p class="globo">{e(AV["promesa"][0].upper() + AV["promesa"][1:])}</p>{img("personajes/guia-manana.webp", "ix-porco")}</div>
-  <ol class="ix-lista">{indice_filas}<li><a href="#fichas"><span class="ix-n">EX</span><b>Fichas privadas para recortar</b></a></li></ol>
+  <div class="ix-promesa"><p class="globo">{e(AV["promesa"][0].upper() + AV["promesa"][1:])}</p>{img("personajes/presentador-manana.webp", "ix-porco")}</div>
+  <ol class="ix-lista">{indice_filas}<li><a href="#fichas"><span class="ix-n">EX</span><b>Los malditos de un vistazo</b></a></li></ol>
   <div class="staff"><b>STAFF</b> Aventura y sistema: Manu Romera · Arte: generado con IA para esta partida a partir de diseños propios · Rótulos: Dela Gothic One, Zen Maru Gothic y Press Start 2P (OFL) · Versión {SYS["version"]} para Foundry VTT 13–14.
-  <br><em>Partida fan, original y no oficial, ambientada en el barrio de Nerima y en el espíritu de las comedias de artes marciales de los años 90. Sin ánimo de lucro. Para 2–4 participantes y dirección; 120 minutos; comedia de enredos para mesa adulta o juvenil.</em></div>
+  <br><em>Partida fan, original y no oficial, ambientada en el barrio de Nerima y en el espíritu de las comedias de artes marciales de los años 90. Sin ánimo de lucro. Para 2–4 participantes y dirección; 120 minutos; comedia de enredos para un grupo adulto o juvenil.</em></div>
 </section>'''
 
 # ---------- Pantalla de versus (antes de ¡PELEA!) ----------
@@ -124,7 +124,7 @@ def cameo(c):
     return f'''<article class="cameo"><h3>{e(c["nombre"])}</h3><p><b>1 · Avistamiento</b> {e(c["paso1"])}</p><p><b>2 · Roce</b> {e(c["paso2"])}</p><p><b>3 · Despedida</b> {e(c["paso3"])}</p></article>'''
 
 # ---------- Galerías ----------
-VEC = [("guia-manana", "Guía de Jusenkyo"), ("pnj-hidetoshi", "Capitán Hidetoshi"), ("pnj-esbirro", "La Pandilla del Cisne"), ("pnj-mariko", "Mariko"), ("pnj-yuzuki", "Maestro Yuzuki"),
+VEC = [("presentador-manana", "Manuel, el presentador"), ("guia-manana", "Guía de Jusenkyo"), ("pnj-hidetoshi", "Capitán Hidetoshi"), ("pnj-esbirro", "La Pandilla del Cisne"), ("pnj-mariko", "Mariko"), ("pnj-yuzuki", "Maestro Yuzuki"),
        ("pnj-matsu", "Maestra Matsu"), ("pnj-tendera", "Señora Sawa"), ("pnj-ramen", "Tío del ramen"), ("pnj-notario", "El notario"),
        ("pj-kenji-mojado", "Kenji (avestruz)"), ("pj-mako-mojado", "Mako (nutria)"), ("pj-daiki-mojado", "Daiki (cabra)"), ("pj-yumi-mojado", "Yumi (macaco)")]
 vecinos = "".join(f'<figure>{img(f"personajes/{k}-cara.webp")}<figcaption>{e(n)}</figcaption></figure>' for k, n in VEC if hay(f"personajes/{k}-cara.webp"))
@@ -134,11 +134,11 @@ NOMBRES = {"00-amanecer": "Amanecer", "01-mediodia": "Mediodía", "02-noche": "N
            "11-lavanderia": "La lavandería", "12-bano-exterior": "El Vapor Feliz", "13-bano-interior": "La sala de baños", "14-calderas": "Las calderas", "15-tejados": "Los tejados", "16-estanque-caos": "El estanque"}
 decorados = "".join(f'<figure>{img(f"escenas/{k}-thumb.webp")}<figcaption>{e(NOMBRES.get(k, k))}</figcaption></figure>' for k in ESC)
 
-fichas = "".join(f'''<div class="recorte"><h3>{e(p["nombre"])} <small>«{e(p["apodo"])}»</small></h3>
+fichas = "".join(f'''<div class="vistazo"><h3>{e(p["nombre"])} <small>«{e(p["apodo"])}»</small></h3>
   <p><b>Talento Marcial</b> {e(p["marcial"])}</p><p><b>Talento de Bestia ({e(p["animal"])})</b> {e(p["bestia"])}</p><p><b>Defecto cómico</b> {e(p["defecto"])}</p>
-  <p><b>Mi secreto vergonzoso</b> {e(p["secreto"])}</p><p><b>Si algún día lo confieso…</b> ____________________________________________</p></div>''' for p in AV["pjs"])
+  <p><b>Secreto (solo dirección)</b> {e(p["secreto"])}</p><p><b>Si lo confiesa…</b> {e(p.get("confesion", "")) or "gana un dado"}</p></div>''' for p in AV["pjs"])
 
-FIGURAS = ["guia-mediodia", "pj-kenji-mojado", "pj-mako-mojado", "guia-noche", "pj-daiki-mojado", "pj-yumi-mojado", "pnj-matsu", "pnj-mariko", "guia-amanecer", "pnj-yuzuki", "pnj-hidetoshi", "pnj-tendera"]
+FIGURAS = ["presentador-mediodia", "pj-kenji-mojado", "pj-mako-mojado", "presentador-noche", "pj-daiki-mojado", "pj-yumi-mojado", "pnj-matsu", "pnj-mariko", "presentador-amanecer", "pnj-yuzuki", "pnj-hidetoshi", "pnj-tendera"]
 def construir(rellenos):
   def RELLENO(n):
     alto = min(rellenos.get(n, 0), 95)
@@ -171,7 +171,7 @@ def construir(rellenos):
 
   cuerpo.append(f'<section class="galeria"><h1 class="gal-titulo">¡TODO NERIMA! <small>Reparto de rivales, vecinos y malditos en forma Mojada</small></h1><div class="gal-caras">{vecinos}</div></section>')
   cuerpo.append(f'<section class="galeria decorados"><h1 class="gal-titulo">DECORADOS <small>17 escenas incluidas en Foundry</small></h1><div class="gal-esc">{decorados}</div></section>')
-  cuerpo.append(f'<section class="cap crema" id="fichas"><header class="cap-cab"><span class="cap-num">EXTRA</span><h1>Fichas privadas para recortar</h1><span class="kana">ひみつ</span></header><p class="texto">Entrega a cada jugador la suya en privado. Los secretos son ficción del personaje; se pueden cambiar por otro de orgullo, dinero, trabajo, rivalidad o metedura de pata. No hay castigo por no confesarlo, y quien lo confiesa gana un dado.</p><div class="recortes">{fichas}</div></section>')
+  cuerpo.append(f'<section class="cap crema" id="fichas"><header class="cap-cab"><span class="cap-num">EXTRA</span><h1>Los malditos de un vistazo</h1><span class="kana">ひみつ</span></header><p class="texto">Cada jugador ve su secreto en su propia hoja de Foundry, en el recuadro <b>«Solo para ti»</b>: lo ven su dueño y quien dirige; el resto de jugadores solo ve «TOP SECRET». Los secretos son ficción del personaje; se pueden cambiar por otro de orgullo, dinero, trabajo, rivalidad o metedura de pata. No hay castigo por no confesarlo, y quien lo confiesa gana un dado.</p><div class="vistazos">{fichas}</div></section>')
   cuerpo.append(f'''<section class="encuesta"><h1>¡ENCUESTA DEL LECTOR! <small>アンケート</small></h1>
     <p>Rellena la postal y envíala a la Redacción de ¡PAM!, Apartado de Correos del barrio de Nerima. Entre todas las respuestas sortearemos un termo portátil que, probablemente, tiene fugas.</p>
     <ol><li>¿Qué animal fue la sensación del barrio? ☐ Avestruz ☐ Nutria ☐ Cabra ☐ Macaco</li><li>¿Qué final jugasteis? ☐ A ☐ B ☐ C ☐ D ☐ Otro magnífico desastre</li>
@@ -227,8 +227,8 @@ for n, p in pags.items():
         idx.insert_text((r.x0 + 330 if r.x0 < 300 else r.x1 + 6, r.y1 - 1), f"p. {p}", fontsize=10, fontname="helv", color=(0.95, 0.33, 0.18))
         break
 for i in range(2, len(d)):
-    if "EXTRA" in d[i].get_text() and "Fichas privadas para recortar" in d[i].get_text():
-        for r in idx.search_for("Fichas privadas para recortar"):
+    if "EXTRA" in d[i].get_text() and "Los malditos de un vistazo" in d[i].get_text():
+        for r in idx.search_for("Los malditos de un vistazo"):
             idx.insert_text((r.x0 + 330, r.y1 - 1), f"p. {i + 1}", fontsize=10, fontname="helv", color=(0.95, 0.33, 0.18)); break
         break
 d.save(PDF, garbage=1, deflate=True)  # garbage≥3 o rewrite_images rompen los subconjuntos de fuentes de Chrome

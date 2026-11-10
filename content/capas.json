@@ -1,6 +1,34 @@
 {
- "00-amanecer": [["guia-manana", 1230, 380, 640]],
- "01-mediodia": [["guia-mediodia", 1180, 520, 520]],
- "02-noche": [["guia-noche", 1230, 380, 640]],
- "03-nuevo-amanecer": [["guia-amanecer", 1230, 380, 640]]
+ "00-amanecer": [
+  [
+   "presentador-manana",
+   1230,
+   380,
+   640
+  ]
+ ],
+ "01-mediodia": [
+  [
+   "presentador-mediodia",
+   1180,
+   470,
+   560
+  ]
+ ],
+ "02-noche": [
+  [
+   "presentador-noche",
+   1230,
+   380,
+   640
+  ]
+ ],
+ "03-nuevo-amanecer": [
+  [
+   "presentador-amanecer",
+   1230,
+   380,
+   640
+  ]
+ ]
 }

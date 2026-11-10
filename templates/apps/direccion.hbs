@@ -5,7 +5,7 @@
 
   <section data-group="panel" data-tab="mesa" class="tab av-pestana {{#if (eq pestana "mesa")}}active{{/if}} av-mesa">
     <div class="av-recuadro av-reloj">
-      <h3>Reloj real <small>120 minutos de mesa</small></h3>
+      <h3>Reloj real <small>120 minutos de sesión</small></h3>
       <div class="av-reloj-fila">
         <b class="av-reloj-num" aria-live="polite">{{reloj.texto}}</b>
         <span class="av-reloj-tramo">{{reloj.tramo}}</span>
@@ -59,13 +59,15 @@
         <div class="av-tablillas-fila">
           {{#each tablillas}}<button type="button" class="av-tablilla {{#if tengo}}tengo{{/if}}" data-action="tablilla" data-n="{{n}}" aria-pressed="{{tengo}}" data-tooltip="Tablilla nº {{n}} (reto {{reto}})"><b>{{n}}</b><small>{{#if tengo}}¡en mano!{{else}}falta{{/if}}</small></button>{{/each}}
         </div>
-        <p class="av-nota">Las que no se consigan en el día las lleva Hidetoshi a la Casa de Baños: duelo por la Escritura.</p>
+        <p class="av-nota">Las que no se consigan se las lleva el Cisne, y pesan en el combate final: cada una le da <b>+2 de Dignidad</b> al Capitán. Las vuestras: nº 1 <b>+1 Furia</b>, nº 2 <b>−2 de Dignidad</b> al Capitán, nº 3 el <b>Torrente Olímpico</b> empieza enfriándose.</p>
+        <button type="button" class="av-boton av-boton-suave {{#if secreto}}elegido{{/if}}" data-action="secreto" aria-pressed="{{secreto}}" data-tooltip="Márcalo si descubrieron que Hidetoshi flota por sus manguitos (pista de Vigilancia)"><i class="fa-solid fa-life-ring" inert></i> {{#if secreto}}Han descubierto el secreto de los manguitos{{else}}Secreto de los manguitos: sin descubrir{{/if}}</button>
+        <p class="av-nota">¡Round 2! (una sola vez, 8 de Dignidad) si ganan con menos Tablillas que el Cisne o sin saber lo de los manguitos.{{#if round2Usado}} <b>Ya se ha usado.</b>{{/if}}</p>
       </div>
     </div>
 
-    <button type="button" class="av-chapuzon" data-action="chapuzonPantalla" data-tooltip="Ola de agua y sonido en todas las pantallas"><span>¡CHAPUZÓN!</span><small>un gag acuático para toda la mesa</small></button>
+    <button type="button" class="av-chapuzon" data-action="chapuzonPantalla" data-tooltip="Ola de agua y sonido en todas las pantallas"><span>¡CHAPUZÓN!</span><small>un gag acuático para todos los jugadores</small></button>
 
-    <h3 class="av-rotulo">Cortinillas del Guía de Jusenkyo</h3>
+    <h3 class="av-rotulo">Cortinillas de Manuel</h3>
     <div class="av-cortinillas">
       {{#each cortinillas}}
       <button type="button" class="av-cortinilla {{#if hecha}}hecha{{/if}}" data-action="cortinilla" data-id="{{id}}" data-tooltip="Activa la escena y lee la narración">
@@ -94,7 +96,7 @@
         <dt>Giro de agua</dt><dd>{{giro}}</dd><dt>Secuela</dt><dd>{{secuela}}</dd>
       </dl>
       <div class="av-fila-botones">
-        <button type="button" class="av-boton" data-action="reto" data-id="{{id}}"><i class="fa-solid fa-droplet" inert></i> ¡A la mesa!</button>
+        <button type="button" class="av-boton" data-action="reto" data-id="{{id}}"><i class="fa-solid fa-droplet" inert></i> ¡A escena!</button>
         <button type="button" class="av-boton av-boton-suave" data-action="escena" data-clave="{{escena}}"><i class="fa-solid fa-image" inert></i> Escena</button>
         <button type="button" class="av-boton av-boton-suave" data-action="estadoReto" data-id="{{id}}"><i class="fa-solid fa-check" inert></i> {{#if (eq estado "resuelto")}}Reabrir{{else}}Resuelto{{/if}}</button>
       </div>
@@ -107,10 +109,10 @@
     {{#if pelea.activa}}
     <div class="av-recuadro av-pelea-en-curso">
       <h3>¡Pelea en curso! <small>{{#if (eq pelea.fase "fin")}}terminada{{else}}ronda {{pelea.ronda}}{{/if}}</small></h3>
-      <p>El marcador está arriba de la pantalla de toda la mesa. Cada jugador ve su mando abajo; tú manejas los bandos que no tienen dueño.</p>
+      <p>El marcador está arriba de la pantalla de todos los jugadores. Cada jugador ve su mando abajo; tú manejas los bandos que no tienen dueño.</p>
       <div class="av-fila-botones">
         <button type="button" class="av-boton" data-action="peleaForzar"><i class="fa-solid fa-forward" inert></i> Resolver ya <small>(los que no han elegido, al azar)</small></button>
-        {{#if (eq pelea.fase "fin")}}<button type="button" class="av-boton av-boton-fuerte" data-action="peleaRound" data-tooltip="Otro round: los personajes como estén y el rival con vida nueva, con un ROUND enorme en pantalla"><i class="fa-solid fa-forward-fast" inert></i> ¡Round extra!</button>{{/if}}
+        {{#if pelea.round2}}<button type="button" class="av-boton av-boton-fuerte" data-action="peleaRound" data-tooltip="El Capitán se levanta con 8 de Dignidad y los personajes siguen como están, con un ROUND 2 enorme en pantalla"><i class="fa-solid fa-forward-fast" inert></i> ¡Round 2!</button>{{/if}}
         <button type="button" class="av-boton av-boton-fuerte" data-action="peleaTerminar"><i class="fa-solid fa-xmark" inert></i> Terminar</button>
       </div>
     </div>
@@ -150,7 +152,7 @@
     <div class="av-finales">
       {{#each finales}}<button type="button" class="av-final {{#if elegido}}elegido{{/if}}" data-action="final" data-id="{{id}}"><b>{{id}} · {{nombre}}</b><small>{{texto}}</small></button>{{/each}}
     </div>
-    <h3 class="av-rotulo">Frases del Guía de Jusenkyo</h3>
+    <h3 class="av-rotulo">Frases de Manuel</h3>
     <div class="av-chips">{{#each frases}}<button type="button" class="av-chip" data-action="frase" data-i="{{i}}">{{texto}}</button>{{/each}}</div>
   </section>
 

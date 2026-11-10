@@ -38,7 +38,8 @@ for i, p in enumerate(AV["pjs"]):
 
 RIV = {r["clave"]: r for r in AV["rivales"]}
 PNJ = [  # (archivo, nombre, papel, frase, descripción, rival?)
- ("guia-manana", "Guía de Jusenkyo", "Presentador de las cortinillas", "¡Buenos días, queridos espectadores! El agua fría es amiga… hasta que deja de serlo.", "Presentador televisivo con sombrero de paja cónico y gafas redondas. Cuenta la historia, pero «el cubo no es cosa suya». Lo acompaña siempre un termo o un cuenco de fideos.", None),
+ ("presentador-manana", "Manuel", "Presentador de las cortinillas", "¡Buenos días, queridos espectadores! El agua fría es amiga… hasta que deja de serlo.", "El presentador de «¡Agua Va!»: sombrero de paja cónico, gafas redondas, bigote canoso y una toalla turquesa al cuello. Abre y cierra el día en las cuatro cortinillas (amanecer con su termo, mediodía con un cuenco de ramen, noche con un farolillo y nuevo amanecer con un café y ojeras). Cuenta la historia, pero «el cubo no es cosa suya».", None),
+ ("guia-manana", "Guía de Jusenkyo", "Guía local (PNJ adicional)", "El agua fría es amiga… hasta que deja de serlo.", "El guía de las pozas de Jusenkyo: sombrero de paja cónico, gafas redondas y bigote. Viene con un termo o un cuenco de fideos y presume de conocer todas las maldiciones del mundo. Puede aparecer en cualquier escena para dar una pista (o un chiste malo).", None),
  ("pnj-hidetoshi", "Capitán Hidetoshi", "Capitán del Dojo del Cisne Hidráulico", "¡Un estilo libre digno de mi apellido!", RIV["hidetoshi"]["descripcion"], "hidetoshi"),
  ("pnj-esbirro", "La Pandilla del Cisne", "Matones del Cisne Hidráulico", "¡Por el Cisne Hidráulico!", RIV["pandilla"]["descripcion"], "pandilla"),
  ("pnj-mariko", "Mariko", "Reina de la sección de congelados", "¡Aquí mando yo, entre la mantequilla y el pescado!", RIV["mariko"]["descripcion"], "mariko"),
@@ -51,8 +52,8 @@ PNJ = [  # (archivo, nombre, papel, frase, descripción, rival?)
 for i, (k, nombre, papel, frase, desc, rival) in enumerate(PNJ):
     if not hay(f"personajes/{k}.webp"): continue
     r = RIV.get(rival, {}) if rival else {}
-    ancho = 1.6 if k in ("pnj-esbirro", "guia-manana") else 1.2
-    actores.append({"_id": uid(f"pnj-{k}"), "name": nombre, "type": "pnj", "img": f"{R}/personajes/{k}-cara.webp", "folder": F["Rivales y vecinos"], "sort": i,
+    ancho = 1.6 if k in ("pnj-esbirro", "guia-manana", "presentador-manana") else 1.2
+    actores.append({"_id": uid(f"pnj-{k}"), "name": nombre, "type": "pnj", "img": f"{R}/retratos/presentador.webp" if k == "presentador-manana" else f"{R}/personajes/{k}-cara.webp", "folder": F["Rivales y vecinos"], "sort": i,
         "system": {"papel": papel, "frase": frase, "descripcion": desc, "tecnica": r.get("tecnica", ""), "secreto": r.get("secreto", ""),
                    "rol": "rival" if rival else "vecino", "jefe": r.get("jefe", ""), "poderes": r.get("poderes", []), "dignidad": r.get("dignidad", 6), "barras": r.get("barras", 1), "rondas": r.get("rondas", 1), "notas": ""},
         "prototypeToken": token(f"{R}/personajes/{k}.webp", ancho, 1.8, nombre) | {"disposition": -1 if rival else 0, "actorLink": True},
@@ -106,7 +107,7 @@ def pagina(nombre, html, n, img=None, nivel=1):
 LAMINAS = {7: "laminas/pdf-acto1.webp", 8: "laminas/pdf-acto2.webp", 11: "laminas/pdf-acto3.webp", 3: "laminas/bn-chapuzon.webp", 2: "laminas/bn-dados.webp",
            4: "laminas/bn-pelea.webp", 10: "laminas/bn-cameos.webp", 9: "laminas/bn-cartel.webp", 6: "laminas/bn-termo.webp"}
 USO = f"""<p><strong>{AV['promesa'][0].upper() + AV['promesa'][1:]}</strong></p>
-<p>Partida fan, original y no oficial, ambientada en el barrio de Nerima, Tokio. Para 2–4 jugadores y dirección; dura <strong>120 minutos reales</strong>. Comedia de enredos y artes marciales para mesa adulta o juvenil.</p>
+<p>Partida fan, original y no oficial, ambientada en el barrio de Nerima, Tokio. Para 2–4 jugadores y dirección; dura <strong>120 minutos reales</strong>. Comedia de enredos y artes marciales para un grupo adulto o juvenil.</p>
 <h2>Cómo se juega en Foundry</h2>
 <ul>
 <li><strong>Panel de dirección</strong> (botón en el directorio de Actores, en la barra de tokens o con un clic en la cartela): reloj real con aviso de cortinilla, <em>Desbarajuste Acuático</em> 0–6, <em>Vapor Nocturno</em> 0–6, el <em>Termo Portátil</em>, las tres tablillas, los 18 retos flotantes, la máquina de <strong>¡PELEA!</strong>, la noche en la Casa de Baños y los cuatro finales.</li>
@@ -125,12 +126,12 @@ reglas_html = cap[2]["html"] + cap[3]["html"] + cap[4]["html"]
 diarios = [
     {"_id": uid("diario-guia"), "name": "¡Agua Va! · La aventura", "pages": guia, "sort": 0, "folder": None, "ownership": {"default": 0}, "flags": {ID: {"clave": "guia"}}},
     {"_id": uid("diario-chuleta"), "name": "Chuleta de dirección", "pages": [pagina("Chuleta de dirección", cap[12]["html"], 0)], "sort": 1, "folder": None, "ownership": {"default": 0}, "flags": {ID: {"clave": "chuleta"}}},
-    {"_id": uid("diario-reglas"), "name": "Reglas: ¡PAM! 2.0, doble forma y ¡PELEA!", "pages": [pagina("Reglas para la mesa", reglas_html, 0, "laminas/bn-dados.webp")], "sort": 2, "folder": None, "ownership": {"default": 2}, "flags": {ID: {"clave": "reglas"}}},
+    {"_id": uid("diario-reglas"), "name": "Reglas: ¡PAM! 2.0, doble forma y ¡PELEA!", "pages": [pagina("Reglas para la partida", reglas_html, 0, "laminas/bn-dados.webp")], "sort": 2, "folder": None, "ownership": {"default": 2}, "flags": {ID: {"clave": "reglas"}}},
 ]
 
 aventura = {"_id": uid("aventura"), "name": "¡Agua Va!", "img": f"{R}/marca/portada.webp",
     "caption": "Un día de verano en Nerima: agua fría, animales; agua caliente, personas.",
-    "description": f"<p>{AV['promesa']}</p><p>Incluye 17 escenas (cuatro cortinillas del Guía de Jusenkyo), los cuatro personajes malditos con sus dos formas, rivales y vecinos, y el diario de dirección completo.</p>",
+    "description": f"<p>{AV['promesa']}</p><p>Incluye 17 escenas (cuatro cortinillas de Manuel), los cuatro personajes malditos con sus dos formas, rivales y vecinos, y el diario de dirección completo.</p>",
     "actors": actores, "scenes": escenas, "journal": diarios, "folders": folders, "items": [], "tables": [], "macros": [], "cards": [], "playlists": [], "combats": [],
     "sort": 0, "flags": {ID: {"version": STATS["systemVersion"]}}, "_stats": STATS}
 json.dump([aventura], open("_data/aventura.json", "w"), ensure_ascii=False, indent=1)

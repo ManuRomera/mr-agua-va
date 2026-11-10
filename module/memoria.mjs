@@ -103,7 +103,7 @@ export function ConMemoria(Base) {
     }
 
     /**
-     * La mesa es compartida: otro jugador puede provocar un repintado mientras escribes.
+     * La partida es compartida: otro jugador puede provocar un repintado mientras escribes.
      * El motor devuelve el foco, pero el texto aún sin guardar; aquí se conserva.
      */
     _preSyncPartState(partId, nuevo, anterior, estado) {

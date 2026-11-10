@@ -28,7 +28,7 @@ export async function aplicarForma(actor, forma) {
   return true;
 }
 
-/** ¡CHAPUZÓN!: agua fría. Seco → Mojado, con tarjeta y efecto en toda la mesa. */
+/** ¡CHAPUZÓN!: agua fría. Seco → Mojado, con tarjeta y efecto en todas las pantallas. */
 export async function chapuzon(actor, { motivo = "" } = {}) {
   if (!actor) return;
   const cambio = await aplicarForma(actor, "mojado");

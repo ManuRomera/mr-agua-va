@@ -1,5 +1,13 @@
 # Cambios
 
+## 1.3.0 · 2026-11-10
+- **Las Tablillas importan en el combate final.** Al empezar la pelea contra Hidetoshi se cuentan las del panel y se aplica solo, con tarjeta en el chat: la nº 1 da **+1 de Furia** al grupo, la nº 2 abolla el cañón (**−2 de Dignidad** al Capitán), la nº 3 deja el **Torrente Olímpico** enfriándose 3 Cruces; cada una que se llevó el Cisne le da al Capitán **+2 de Dignidad**.
+- **¡Round extra! desaparece; ahora hay un único ¡ROUND 2! con condición.** Solo contra Hidetoshi, solo una vez, solo si los personajes ganan y el Cisne reunió más Tablillas que el grupo o no se descubrió el secreto de los manguitos (casilla nueva en el panel). Sale con 8 de Dignidad y los personajes siguen como estaban.
+- **Perder ya no repite la pelea.** Se acabó el «resbalón con el jabón»: si Hidetoshi gana, cada personaje tiene un último turno desesperado fuera del combate para llegar al **Final B** (nulidad de la apuesta, tetera de Yumi, válvula auxiliar) o, si todo se desmanda, al **Final C** (la caldera). El marcador de quien dirige trae los botones de **Final A, B y C**.
+- **Manuel, nuevo presentador de los momentos del día** (cuatro estampas nuevas: mañana, mediodía, noche y nuevo amanecer). La Guía de Jusenkyo queda como PNJ adicional. Los mundos que ya tenían la aventura reciben a Manuel y las estampas nuevas en las escenas al abrirlos (migración automática).
+- **Fuera los rastros de «mesa» física:** el capítulo 4 ya no explica la elección con la mano (solo los tres botones), las «fichas privadas para recortar» pasan a «Los malditos de un vistazo» con la guía del recuadro «Solo para ti» de la ficha, y se renombran «seguridad en la mesa», «reloj de mesa», «una página para la mesa», «La mesa» (pestaña del panel) y similares a lenguaje de sesión online.
+- Pruebas: 45.
+
 ## 1.2.1 · 2026-11-09
 - **Corregido: el jefe no tenía ataques especiales en los mundos ya existentes.** Las actualizaciones no tocan los personajes que ya están en el mundo, así que Hidetoshi, Mariko y la Pandilla (importados con una versión anterior) no recibían sus ataques especiales ni su fase de jefe, y los personajes no tenían su técnica. Ahora, al arrancar la primera vez con una versión nueva, el sistema **pone al día los personajes de la aventura** (solo datos de combate de los rivales y técnica vacía de los PJ; nada de lo escrito a mano). También hay un botón en Configuración → ¡Agua Va! → «Poner al día los personajes».
 - **¡Round extra!** Si el jefe cae demasiado deprisa, un botón (en el marcador al terminar, y en el panel) lanza otro round: los personajes conservan su vida y su Furia, el rival sale con vida nueva (16 por defecto o la que elijas) y aparece un **ROUND 2** enorme en pantalla, más ¡PELEA!. Se puede repetir.

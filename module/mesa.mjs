@@ -21,6 +21,8 @@ export const ESTADO_INICIAL = {
   retos: {},          // R01: "activo" | "resuelto"
   cortinillas: [],    // ids ya lanzadas
   final: "",
+  secreto: false,     // los personajes han descubierto el secreto de los manguitos de Hidetoshi (Acto II)
+  round2: false,      // el ROUND 2 de Hidetoshi ya se ha jugado
   cuentaAtras: null,  // Vapor 6: {restantes} Cruces de combate para vencer al jefe o cerrar una válvula; si no, Final C
   pelea: null         // ¡PELEA! en curso (solo la escribe quien dirige; ver pelea.mjs)
 };
@@ -75,6 +77,8 @@ function sanear(cambios = {}) {
   if (cambios.reloj && typeof cambios.reloj === "object") v.reloj = { inicio: Number(cambios.reloj.inicio) || null, acumulado: Math.max(0, Number(cambios.reloj.acumulado) || 0) };
   if (cambios.retos && typeof cambios.retos === "object") v.retos = Object.fromEntries(Object.entries(cambios.retos).filter(([k, e]) => /^R\d\d$/.test(k) && ["activo", "resuelto"].includes(e)));
   if (Array.isArray(cambios.cortinillas)) v.cortinillas = cambios.cortinillas.filter(c => typeof c === "string").slice(0, 8);
+  if (typeof cambios.secreto === "boolean") v.secreto = cambios.secreto;
+  if (typeof cambios.round2 === "boolean") v.round2 = cambios.round2;
   if (typeof cambios.final === "string") v.final = cambios.final.slice(0, 2);
   return v;
 }

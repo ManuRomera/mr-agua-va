@@ -293,7 +293,7 @@
 .av-finales { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .av-final { display: flex; flex-direction: column; gap: 4px; text-align: left; height: auto; padding: 8px 10px; background: var(--av-blanco); border: var(--av-borde); box-shadow: 3px 3px 0 var(--av-linea); cursor: pointer; font-family: var(--av-texto); }
 .av-final b { font-family: var(--av-display); font-size: 18px; font-weight: 400; letter-spacing: .03em; }
-.av-final.elegido { background: var(--av-amarillo); }
+.av-final.elegido, .av-boton-suave.elegido { background: var(--av-amarillo); }
 .av-reparto-rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
 .av-tarjeta-pj { position: relative; display: flex; flex-direction: column; align-items: center; gap: 2px; height: auto; padding: 8px; background: var(--av-blanco); border: var(--av-borde); box-shadow: 4px 4px 0 var(--av-linea); cursor: pointer; font-family: var(--av-texto); }
 .av-tarjeta-pj img { width: 96px; height: 96px; object-fit: cover; border: 2.5px solid var(--av-linea); }

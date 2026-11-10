@@ -64,7 +64,45 @@ export async function migrarAventura({ silencioso = false } = {}) {
       if (Object.keys(cambios).length) { await a.update(cambios); n++; }
     }
   }
+  n += await migrarPresentador();
   if (n && !silencioso) ui.notifications.info(`¡Agua Va!: ${n} personaje${n === 1 ? "" : "s"} de la aventura puesto${n === 1 ? "" : "s"} al día (ataques especiales, jefe y técnicas).`);
+  return n;
+}
+
+/**
+ * v1.3.0: el presentador de las cortinillas es Manuel (la Guía de Jusenkyo pasa a ser un PNJ más). Los mundos que ya tenían la aventura reciben
+ * el actor «Manuel» y sus cuatro estampas (mañana, mediodía, noche y nuevo amanecer) en lugar de las de la Guía en las escenas del día.
+ */
+const PRESENTADORES = { "00-amanecer": "presentador-manana", "01-mediodia": "presentador-mediodia", "02-noche": "presentador-noche", "03-nuevo-amanecer": "presentador-amanecer" };
+const medida = src => new Promise(ok => { const i = new Image(); i.onload = () => ok(i.naturalWidth / i.naturalHeight); i.onerror = () => ok(0); i.src = src; });
+
+export async function migrarPresentador() {
+  if (!game.user.isGM) return 0;
+  let n = 0;
+  for (const sc of game.scenes ?? []) {
+    const k = sc.getFlag(ID, "escena"), nuevo = PRESENTADORES[k];
+    if (!nuevo) continue;
+    const cambios = [];
+    for (const t of sc.tiles) {
+      const capa = t.getFlag(ID, "capa") ?? "";
+      if (!capa.startsWith(`${k}-guia-`)) continue;
+      const ratio = await medida(`${ARTE}/personajes/${nuevo}.webp`);
+      cambios.push({ _id: t.id, "texture.src": `${ARTE}/personajes/${nuevo}.webp`, [`flags.${ID}.capa`]: `${k}-${nuevo}`, ...(ratio ? { width: Math.round(t.height * ratio) } : {}) });
+    }
+    if (cambios.length) { await sc.updateEmbeddedDocuments("Tile", cambios); n++; }
+  }
+  const hay = [...game.actors].some(a => a.getFlag(ID, "clave") === "presentador" || (a.type === "pnj" && a.name === "Manuel"));
+  const pack = game.packs?.get(PACK);
+  if (!hay && pack) {
+    const aventura = (await pack.getDocuments())[0];
+    const datos = aventura?.actors?.find(a => a.name === "Manuel");
+    if (datos) {
+      const o = datos.toObject(); delete o.folder;
+      const carpeta = game.folders.find(f => f.type === "Actor" && f.name === "Rivales y vecinos");
+      await Actor.create({ ...o, ...(carpeta ? { folder: carpeta.id } : {}) }, { keepId: false });
+      n++;
+    }
+  }
   return n;
 }
 
@@ -96,7 +134,7 @@ async function bienvenida() {
       { etiqueta: "Seguridad", icono: "fa-solid fa-shield-heart", accion: "seguridad" }
     ],
     fx: { texto: "¡SPLASH!", sonido: "chapuzon", tono: "agua" }
-  }, { alias: "Guía de Jusenkyo", soloGM: true });
+  }, { alias: "Manuel", soloGM: true });
 }
 
 export function registrarInicio() {

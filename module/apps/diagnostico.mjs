@@ -4,7 +4,7 @@ import { ApplicationV2, diagnostico } from "../compat.mjs";
 import { ConMemoria } from "../memoria.mjs";
 
 const existe = async src => { try { return (await fetch(src, { method: "HEAD", cache: "no-store" })).ok; } catch { return false; } };
-const IMAGENES = ["marca/portada.webp", "personajes/guia-manana.webp", "personajes/guia-noche.webp", "personajes/pnj-hidetoshi.webp", "personajes/pj-kenji-seco.webp", "personajes/pj-kenji-mojado.webp"];
+const IMAGENES = ["marca/portada.webp", "personajes/presentador-manana.webp", "personajes/presentador-noche.webp", "personajes/pnj-hidetoshi.webp", "personajes/pj-kenji-seco.webp", "personajes/pj-kenji-mojado.webp"];
 
 export async function informe() {
   const faltan = (await Promise.all(IMAGENES.map(async r => [r, await existe(`${ARTE}/${r}`)]))).filter(([, ok]) => !ok).map(([r]) => r);

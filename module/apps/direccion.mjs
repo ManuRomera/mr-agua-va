@@ -1,6 +1,6 @@
 /**
  * Panel de dirección (solo GM): reloj real de 120 minutos, Desbarajuste Acuático, Vapor Nocturno, Termo y tablillas,
- * las cuatro cortinillas del Guía de Jusenkyo, los 18 retos flotantes, la máquina de ¡PELEA!, la noche en la
+ * las cuatro cortinillas de Manuel, los 18 retos flotantes, la máquina de ¡PELEA!, la noche en la
  * Casa de Baños (tuberías, vías, finales) y el reparto.
  */
 import { ApplicationV2, HandlebarsApplicationMixin } from "../compat.mjs";
@@ -10,7 +10,7 @@ import { DESBARAJUSTE, VAPOR, tramo, minutosReloj, cortinillaPendiente, maxPalab
 import { publicar } from "../chat.mjs";
 import { chapuzonPantalla } from "../efectos.mjs";
 import { pintarRetratos } from "../retrato.mjs";
-import { iniciarPelea, terminarPelea, nuevoRound, accionesMando } from "../pelea.mjs";
+import { iniciarPelea, terminarPelea, nuevoRound, round2Posible, elegirFinal, accionesMando } from "../pelea.mjs";
 import { chapuzon, formaDe, tokenForma } from "../forma.mjs";
 import { abrirConfigurador, accionDireccion, escenasDeLaAventura, api as apiDireccion } from "../direccion-mr.mjs";
 import AV from "../aventura.mjs";
@@ -21,7 +21,7 @@ const GRUPOS = [
   { clave: "grande", nombre: "Gran escala", test: r => r.grupo === "grande" },
   { clave: "otros", nombre: "Social y comodín", test: r => ["social", "comodin"].includes(r.grupo) }
 ];
-export const FRASES_GUIA = [
+export const FRASES_GUIA = [ // frases de Manuel
   "¡Y aquí, amigos, se ve claramente la tragedia del barrio que acaba de mojarse!",
   "Recuerden: el agua fría es amiga hasta que deja de serlo.",
   "Esa nutria es profesional.",
@@ -41,12 +41,12 @@ const TUBERIAS = [
 const esc = s => foundry.utils.escapeHTML(String(s ?? ""));
 const mmss = m => `${String(Math.floor(m)).padStart(2, "0")}:${String(Math.floor((m % 1) * 60)).padStart(2, "0")}`;
 
-/** El Guía de Jusenkyo habla en el chat. */
-export function guiaHabla(texto, { arte = "guia-manana", titulo = "Guía de Jusenkyo" } = {}) {
+/** Manuel, el presentador, habla en el chat. */
+export function guiaHabla(texto, { arte = "presentador-manana", titulo = "Manuel" } = {}) {
   return publicar({
     tipo: "guia", tono: "guia", icono: "fa-solid fa-microphone-lines", etiqueta: titulo, arte: `${ARTE}/personajes/${arte}.webp`, arteClase: "figura mini",
     titulo: "", globo: esc(texto)
-  }, { alias: "Guía de Jusenkyo" });
+  }, { alias: "Manuel" });
 }
 
 /** Activa una escena de la aventura por su clave (flags.mr-agua-va.escena). */
@@ -65,10 +65,10 @@ export async function lanzarCortinilla(id) {
   await cambiarEstado({ cortinillas: [...new Set([...e.cortinillas, id])], ...(id === "noche" ? { vapor: Math.max(1, e.vapor) } : {}) });
   return publicar({
     tipo: "cortinilla", tono: id === "noche" ? "noche" : "dia", icono: id === "noche" ? "fa-solid fa-moon" : "fa-solid fa-sun",
-    etiqueta: `Cortinilla · minuto ${c.minuto}`, sfx: "¡DING-DONG!", arte: `${ARTE}/personajes/${c.guia}.webp`, arteClase: "figura",
+    etiqueta: `Cortinilla · minuto ${c.minuto}`, sfx: "¡DING-DONG!", arte: `${ARTE}/personajes/${c.presentador}.webp`, arteClase: "figura",
     titulo: c.titulo, texto: c.lineas.map(l => `<p>${l}</p>`).join(""),
     fx: { texto: "¡DING-DONG!", sonido: "campanilla", tono: id === "noche" ? "noche" : "rosa" }
-  }, { alias: "Guía de Jusenkyo" });
+  }, { alias: "Manuel" });
 }
 
 export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(ApplicationV2)) {
@@ -82,7 +82,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
       reloj: PanelDireccion.#reloj, marcador: PanelDireccion.#marcador, chapuzonPantalla: () => chapuzonPantalla(),
       cortinilla: (ev, b) => lanzarCortinilla(b.dataset.id), escena: (ev, b) => activarEscena(b.dataset.clave),
       reto: PanelDireccion.#reto, estadoReto: PanelDireccion.#estadoReto, frase: (ev, b) => guiaHabla(FRASES_GUIA[b.dataset.i]),
-      tablilla: PanelDireccion.#tablilla, tuberia: PanelDireccion.#tuberia, chaparron: PanelDireccion.#chaparron, valvula: PanelDireccion.#valvula,
+      tablilla: PanelDireccion.#tablilla, secreto: PanelDireccion.#secreto, tuberia: PanelDireccion.#tuberia, chaparron: PanelDireccion.#chaparron, valvula: PanelDireccion.#valvula,
       configurador: () => abrirConfigurador(), escenaConfig: (ev, b) => abrirConfigurador(b.dataset.id), escenaVer: (ev, b) => game.scenes.get(b.dataset.id)?.view(),
       colocar: () => accionDireccion("figures"), tamano: () => accionDireccion("resize"), tamanoSel: () => accionDireccion("resize-selected"),
       final: PanelDireccion.#final, abrir: (ev, b) => game.actors.get(b.dataset.id)?.sheet.render(true),
@@ -113,20 +113,21 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     const casillas = (n, max) => Array.from({ length: max }, (_, i) => ({ n: i + 1, llena: i + 1 <= n }));
     return {
       pestana: this.tabGroups.panel,
-      pestanas: [["mesa", "La mesa", "fa-sun"], ["retos", "Retos", "fa-burst"], ["pelea", "¡Pelea!", "fa-hand-fist"], ["noche", "La noche", "fa-moon"], ["escenas", "Escenas", "fa-images"], ["reparto", "Reparto", "fa-users"]]
+      pestanas: [["mesa", "La partida", "fa-sun"], ["retos", "Retos", "fa-burst"], ["pelea", "¡Pelea!", "fa-hand-fist"], ["noche", "La noche", "fa-moon"], ["escenas", "Escenas", "fa-images"], ["reparto", "Reparto", "fa-users"]]
         .map(([id, nombre, icono]) => ({ id, nombre, icono, activa: id === this.tabGroups.panel })),
       reloj: { texto: mmss(min), marcha: Boolean(e.reloj.inicio), tramo: t.nombre, pct: Math.min(100, (min / 120) * 100), aviso: pendiente ? AV.cortinillas.find(c => c.id === pendiente)?.titulo : "" },
       desbarajuste: { valor: e.desbarajuste, texto: DESBARAJUSTE[e.desbarajuste], casillas: casillas(e.desbarajuste, 6) },
       vapor: { valor: e.vapor, texto: VAPOR[e.vapor], palabras: maxPalabras(e.vapor), casillas: casillas(e.vapor, 6), cuenta: e.cuentaAtras?.restantes ?? 0 },
       termo: { valor: e.termo, casillas: casillas(e.termo, 3) },
+      secreto: e.secreto, round2Usado: e.round2,
       tablillas: [1, 2, 3].map(n => ({ n, tengo: e.tablillas.includes(n), reto: `R0${n}` })),
-      cortinillas: AV.cortinillas.map(c => ({ ...c, hecha: e.cortinillas.includes(c.id), arte: `${ARTE}/personajes/${c.guia}.webp` })),
+      cortinillas: AV.cortinillas.map(c => ({ ...c, hecha: e.cortinillas.includes(c.id), arte: `${ARTE}/personajes/${c.presentador}.webp` })),
       filtro: this.filtro,
       grupos: [{ clave: "todos", nombre: "Todos" }, ...GRUPOS].map(g => ({ ...g, activo: g.clave === this.filtro })),
       retos: AV.retos.filter(r => this.filtro === "todos" || GRUPOS.find(g => g.clave === this.filtro)?.test(r)).map(r => ({ ...r, estado: e.retos[r.id] ?? "", reservado: r.grupo === "grande" && e.desbarajuste < 3 })),
       frases: FRASES_GUIA.map((texto, i) => ({ texto, i })),
       pelea: {
-        activa: Boolean(e.pelea), fase: e.pelea?.fase, ronda: e.pelea?.ronda,
+        activa: Boolean(e.pelea), fase: e.pelea?.fase, ronda: e.pelea?.ronda, round2: Boolean(round2Posible(e.pelea, e)),
         a: todos.map(a => ({ id: a.id, nombre: a.name, img: tokenForma(a), marcado: this.sel.a.has(a.id) })),
         b: rivales.map(a => ({ id: a.id, nombre: a.name, img: a.img, dignidad: a.system.dignidad, barras: a.system.barras, rondas: a.system.rondas, marcado: this.sel.b.has(a.id) })),
         rondas: this.sel.rondas, cruces: this.sel.cruces,
@@ -173,7 +174,7 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     if (accion === "marcha") nuevo = r.inicio ? { inicio: null, acumulado: r.acumulado + (ahora - r.inicio) } : { inicio: ahora, acumulado: r.acumulado };
     if (accion === "menos" || accion === "mas") nuevo = { inicio: r.inicio, acumulado: Math.max(0, r.acumulado + (accion === "mas" ? 5 : -5) * 60000) };
     if (accion === "cero") nuevo = { inicio: null, acumulado: 0 };
-    await cambiarEstado({ reloj: nuevo, ...(accion === "cero" ? { cortinillas: [], desbarajuste: 0, vapor: 0, termo: 3, tablillas: [], retos: {}, final: "", cuentaAtras: null, pelea: null } : {}) });
+    await cambiarEstado({ reloj: nuevo, ...(accion === "cero" ? { cortinillas: [], desbarajuste: 0, vapor: 0, termo: 3, tablillas: [], retos: {}, final: "", secreto: false, round2: false, cuentaAtras: null, pelea: null } : {}) });
   }
 
   static async #marcador(ev, b) {
@@ -232,12 +233,9 @@ export class PanelDireccion extends ConMemoria(HandlebarsApplicationMixin(Applic
     for (const a of pjs()) if (formaDe(a) === "seco") await chapuzon(a, { motivo: "¡Chaparrón de verano!" });
   }
 
-  static async #final(ev, b) {
-    const f = AV.finales.find(x => x.id === b.dataset.id);
-    await cambiarEstado({ final: f.id });
-    return publicar({ tipo: "final", tono: "dia", icono: "fa-solid fa-flag-checkered", etiqueta: `Final ${f.id}`, titulo: f.nombre, texto: `<p>${esc(f.texto)}</p>`,
-      sfx: "¡FIN!", fx: { texto: "¡FIN!", sonido: "descomunal", tono: "descomunal" } }, { soloGM: true, alias: "Dirección" });
-  }
+  static #final(ev, b) { return elegirFinal(b.dataset.id); }
+
+  static async #secreto() { await cambiarEstado({ secreto: !estado().secreto }); }
 
   static #filtro(ev, b) { this.filtro = b.dataset.clave; this.render(); }
 

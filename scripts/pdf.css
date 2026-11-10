@@ -142,14 +142,13 @@ strong, b { font-weight: 900; }
 .gal-caras figcaption, .gal-esc figcaption { font: 8pt Dela; letter-spacing: .04em; text-align: center; padding: .8mm; border-top: .5mm solid var(--tinta); }
 .gal-esc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3.5mm; }
 
-/* Fichas recortables */
-.recortes { display: grid; grid-template-columns: 1fr; gap: 0; }
-.recorte { border: .6mm dashed var(--tinta); padding: 1.8mm 3.5mm; margin: 0 0 2.4mm; background: #fff; font-size: 8.3pt; line-height: 1.38; break-inside: avoid; position: relative; }
-.recorte::before { content: "✂"; position: absolute; left: -1mm; top: -3.2mm; font-size: 11pt; background: #eaf7f6; }
-.recorte h3 { font: 15pt Bangers; letter-spacing: .03em; margin: 0 0 1mm; }
-.recorte h3 small { font: 800 8pt Maru; margin-left: 2mm; }
-.recorte p { margin: 0 0 .8mm; }
-.recorte b { color: var(--rojo); }
+/* Los malditos de un vistazo */
+.vistazos { display: grid; grid-template-columns: 1fr; gap: 0; }
+.vistazo { border: .6mm solid var(--tinta); padding: 1.8mm 3.5mm; margin: 0 0 2.4mm; background: #fff; font-size: 8.3pt; line-height: 1.38; break-inside: avoid; position: relative; }
+.vistazo h3 { font: 15pt Bangers; letter-spacing: .03em; margin: 0 0 1mm; }
+.vistazo h3 small { font: 800 8pt Maru; margin-left: 2mm; }
+.vistazo p { margin: 0 0 .8mm; }
+.vistazo b { color: var(--rojo); }
 .ficha-ya { font: 900 9.5pt Maru; letter-spacing: 0; }
 
 /* Encuesta */
@@ -259,11 +258,10 @@ strong, b { font-weight: 900; }
 .final-splash { page: color; width: 182mm; height: 256.8mm; position: relative; overflow: hidden; break-after: page; }
 .final-splash .fondo { object-position: 50% 50%; }
 .final-splash p { position: absolute; left: 8mm; bottom: 12mm; right: 8mm; background: #fff; border: .8mm solid var(--tinta); box-shadow: 1.5mm 1.5mm 0 var(--tinta); padding: 4mm 6mm; font: 900 12pt/1.3 Maru; text-align: center; }
-.recorte::before { background: #eaf7f6; }
-.recorte h3 { font: 12.5pt Dela; }
+.vistazo h3 { font: 12.5pt Dela; }
 .tab-recorte { color: var(--rojo); }
 
 .bloque-tabla { column-span: all; break-inside: avoid; }
 .bloque-tabla > h2, .bloque-tabla > h3 { margin-top: 2mm; }
-.recorte { font-size: 7.9pt; }
+.vistazo { font-size: 7.9pt; }
 .an-sub { font-size: 10pt; max-width: 110mm; }

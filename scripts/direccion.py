@@ -10,8 +10,8 @@ esc = lambda k: {"flag": [ID, "escena", k]}
 # clave de escena: (nombre, reparto, horizonte, apoyos del suelo)
 SUELO = [[0.3, 0.86], [0.5, 0.9], [0.7, 0.86]]
 ESC = {
- "00-amanecer": ("Cortinilla · Buenos días", ["guia"], None), "01-mediodia": ("Cortinilla · A comer", ["guia"], None),
- "02-noche": ("Cortinilla · Buenas noches", ["guia"], None), "03-nuevo-amanecer": ("Cortinilla · Nuevo amanecer", ["guia"], None),
+ "00-amanecer": ("Cortinilla · Buenos días", ["presentador"], None), "01-mediodia": ("Cortinilla · A comer", ["presentador"], None),
+ "02-noche": ("Cortinilla · Buenas noches", ["presentador"], None), "03-nuevo-amanecer": ("Cortinilla · Nuevo amanecer", ["presentador"], None),
  "04-dojo-exterior": ("El Bambú Torcido", PJ + ["yuzuki"], 0.5), "05-dojo-interior": ("Dentro del dojo", PJ, 0.45),
  "06-calle-nerima": ("La calle comercial", PJ + ["tendera"], 0.48), "07-mercadillo": ("El mercadillo", PJ, 0.46),
  "08-supermercado": ("El supermercado", PJ + ["mariko"], 0.45), "09-canal": ("El canal", PJ + ["ramen"], 0.5),

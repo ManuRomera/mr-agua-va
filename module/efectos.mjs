@@ -146,7 +146,7 @@ export function onomatopeya(texto, { tono = "amarillo", anillos = false } = {}) 
   });
 }
 
-/** ¡CHAPUZÓN! de pantalla para toda la mesa. */
+/** ¡CHAPUZÓN! de pantalla para todos los jugadores. */
 export function chapuzonPantalla(texto = "¡CHAPUZÓN!") {
   difundir("chapuzon", { texto });
 }

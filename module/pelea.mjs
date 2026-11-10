@@ -10,7 +10,8 @@ import { ID, estado, cambiarEstado, alRecibir, difundir, SOCKET } from "./mesa.m
 import { DialogV2 } from "./compat.mjs";
 import { publicar } from "./chat.mjs";
 import { sonar, colaPantalla } from "./efectos.mjs";
-import { POSTURAS, MAX_FURIA, CRUCES_POR_RONDA, CURA_SERENIDAD, dominante, danoDe, barra, tiempo, caido } from "./reglas.mjs";
+import { POSTURAS, MAX_FURIA, CRUCES_POR_RONDA, CURA_SERENIDAD, dominante, danoDe, barra, tiempo, caido, efectosTablillas, motivoRound2, DIGNIDAD_ROUND2 } from "./reglas.mjs";
+import AV from "./aventura.mjs";
 import { lanzarPam } from "./tirada.mjs";
 import { formaDe, tokenForma, caraForma, chapuzon, hervir } from "./forma.mjs";
 
@@ -48,26 +49,50 @@ export async function iniciarPelea({ a = [], b = [], rondasPara = 1, maxCruces =
   PICKS[0] = PICKS[1] = null;
   // Un Jefe Final no tiene cronómetro: la pelea acaba por K.O. (o por la cuenta atrás del Vapor), nunca por ¡TIEMPO!
   const sinLimite = lados.some(l => l.equipo.some(f => f.jefe));
+  // Las Tablillas pesan en el combate final: las del grupo le ayudan, las del Cisne protegen al Capitán
+  const lc = lados.findIndex(l => l.equipo.some(f => f.jefe === "hidetoshi"));
+  const tab = lc >= 0 && lados[1 - lc].equipo.some(f => f.tipo === "pj") ? efectosTablillas(estado().tablillas) : null;
+  let capitan = null;
+  if (tab) {
+    lados[1 - lc].furia = Math.min(MAX_FURIA, tab.furia);
+    capitan = lados[lc].equipo.find(f => f.jefe === "hidetoshi");
+    capitan.max = Math.max(4, capitan.max + tab.escudo - tab.canon); capitan.dig = capitan.max * capitan.barras;
+    if (tab.torrente) { const k = capitan.poderes.findIndex(pw => pw.area); if (k >= 0) capitan.enf[k] = tab.torrente; }
+  }
   await cambiarEstado({ pelea: { fase: "eleccion", ronda: 1, rondasPara: Math.max(1, Math.min(3, rondasPara)), cruce: 1, maxCruces: sinLimite ? 0 : maxCruces, lados, ganador: null, peticiones: {}, relevos: {}, ayudas: {} } });
   banners([{ t: "RONDA 1", ms: 1500, sonido: "ronda" }, { t: "¡PELEA!", ms: 1100, sonido: "pelea", tono: "fuego" }]);
+  if (tab) {
+    const filas = [
+      { clave: "Tablilla nº 1", valor: tab.grupo.includes(1) ? "La lleváis vosotros: <b>+1 de Furia</b> al empezar." : "La tiene el Cisne: el Capitán lleva un escudo de bambú (<b>+2 de Dignidad</b>)." },
+      { clave: "Tablilla nº 2", valor: tab.grupo.includes(2) ? "La lleváis vosotros: el cañón queda abollado, <b>−2 de Dignidad</b> para el Capitán." : "La tiene el Cisne: el Capitán lleva un peto de cerezo (<b>+2 de Dignidad</b>)." },
+      { clave: "Tablilla nº 3", valor: tab.grupo.includes(3) ? "La lleváis vosotros: el <b>Torrente Olímpico</b> empieza enfriándose (<b>3 Cruces</b>)." : "La tiene el Cisne: el Capitán lleva un amuleto de sándalo (<b>+2 de Dignidad</b>)." },
+      { clave: "Capitán Hidetoshi", valor: `sale con <b>${capitan.dig} de Dignidad</b>.` }];
+    await publicar({ tipo: "tablillas", tono: "dia", icono: "fa-solid fa-scroll", etiqueta: "Las Tablillas pesan", sfx: "¡TABLILLAS!", titulo: `Tablillas: ${tab.grupo.length} para vosotros, ${tab.cisne} para el Cisne`,
+      filas, fx: { texto: "", sonido: "gong", tono: "oro" } }, { alias: "¡PELEA!" });
+  }
+}
+
+/** ¿Es Hidetoshi el rival y han ganado los personajes? Devuelve el motivo del ROUND 2 ("tablillas", "secreto") o "" si no toca. Una sola vez. */
+export function round2Posible(p = estado().pelea, e = estado()) {
+  if (!p || p.fase !== "fin" || p.ganador == null) return "";
+  const c = p.lados.findIndex(l => l.equipo.some(f => f.jefe === "hidetoshi"));
+  if (c < 0 || p.ganador === c) return "";
+  return motivoRound2(e);
 }
 
 /**
- * ¡Round extra! Si el jefe cae demasiado deprisa: otro round con los personajes como estén (vida y Furia) y el rival con vida nueva,
- * con un «ROUND 2» enorme en pantalla. Solo quien dirige.
+ * ¡ROUND 2! Una sola vez y solo contra el Capitán Hidetoshi: si los personajes ganan habiendo reunido menos Tablillas que el Cisne
+ * o sin haber descubierto el secreto de sus manguitos, el Capitán se levanta con 8 de Dignidad y los personajes siguen como estén.
+ * Solo quien dirige.
  */
 export async function nuevoRound() {
   if (!game.user.isGM) return;
-  const p0 = estado().pelea; if (!p0) return;
-  const r = Math.max(0, p0.lados.findIndex(l => l.equipo.every(f => f.tipo === "pnj")));   // el bando rival (los PNJ)
-  const jefe = p0.lados[r].equipo.find(f => f.jefe) ?? p0.lados[r].equipo[0];
-  const vida = await DialogV2.prompt({
-    window: { title: "¡Round extra!", icon: "fa-solid fa-forward-fast" }, classes: ["mr-agua-va", "av-dialogo"],
-    content: `<div class="av-dialogo-cuerpo"><p class="av-nota">Los personajes siguen como están. ${esc(jefe.nombre)} sale con vida nueva y aparece un «ROUND ${p0.ronda + 1}» enorme en pantalla.</p>
-      <label class="av-campo"><span>Dignidad de ${esc(jefe.nombre)}</span><input type="number" name="vida" min="1" max="99" value="${jefe.max * jefe.barras}" autofocus></label></div>`,
-    ok: { label: `¡ROUND ${p0.ronda + 1}!`, icon: "fa-solid fa-forward-fast", callback: (e, b) => Number(b.form.elements.vida.value) || jefe.max * jefe.barras }, rejectClose: false
-  });
-  if (!vida) return;
+  const e = estado(), p0 = e.pelea; if (!p0) return;
+  const motivo = round2Posible(p0, e);
+  if (!motivo) return ui.notifications.warn("No toca Round 2: solo si los personajes ganan con menos Tablillas que el Cisne o sin haber descubierto el secreto de los manguitos, y una sola vez.");
+  const r = p0.lados.findIndex(l => l.equipo.some(f => f.jefe === "hidetoshi"));
+  const jefe = p0.lados[r].equipo.find(f => f.jefe === "hidetoshi");
+  const vida = DIGNIDAD_ROUND2;
   const p = foundry.utils.deepClone(p0);
   p.fase = "eleccion"; p.ganador = null; p.ronda += 1; p.cruce = 1; p.peticiones = {}; p.relevos = {}; p.ayudas = {};
   p.rondasPara = Math.max(...p.lados.map(l => l.rondas)) + 1;
@@ -82,9 +107,10 @@ export async function nuevoRound() {
     }
   });
   PICKS[0] = PICKS[1] = null;
-  await cambiarEstado({ pelea: p });
+  await cambiarEstado({ pelea: p, round2: true });
+  const porque = motivo === "tablillas" ? "Las Tablillas que se llevó el Cisne le dan una última sacudida de madera sagrada." : "Nadie descubrió el secreto de sus manguitos: ¡el Capitán flota y no se hunde!";
   await publicar({ tipo: "round", tono: "descomunal", icono: "fa-solid fa-forward-fast", etiqueta: `¡ROUND ${p.ronda}!`, sfx: "¡OTRA VEZ!", titulo: `¡Round ${p.ronda}!`,
-    texto: `<p>${esc(jefe.nombre)} se levanta con <b>${vida} de Dignidad</b>. Los personajes siguen con la que les quedaba.</p>`, fx: { texto: "", sonido: "gong", tono: "fuego" } }, { alias: "¡PELEA!" });
+    texto: `<p>${porque}</p><p>${esc(jefe.nombre)} se levanta con <b>${vida} de Dignidad</b>. Los personajes siguen con la que les quedaba.</p>`, fx: { texto: "", sonido: "gong", tono: "fuego" } }, { alias: "¡PELEA!" });
   banners([{ t: `ROUND ${p.ronda}`, ms: 2600, sonido: "ko", tono: "ko" }, { t: "¡PELEA!", ms: 1100, sonido: "pelea", tono: "fuego" }]);
 }
 
@@ -178,7 +204,7 @@ const RECEPTORES = {
     const humana = (quien && !quien.isGM) || f.tipo === "pj";
     const gracia = humana ? await DialogV2.confirm({
       window: { title: "¿Ha tenido gracia?", icon: "fa-solid fa-face-grin-tears" }, classes: ["mr-agua-va", "av-dialogo"],
-      content: `<p><b>${esc(f.nombre)}</b> provoca: «${esc(texto)}»</p><p class="av-nota">Si hace gracia a la mesa, ${esc(activoDe(p.lados[otro(d.lado)]).nombre)} pierde los papeles: este Cruce no puede elegir Parada.</p>`,
+      content: `<p><b>${esc(f.nombre)}</b> provoca: «${esc(texto)}»</p><p class="av-nota">Si hace gracia al grupo, ${esc(activoDe(p.lados[otro(d.lado)]).nombre)} pierde los papeles: este Cruce no puede elegir Parada.</p>`,
       yes: { label: "¡Ha tenido gracia!", icon: "fa-solid fa-face-laugh-squint" }, no: { label: "Ni caso", icon: "fa-solid fa-face-meh" }, rejectClose: false
     }) : true;
     const nuevo = foundry.utils.deepClone(estado().pelea);
@@ -522,6 +548,7 @@ async function resolverCruce() {
     titulo, globo: golpe ? esc(golpe) : "", filas: lineas.map(l => ({ clave: l.clave, valor: l.valor })),
     fx: tirada ? { texto: tirada.r.sfx, sonido: tirada.r.clave, tono: tirada.r.clave } : { texto: "", sonido: "golpe", tono: "fuego" }
   }, { actor: dominanteActor ?? undefined, tirada: tirada?.roll, alias: dominanteActor ? undefined : "¡PELEA!" });
+  if (p.fase === "fin" && p.ganador !== null) await tarjetaDesenlace(p);
   for (const id of new Set(mojar)) { const a = game.actors.get(id); if (a && formaDe(a) === "seco") await chapuzon(a, { motivo: "El agua fría ha llegado." }); }
   await sincronizarFormas();
   if (banners_.length) banners(banners_);
@@ -639,7 +666,7 @@ export function htmlHUD(p) {
         ${gm ? `<div class="av-gm-mini"><button type="button" data-accion="forzar" class="av-mini" data-tooltip="Resolver ya (los que no han elegido, al azar)" ${p.fase !== "eleccion" ? "disabled" : ""}><i class="fa-solid fa-forward" inert></i></button><button type="button" data-accion="terminar" class="av-mini" data-tooltip="Terminar la pelea"><i class="fa-solid fa-xmark" inert></i></button></div>` : ""}</div>
       ${htmlLado(p.lados[1], 1, p)}
     </div>
-    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm && p.ganador !== null ? `<button type="button" class="av-boton av-boton-fuerte" data-accion="nuevoRound"><i class="fa-solid fa-forward-fast" inert></i> ¡Round ${p.ronda + 1}!</button>` : ""}${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
+    ${p.fase === "fin" ? `<div class="av-fin"><b>${p.ganador === null ? "¡EXPLOSIÓN! FINAL C" : `¡GANA ${esc(nombreBando(p.lados[p.ganador]).toUpperCase())}!`}</b>${gm && p.ganador !== null ? botonesFin(p) : ""}${gm ? `<button type="button" class="av-boton" data-accion="terminar">Cerrar la máquina</button>` : ""}</div>` : (manejo.length ? `<div class="av-mando">${manejo.map(i => htmlMando(p, i)).join("")}</div>` : "")}`;
 }
 
 function pintarHUD() {
@@ -669,6 +696,36 @@ function pintarHUD() {
   }
 }
 
+/** Al acabar el combate final: si pierden los personajes no hay repetición, sino un último turno desesperado; si ganan, la dirección recibe su nota. */
+async function tarjetaDesenlace(p) {
+  const c = p.lados.findIndex(l => l.equipo.some(f => f.jefe === "hidetoshi"));
+  if (c < 0) return;
+  if (p.ganador === c) return publicar({ tipo: "derrota", tono: "fiasco", icono: "fa-solid fa-hourglass-end", etiqueta: "K.O. del grupo", sfx: "¡K.O.!", titulo: "Último turno desesperado",
+    texto: "<p>Hidetoshi sube a la tarima y alza las Tablillas con aire triunfal. <b>No hay repetición</b>: cada personaje tiene <b>un último turno</b>, fuera del combate, para salvar el dojo con lo que haya descubierto (¡PAM! como siempre).</p><p>Si el ingenio funciona, el dojo se salva por la vía técnica (<b>Final B</b>). Si todo se desmanda y alguien toca la caldera… <b>¡Final C!</b></p>",
+    fx: { texto: "", sonido: "ko", tono: "ko" } }, { alias: "¡PELEA!" });
+  const motivo = round2Posible(p);
+  return publicar({ tipo: "aviso", tono: "dia", icono: "fa-solid fa-trophy", etiqueta: "Victoria", titulo: "Los personajes ganan",
+    texto: `<p>Si aceptan sus formas o confiesan: <b>Final A</b> (Barril de fideos).</p>${motivo ? `<p><b>¡Hay ROUND 2!</b> ${motivo === "tablillas" ? "El Cisne tiene más Tablillas que el grupo." : "No descubrieron el secreto de los manguitos."} Pulsa «Round 2» en el marcador o en el panel para sorprenderles.</p>` : ""}` }, { soloGM: true, alias: "Dirección" });
+}
+
+/** Botones de quien dirige al acabar el combate final: ROUND 2 (si toca) y el final que corresponde. */
+function botonesFin(p) {
+  const c = p.lados.findIndex(l => l.equipo.some(f => f.jefe === "hidetoshi"));
+  if (c < 0) return "";
+  const fin = (id, txt, ico) => `<button type="button" class="av-boton av-boton-fuerte" data-accion="final" data-final="${id}"><i class="fa-solid ${ico}" inert></i> ${txt}</button>`;
+  if (p.ganador === c) return fin("B", "Final B · trampa administrativa", "fa-file-signature") + fin("C", "Final C · ¡a la caldera!", "fa-fire-flame-curved");
+  return (round2Posible(p) ? `<button type="button" class="av-boton av-boton-fuerte" data-accion="nuevoRound"><i class="fa-solid fa-forward-fast" inert></i> ¡Round ${p.ronda + 1}!</button>` : "") + fin("A", "Final A · victoria limpia", "fa-trophy");
+}
+
+/** Elige un final desde el marcador (A, B o C) y lo cuenta en el chat. Solo quien dirige. */
+export async function elegirFinal(id) {
+  if (!game.user.isGM) return;
+  const f = AV.finales.find(x => x.id === id); if (!f) return;
+  await cambiarEstado({ final: f.id });
+  return publicar({ tipo: "final", tono: "dia", icono: "fa-solid fa-flag-checkered", etiqueta: `Final ${f.id}`, titulo: f.nombre, texto: `<p>${esc(f.texto)}</p>`,
+    sfx: "¡FIN!", fx: { texto: "¡FIN!", sonido: "descomunal", tono: "descomunal" } }, { soloGM: true, alias: "Dirección" });
+}
+
 function alEscribir(ev) {
   const campo = ev.target.dataset?.campo; if (!campo) return;
   const i = Number(ev.target.closest("[data-lado]")?.dataset.lado);
@@ -682,6 +739,7 @@ function alPulsar(ev) {
   const accion = b.dataset.accion;
   if (accion === "terminar") return terminarPelea();
   if (accion === "nuevoRound") return nuevoRound();
+  if (accion === "final") return elegirFinal(b.dataset.final);
   if (accion === "forzar") return accionesMando.forzar();
   if (accion === "azar") return accionesMando.alAzar(i);
   const f = activoDe(p.lados[i]), st = local[i];
@@ -698,7 +756,7 @@ function alPulsar(ev) {
   if (accion === "provocar") {
     DialogV2.prompt({
       window: { title: `Provocación · ${f.nombre}`, icon: "fa-solid fa-face-grin-tongue-squint" }, classes: ["mr-agua-va", "av-dialogo"],
-      content: `<div class="av-dialogo-cuerpo"><p class="av-nota">Una pulla sobre el defecto cómico o el secreto del rival, a la cara y en voz alta. Si hace gracia a la mesa, no podrá Parar este Cruce.</p>
+      content: `<div class="av-dialogo-cuerpo"><p class="av-nota">Una pulla sobre el defecto cómico o el secreto del rival, en voz alta (o por el chat de voz). Si hace gracia al grupo, no podrá Parar este Cruce.</p>
         <label class="av-campo"><span>Tu pulla</span><input type="text" name="texto" maxlength="140" autofocus placeholder="¡Tú no sabes ni nadar!"></label></div>`,
       ok: { label: "¡Provocar!", icon: "fa-solid fa-face-grin-tongue-squint", callback: (e, bb) => bb.form.elements.texto.value }, rejectClose: false
     }).then(texto => { if (texto?.trim()) accionesMando.provocar({ lado: i, texto }); });

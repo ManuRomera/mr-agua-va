@@ -1,6 +1,6 @@
 /**
- * Seguridad en mesa. Comedia con verdades vergonzosas: si un gag incomoda, se cambia sin explicaciones.
- * Pausa, Velo y Tarjeta X llegan a toda la mesa al instante y sin decir quién las activó,
+ * Seguridad en la sesión. Comedia con verdades vergonzosas: si un gag incomoda, se cambia sin explicaciones.
+ * Pausa, Velo y Tarjeta X llegan a todo el grupo al instante y sin decir quién las activó,
  * y las líneas y velos acordados viven a la vista.
  *
  * Las señales viajan por socket y no se guardan en ningún sitio.
@@ -24,7 +24,7 @@ export class PanelSeguridad extends ConMemoria(HandlebarsApplicationMixin(Applic
     id: "av-seguridad",
     classes: ["mr-agua-va", "av-dialogo", "av-seguridad"],
     position: { width: 460, height: "auto" },
-    window: { title: "Seguridad en mesa", icon: "fa-solid fa-shield-heart" },
+    window: { title: "Seguridad en la sesión", icon: "fa-solid fa-shield-heart" },
     actions: { senal: PanelSeguridad.#senal, guardar: PanelSeguridad.#guardar }
   };
   static PARTS = { cuerpo: { template: "systems/mr-agua-va/templates/apps/seguridad.hbs" } };
@@ -97,7 +97,7 @@ export function registrarSeguridad() {
     onChange: () => foundry.applications.instances.get("av-seguridad")?.render()
   });
   game.settings.registerMenu(ID, "seguridadMenu", {
-    name: "Seguridad en mesa",
+    name: "Seguridad en la sesión",
     label: "Líneas, velos y pausa",
     hint: "Líneas y velos acordados, y las señales de Pausa, Velo y Tarjeta X (anónimas).",
     icon: "fa-solid fa-shield-heart",

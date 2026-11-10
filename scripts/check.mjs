@@ -47,7 +47,7 @@ for (const f of manifiesto.styles.concat(manifiesto.esmodules)) if (!(await exis
 // Imágenes que el sistema y la aventura dan por hechas.
 const AV = (await import("../module/aventura.mjs")).default;
 const imprescindibles = ["assets/marca/portada.webp", "assets/marca/logo.webp", "assets/marca/icono.webp", "assets/marca/mr-marca.webm", "fonts/PressStart2P-Regular.woff2",
-  ...AV.cortinillas.flatMap(c => [`assets/escenas/${c.escena}.webp`, `assets/personajes/${c.guia}.webp`]),
+  ...AV.cortinillas.flatMap(c => [`assets/escenas/${c.escena}.webp`, `assets/personajes/${c.presentador}.webp`]),
   ...AV.pjs.flatMap(p => [`assets/retratos/pj-${p.clave}.webp`, ...["seco", "mojado"].flatMap(f => [`assets/personajes/pj-${p.clave}-${f}.webp`, `assets/personajes/pj-${p.clave}-${f}-cara.webp`])]),
   ...AV.retos.map(r => `assets/escenas/${r.escena}.webp`)];
 for (const r of imprescindibles) if (!(await existe(r))) errores.push(`falta ${r}`);

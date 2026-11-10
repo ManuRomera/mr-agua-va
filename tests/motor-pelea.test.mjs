@@ -40,7 +40,7 @@ const mesa = await import("../module/mesa.mjs");
 const { iniciarPelea, accionesMando } = await import("../module/pelea.mjs");
 const estado = () => mesa.estado().pelea;
 const reset = async (pjs, enemigos) => {
-  game.actors._l = [...pjs, ...enemigos]; chats.length = 0; globalThis.__dados = []; ajustes.set("estado", { cuentaAtras: null, vapor: 1, termo: 3 });
+  game.actors._l = [...pjs, ...enemigos]; chats.length = 0; globalThis.__dados = []; ajustes.set("estado", { cuentaAtras: null, vapor: 1, termo: 3, tablillas: [1, 2] });   // 2 del grupo y 1 del Cisne: el Capitán queda en 16
   await iniciarPelea({ a: pjs.map(a => a.id), b: enemigos.map(a => a.id), rondasPara: 1 });
 };
 const pick = (lado, eleccion, extra = {}) => accionesMando.pick({ lado, eleccion, talento: false, entorno: false, golpe: "", ...extra });
@@ -234,18 +234,59 @@ test("Una pelea normal sí tiene cronómetro de 6 Cruces", async () => {
   assert.equal(estado().ronda, 1); assert.equal(estado().cruce, 1); assert.equal(estado().lados[0].rondas + estado().lados[1].rondas, 0);
 });
 
-test("¡Round extra!: los personajes conservan su vida y el jefe sale con vida nueva", async () => {
-  const jefe = actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi", poderes: [CHORRO] });
-  await reset([actor("k", "Kenji", "pj"), actor("d", "Daiki", "pj")], [jefe]);
-  await cambia(p => { p.fase = "fin"; p.ganador = 0; p.lados[0].rondas = 1; p.lados[0].equipo[0].dig = 5; p.lados[0].equipo[1].dig = 3; p.lados[0].furia = 2; p.lados[1].equipo[0].dig = 0; p.lados[1].furia = 3; });
-  const { nuevoRound } = await import("../module/pelea.mjs");
-  globalThis.__vida = 16; await nuevoRound(); globalThis.__vida = null;
+const hidetoshi = () => actor("h", "Hidetoshi", "pnj", { rol: "rival", dignidad: 16, jefe: "hidetoshi", poderes: [CHORRO, { nombre: "Torrente Olímpico", frase: "¡Torrente!", coste: 2, extra: 1, recarga: 3, area: true }] });
+const conEstado = async (extra, pjs = [actor("k", "Kenji", "pj"), actor("d", "Daiki", "pj")]) => {
+  game.actors._l = [...pjs, hidetoshi()]; chats.length = 0; globalThis.__dados = [];
+  ajustes.set("estado", { cuentaAtras: null, vapor: 1, termo: 3, ...extra });
+  await iniciarPelea({ a: pjs.map(a => a.id), b: ["h"], rondasPara: 1 });
+};
+
+test("Tablillas: sin ninguna, el Cisne protege al Capitán (+6 de Dignidad); con las tres, el grupo gana Furia, cañón abollado y Torrente enfriándose", async () => {
+  await conEstado({ tablillas: [] });
+  assert.equal(estado().lados[1].equipo[0].dig, 22); assert.equal(estado().lados[0].furia, 0);
+  await conEstado({ tablillas: [1, 2, 3] });
   const p = estado();
+  assert.equal(p.lados[1].equipo[0].dig, 14); assert.equal(p.lados[0].furia, 1);
+  assert.equal(p.lados[1].equipo[0].enf[1], 3, "el Torrente Olímpico (el de área) empieza enfriándose");
+  assert.ok(chats.some(c => c.flags?.["mr-agua-va"]?.tipo === "tablillas"));
+  await conEstado({ tablillas: [2] });
+  assert.equal(estado().lados[1].equipo[0].dig, 16 - 2 + 4);
+});
+
+test("ROUND 2: solo con menos Tablillas que el Cisne o sin saber lo de los manguitos, una vez, con 8 de Dignidad", async () => {
+  const { nuevoRound, round2Posible } = await import("../module/pelea.mjs");
+  const gana = async () => cambia(p => { p.fase = "fin"; p.ganador = 0; p.lados[0].rondas = 1; p.lados[0].equipo[0].dig = 5; p.lados[0].equipo[1].dig = 3; p.lados[0].furia = 2; p.lados[1].equipo[0].dig = 0; });
+  // Todo descubierto y 2 Tablillas o más: no hay Round 2
+  await conEstado({ tablillas: [1, 2], secreto: true }); await gana();
+  assert.equal(round2Posible(), ""); await nuevoRound(); assert.equal(estado().fase, "fin");
+  // Menos Tablillas que el Cisne
+  await conEstado({ tablillas: [1], secreto: true }); await gana();
+  assert.equal(round2Posible(), "tablillas");
+  await nuevoRound();
+  let p = estado();
   assert.equal(p.fase, "eleccion"); assert.equal(p.ronda, 2); assert.equal(p.cruce, 1); assert.equal(p.rondasPara, 2);
-  assert.deepEqual(p.lados[0].equipo.map(f => f.dig), [5, 3], "los personajes conservan su vida");
-  assert.equal(p.lados[0].furia, 2);
-  assert.equal(p.lados[1].equipo[0].dig, 16); assert.equal(p.lados[1].furia, 0); assert.equal(p.lados[1].equipo[0].fase, 1);
-  assert.ok(chats.some(c => c.flags?.["mr-agua-va"]?.tipo === "round"));
+  assert.deepEqual(p.lados[0].equipo.map(f => f.dig), [5, 3], "los personajes conservan su vida"); assert.equal(p.lados[0].furia, 2);
+  assert.equal(p.lados[1].equipo[0].dig, 8); assert.equal(p.lados[1].equipo[0].fase, 1);
+  assert.ok(chats.some(c => c.flags?.["mr-agua-va"]?.tipo === "round")); assert.equal(mesa.estado().round2, true);
+  // Una sola vez
+  await gana(); assert.equal(round2Posible(), "");
+  // Secreto sin descubrir
+  await conEstado({ tablillas: [1, 2, 3], secreto: false }); await gana();
+  assert.equal(round2Posible(), "secreto");
+  // Contra otro rival no hay Round 2
+  await reset([actor("k", "Kenji", "pj")], [actor("m", "Mariko", "pnj", { rol: "rival" })]);
+  await cambia(p => { p.fase = "fin"; p.ganador = 0; }); assert.equal(round2Posible(), "");
+});
+
+test("Si pierden los personajes contra el Capitán: sin repetición, tarjeta de último turno desesperado", async () => {
+  await conEstado({ tablillas: [1, 2, 3], secreto: true });
+  await cambia(p => { p.lados[0].equipo.forEach(f => { f.dig = 0; }); p.lados[0].equipo[0].dig = 1; });
+  await pick(0, "parada"); await pick(1, "golpe");
+  await cambia(p => { p.lados[0].equipo.forEach(f => { f.dig = 0; }); });
+  const p = estado();
+  assert.ok(["fin", "eleccion"].includes(p.fase));
+  const { round2Posible } = await import("../module/pelea.mjs");
+  assert.equal(round2Posible({ ...p, fase: "fin", ganador: 1 }, mesa.estado()), "", "perder nunca da Round 2");
 });
 
 test("Migración: los rivales importados con una versión antigua reciben jefe y ataques especiales", async () => {
@@ -258,4 +299,30 @@ test("Migración: los rivales importados con una versión antigua reciben jefe y
   assert.ok(viejo.system.poderes.length >= 3 && viejo.system.poderes.every(p => p.nombre && p.frase));
   assert.match(kenji.system.tecnica, /Plancha/);
   assert.equal(await migrarAventura({ silencioso: true }), 0, "la segunda vez no cambia nada");
+});
+
+test("Migración del presentador: las estampas de la Guía pasan a Manuel y la migración es idempotente", async () => {
+  globalThis.Image = class { set src(v) { this.naturalWidth = 610; this.naturalHeight = 1100; setTimeout(() => this.onload?.(), 0); } };
+  const tile = { id: "t1", height: 640, getFlag: (_, k) => (k === "capa" ? "00-amanecer-guia-manana" : null) };
+  let aplicado = null;
+  const escena = { id: "s1", tiles: [tile], getFlag: (_, k) => (k === "escena" ? "00-amanecer" : null), updateEmbeddedDocuments: async (_, c) => { aplicado = c; tile.getFlag = (_, k) => (k === "capa" ? c[0]["flags.mr-agua-va.capa"] : null); } };
+  game.scenes = [escena]; game.actors._l = [actor("m", "Manuel", "pnj")];
+  const { migrarPresentador } = await import("../module/inicio.mjs");
+  assert.equal(await migrarPresentador(), 1);
+  assert.match(aplicado[0]["texture.src"], /presentador-manana\.webp$/); assert.equal(aplicado[0].width, Math.round(640 * 610 / 1100));
+  assert.equal(await migrarPresentador(), 0, "la segunda vez no cambia nada");
+  game.scenes = [];
+});
+
+test("Marcador al acabar contra Hidetoshi: botones de Final A (+Round 2 si toca) si ganan y de Final B/C si pierden; a los jugadores no", async () => {
+  const { htmlHUD } = await import("../module/pelea.mjs");
+  await conEstado({ tablillas: [1], secreto: true });
+  await cambia(p => { p.fase = "fin"; p.ganador = 0; p.lados[0].rondas = 1; });
+  let h = htmlHUD(estado());
+  assert.match(h, /data-final="A"/); assert.match(h, /data-accion="nuevoRound"/); assert.doesNotMatch(h, /data-final="B"/);
+  await cambia(p => { p.ganador = 1; });
+  h = htmlHUD(estado());
+  assert.match(h, /data-final="B"/); assert.match(h, /data-final="C"/); assert.doesNotMatch(h, /nuevoRound/);
+  game.user = jugador; h = htmlHUD(estado()); game.user = gm;
+  assert.doesNotMatch(h, /data-final=/);
 });

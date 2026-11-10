@@ -54,9 +54,9 @@ La novedad del sistema: una regla de **combate de barrio al estilo de las máqui
 
 ## El gestor de la partida
 
-El **Panel de dirección** lleva el reloj real de 120 minutos (y avisa cuando toca cortinilla), los marcadores de **Desbarajuste Acuático** (0–6) y **Vapor Nocturno** (0–6), el **Termo**, las **tres tablillas**, las cuatro cortinillas del Guía de Jusenkyo, los **18 retos flotantes**, la máquina de ¡PELEA! con sus contendientes, la noche en la Casa de Baños (tuberías cruzadas, tres vías de información, cuatro finales) y el reparto. Una **cartela** flotante enseña a toda la mesa la hora del día y los marcadores.
+El **Panel de dirección** lleva el reloj real de 120 minutos (y avisa cuando toca cortinilla), los marcadores de **Desbarajuste Acuático** (0–6) y **Vapor Nocturno** (0–6), el **Termo**, las **tres tablillas**, las cuatro cortinillas del Guía de Jusenkyo, los **18 retos flotantes**, la máquina de ¡PELEA! con sus contendientes, la noche en la Casa de Baños (tuberías cruzadas, tres vías de información, cuatro finales) y el reparto. Una **cartela** flotante enseña a todos los jugadores la hora del día y los marcadores.
 
-<p align="center"><img src="docs/img/panel.webp" alt="Panel de dirección: la mesa, los retos, la pelea, la noche y el reparto" width="100%"></p>
+<p align="center"><img src="docs/img/panel.webp" alt="Panel de dirección: la partida, los retos, la pelea, la noche y el reparto" width="100%"></p>
 
 ## La aventura, completa en Foundry
 
@@ -66,13 +66,13 @@ Se instala sola en un mundo vacío: 17 decorados, los cuatro personajes malditos
 
 ## El PDF: un especial de revista
 
-El libro de la aventura va maquetado como un especial de la revista «¡PAM!» (B5): portada, índice, **pantalla de versus**, el capítulo de ¡PELEA! en papel de recreativa, láminas a color al empezar cada acto, fichas de personaje con sus dos formas, los retos en tarjetas, cameos en tres pasos, fichas privadas para recortar, encuesta del lector y un anuncio del Termo Portátil en la contraportada. Está en cada [versión publicada](https://github.com/ManuRomera/mr-agua-va/releases/latest).
+El libro de la aventura va maquetado como un especial de la revista «¡PAM!» (B5): portada, índice, **pantalla de versus**, el capítulo de ¡PELEA! en papel de recreativa, láminas a color al empezar cada acto, fichas de personaje con sus dos formas, los retos en tarjetas, cameos en tres pasos, los cuatro malditos de un vistazo con la guía de «Solo para ti», encuesta del lector y un anuncio del Termo Portátil en la contraportada. Está en cada [versión publicada](https://github.com/ManuRomera/mr-agua-va/releases/latest).
 
 <p align="center"><img src="docs/img/pdf.webp" alt="Páginas del PDF: portada, versus, ficha de personaje, retos y contraportada" width="100%"></p>
 
 ## Lo de siempre
 
-Accesibilidad (tamaño de texto, alto contraste, fuente legible, sin movimiento, modo oscuro), seguridad en mesa (Pausa, Velo y Tarjeta X anónimas), memoria de ventanas, lupa sobre las imágenes, diagnóstico y créditos en Ajustes.
+Accesibilidad (tamaño de texto, alto contraste, fuente legible, sin movimiento, modo oscuro), seguridad en la sesión (Pausa, Velo y Tarjeta X anónimas), memoria de ventanas, lupa sobre las imágenes, diagnóstico y créditos en Ajustes.
 
 ## Descargas
 

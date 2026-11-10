@@ -106,7 +106,7 @@ const objetivos = () => {
 };
 
 Hooks.on("getSceneControlButtons", controles => {
-  anadirHerramienta(controles, "tokens", { name: "avSeguridad", title: "Seguridad en mesa", icon: "fa-solid fa-shield-heart", onChange: () => PanelSeguridad.abrir() });
+  anadirHerramienta(controles, "tokens", { name: "avSeguridad", title: "Seguridad en la sesión", icon: "fa-solid fa-shield-heart", onChange: () => PanelSeguridad.abrir() });
   if (!game.user.isGM) return;
   anadirHerramienta(controles, "tokens", { name: "avDireccion", title: "Panel de dirección", icon: "fa-solid fa-clapperboard", onChange: () => PanelDireccion.abrir() });
   anadirHerramienta(controles, "tokens", { name: "avEscenas", title: "Configurador de escenas (MR- Dirección)", icon: "fa-solid fa-sliders", onChange: () => abrirConfigurador() });
